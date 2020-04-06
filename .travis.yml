@@ -1,32 +1,44 @@
+os: 
+  - linux
 dist: trusty
-sudo: false
 
 language: node_js
 node_js:
   - '13.0'
-  
+
 addons:
   chrome: stable
 
 cache:
   directories:
-    - ./node_modules
+  - "./node_modules"
 
 install:
   - npm install
 
 script:
   - npm run test -- --watch=false --no-progress --browsers=ChromeHeadless
-  
+
+before-deploy:
+  - npm run build
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: rd61Ojz+wAnfihRo5+gFCtqWuyphaoxVCjERfr2Olh6Q2RtSYlg2ZyNyiQP7f+uHN7q36A2Sw4N0BwN+PDH/vosktESFKu6qofTBLa5j1DP7AHMmVE3VWAE8/UbFySnBKY/oP6WqxHfBQHaFB0S/M18VTwgnm0KVuNhCiDBHwYkL3UtWrlkfwZhvgXIUalhdNxwbbK9KWna2rQm50eXuomuYT3jWcnBxa4R30SEXuFaohCJxmOIB0Vn9peX/NzhaWMrUTJamdznAu5MKI0rgwT0G1ef9GivjOjZm20eUICbXYxtpCncFtejubWbqVrSd6rbLT+c2tEaNjmCUCOjAGJMJP1U8r8sQmUnJMY5nWIOmrExjkL8F72PNNpZZtu7vIAA3Rc+rtkKb0G6oVE7Cirh5Ltl9lkvDOOV+krbwrrAANtZdwUc8a/npOogDY7SYeA39v1AfiW7+StYlPMSQPsV4Zb7SFbui5Vhe9VMt57Ir8Ge0jRLDslUvpJ3G1MzGoezI29dz4AN0XwHidcqa9te9+le+Bd5KVSEmhSYOuXH/GENQ6JBhfVOSpe7xvXItkVVUTZduhpZe1PXu9f298+gRZzwxqwO8yZq2MUjuKyK4O0ocEcOa3OL4lAIanqjKqEx/Uc2Pcah6XpQKN7nwM/slrsGPk+BsQskiieEp7ME=
+  app: leafer-app
+  on: release
+  skip_cleanup: true
+
 after_success:
   - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
   - chmod +x send.sh
-  - ./send.sh success $WEBHOOK_URL
-  
+  - "./send.sh success $WEBHOOK_URL"
+
 after_failure:
   - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
   - chmod +x send.sh
-  - ./send.sh failure $WEBHOOK_URL
+  - "./send.sh failure $WEBHOOK_URL"
 
 notifications:
   email: false
