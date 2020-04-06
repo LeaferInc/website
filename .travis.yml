@@ -29,9 +29,6 @@ after_failure:
   - chmod +x send.sh
   - "./send.sh failure $WEBHOOK_URL"
 
-before_deploy:
-  - npm run build
-
 deploy:
   provider: heroku
   api_key:
