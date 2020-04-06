@@ -4,7 +4,7 @@ dist: trusty
 
 language: node_js
 node_js:
-  - '13.0'
+  - '13.2'
 
 addons:
   chrome: stable
@@ -29,7 +29,7 @@ after_failure:
   - chmod +x send.sh
   - "./send.sh failure $WEBHOOK_URL"
 
-before-deploy:
+before_deploy:
 - npm run build
 
 deploy:
