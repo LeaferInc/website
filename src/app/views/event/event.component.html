@@ -1,6 +1,6 @@
 <div *ngIf="!showForm">
     <p>Event works</p>
-    <button (click)="showForm=!showForm">+</button>
 </div>
+<button class="btn-float"(click)="showForm=!showForm">+</button>
 
 <app-event-form *ngIf="showForm" (created)="addEvent($event)"></app-event-form>

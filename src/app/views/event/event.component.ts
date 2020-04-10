@@ -35,7 +35,7 @@ export class EventComponent implements OnInit {
   }
 
   addEvent(event): void {
-    console.log(event);
+    this.events.push(event);
     this.showForm = false;
   }
 }
