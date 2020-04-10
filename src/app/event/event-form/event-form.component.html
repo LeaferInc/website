@@ -1,0 +1,28 @@
+<form novalidate [formGroup]="eventForm" (ngSubmit)="submit()">
+    <div>
+        <label for="name">Nom: </label>
+        <input type="text" name="name" formControlName="name" />
+        <span *ngIf="eventForm.get('name').errors?.required">*</span>
+    </div>
+    <div>
+        <label for="description">Description: </label>
+        <textarea name="description" formControlName="description"></textarea>
+        <span *ngIf="eventForm.get('description').errors?.required">*</span>
+    </div>
+    <div>
+        <label for="location">Lieu: </label>
+        <input type="text" name="location" formControlName="location" />
+        <span *ngIf="eventForm.get('location').errors?.required">*</span>
+    </div>
+    <div>
+        <label for="price">Prix: </label>
+        <input type="number" name="price" formControlName="price" />
+        <span *ngIf="eventForm.get('price').errors?.required">*</span>
+    </div>
+    <div>
+        <label for="maxPeople">Capacité: </label>
+        <input type="number" name="maxPeople" formControlName="maxPeople" />
+        <span *ngIf="eventForm.get('maxPeople').errors?.required">*</span>
+    </div>
+    <button [disabled]="eventForm.invalid">Ajouter</button>
+</form>
