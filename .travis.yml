@@ -1,7 +1,6 @@
 os:
   - linux
 dist: trusty
-
 language: node_js
 node_js:
   - '13.0'
@@ -29,16 +28,18 @@ after_failure:
   - chmod +x send.sh
   - "./send.sh failure $WEBHOOK_URL"
 
-before_deploy:
-  - npm run build:prod
-
 deploy:
-  provider: heroku
-  api_key:
-    secure: Y2E98NjOrTvdnOrUMwH+fZAxvCcuuCOFCfaOGI2ZDSnfvrVXp9zzBBsBXnpsMz1ZYthQhex96JcqTWdDd3eR7xf2BQE9pI3usPUYEy3PMuo4w1fCpxWId/wpovyvJohm1MThpwxHC9A0mIYQKPShFnq1h+tvIMR4pl7EsdQvhvA/2fzLexdawJ1+ZnZ7tHgNegODot4zdfQD3TbK6H1+38tM7TqRpUDdarmKClkAOv0cgzeLpriF/ex7JqXX4S8KlsFIQCvwXcHoOTE1pSwy5y37HCsyBrjH7THCUCWMZBLbmAdQeXMmrOSNlREXl/nBI89teGxTX9q35p3uiupyTPWuErNIV6O0J7B5zLAt5Z38A0Pa0MWy9sKdx/T+mterMDVm1aJ3FiOn3DLCUIUMjQrSYz3nn9qJvlDAV38NqyYdeCmy+v7grvkXiBC37hXK1t/D5vtRQE8+8EBD09R4NVl04uSvHhRpPie05F2rwb8r1l8yPBkkzBzDfbTo93md/uVE1oD2IjMOTxKnvyWJAff5os+miF3zjtBPpMKeV9w703FtKOJ00W1d6e5eJg0oQUza9B8b4hjAr8H29ya1kzKA5SAWBDYjUJbSv2wU2klWwwsB4g07GspP1+8vIV0DYtLyJXIPAMo8XVEaTCqAbdw/t4xSe4BNV39po25kszY=
-  app: leafer-app
-  on: release
-  skip_cleanup: true
+  - provider: script
+    skip_cleanup: true
+    script: npx semantic-release
+    on:
+      branch: master
+  - provider: heroku
+    api_key:
+      secure: Y2E98NjOrTvdnOrUMwH+fZAxvCcuuCOFCfaOGI2ZDSnfvrVXp9zzBBsBXnpsMz1ZYthQhex96JcqTWdDd3eR7xf2BQE9pI3usPUYEy3PMuo4w1fCpxWId/wpovyvJohm1MThpwxHC9A0mIYQKPShFnq1h+tvIMR4pl7EsdQvhvA/2fzLexdawJ1+ZnZ7tHgNegODot4zdfQD3TbK6H1+38tM7TqRpUDdarmKClkAOv0cgzeLpriF/ex7JqXX4S8KlsFIQCvwXcHoOTE1pSwy5y37HCsyBrjH7THCUCWMZBLbmAdQeXMmrOSNlREXl/nBI89teGxTX9q35p3uiupyTPWuErNIV6O0J7B5zLAt5Z38A0Pa0MWy9sKdx/T+mterMDVm1aJ3FiOn3DLCUIUMjQrSYz3nn9qJvlDAV38NqyYdeCmy+v7grvkXiBC37hXK1t/D5vtRQE8+8EBD09R4NVl04uSvHhRpPie05F2rwb8r1l8yPBkkzBzDfbTo93md/uVE1oD2IjMOTxKnvyWJAff5os+miF3zjtBPpMKeV9w703FtKOJ00W1d6e5eJg0oQUza9B8b4hjAr8H29ya1kzKA5SAWBDYjUJbSv2wU2klWwwsB4g07GspP1+8vIV0DYtLyJXIPAMo8XVEaTCqAbdw/t4xSe4BNV39po25kszY=
+    app:
+      develop: leafer-website-dev
+      master: leafer-website-prod
 
 notifications:
   email: false
