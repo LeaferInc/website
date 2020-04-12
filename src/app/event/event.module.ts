@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { EventComponent } from '../views/event/event.component';
 import { EventService } from './event.service';
 import { EventFormComponent } from './event-form/event-form.component';
+import { UtilsService } from '../common/utils.service';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { EventFormComponent } from './event-form/event-form.component';
     ReactiveFormsModule,
   ],
   providers: [
-    EventService
+    EventService,
+    UtilsService
   ]
 })
 export class EventModule { }

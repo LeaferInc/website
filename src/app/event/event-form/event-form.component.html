@@ -1,38 +1,62 @@
+<!-- @author ddaninthe -->
+
 <form novalidate [formGroup]="eventForm" (ngSubmit)="submit()">
 	<div class="form-group row">
-		<label class="col-form-label col-sm-2" for="name">Nom: </label>
-		<div class="col-sm-10">
-			<input type="text" class="form-control" name="name" formControlName="name" />
-			<span *ngIf="eventForm.get('name').errors?.required">*</span>
+		<label class="col-form-label col-sm-2 offset-md-1 offset-lg-2" for="name">Nom</label>
+		<div class="col-sm-10 col-md-8 col-lg-6">
+			<input type="text" class="form-control" name="name" formControlName="name" [ngClass]="{'is-valid': eventForm.get('name').valid && eventForm.get('name').dirty,
+			 'is-invalid': eventForm.get('name').invalid && eventForm.get('name').dirty }" />
 		</div>
 	</div>
 	<div class="form-group row">
-		<label class="col-form-label col-sm-2" for="description">Description: </label>
-		<div class="col-sm-10">
-			<textarea class="form-control" name="description" formControlName="description"></textarea>
-			<span *ngIf="eventForm.get('description').errors?.required">*</span>
+		<label class="col-form-label col-sm-2 offset-md-1 offset-lg-2" for="description">Description</label>
+		<div class="col-sm-10 col-md-8 col-lg-6">
+			<textarea class="form-control" name="description" formControlName="description" placeholder="Description détaillée de l'évènement" [ngClass]="{'is-valid': eventForm.get('description').valid && eventForm.get('description').dirty,
+			 'is-invalid': eventForm.get('description').invalid && eventForm.get('description').dirty }"></textarea>
 		</div>
 	</div>
 	<div class="form-group row">
-		<label class="col-form-label col-sm-2" for="location">Lieu: </label>
-		<div class="col-sm-10">
-			<input type="text" class="form-control" name="location" formControlName="location" />
-			<span *ngIf="eventForm.get('location').errors?.required">*</span>
+		<label class="col-form-label col-sm-2 offset-md-1 offset-lg-2" for="location">Lieu</label>
+		<div class="col-sm-10 col-md-8 col-lg-6">
+			<input (change)="test($event, 'in change')" list="list-locations" class="form-control" (ngModelChange)="getLocations($event)" name="location" formControlName="location" [ngClass]="{'is-valid': eventForm.get('location').valid && eventForm.get('location').dirty,
+			 'is-invalid': eventForm.get('location').invalid && eventForm.get('location').dirty }" />
+			<datalist id="list-locations">
+				<select (select)="test($event, 'sel select')" (click)="test($event, 'sel click')">
+					<option (click)="test($event, 'opt click')" [value]="eventForm.get('location').value">Test</option>
+					<option [value]="eventForm.get('location').value" *ngFor="let loc of locations" (click)="setFormLocation(loc)">{{loc.label}}</option>
+				</select>
+			</datalist>
 		</div>
 	</div>
 	<div class="form-group row">
-		<label class="col-form-label col-sm-2" for="price">Prix: </label>
-		<div class="col-sm-10">
-			<input type="number" class="form-control" name="price" formControlName="price" />
-			<span *ngIf="eventForm.get('price').errors?.required">*</span>
+		<label class="col-form-label col-sm-2 offset-md-1 offset-lg-2" for="startDate">Date début</label>
+		<div class="col-sm-10 col-md-6 col-lg-4 col-xl-3">
+			<input type="datetime-local" class="form-control" name="startDate" formControlName="startDate" placeholder="jj-mm-aaaa hh:mm"
+			[ngClass]="{'is-valid': eventForm.get('startDate').valid && eventForm.get('startDate').dirty,
+			 'is-invalid': eventForm.get('startDate').invalid && eventForm.get('startDate').dirty }" />
 		</div>
 	</div>
 	<div class="form-group row">
-		<label class="col-form-label col-sm-2" for="maxPeople">Capacité: </label>
-		<div class="col-sm-10">
-			<input type="number" class="form-control" name="maxPeople" formControlName="maxPeople" />
-			<span *ngIf="eventForm.get('maxPeople').errors?.required">*</span>
+		<label class="col-form-label col-sm-2 offset-md-1 offset-lg-2" for="endDate">Date fin</label>
+		<div class="col-sm-10 col-md-6 col-lg-4 col-xl-3">
+			<input type="datetime-local" class="form-control" name="endDate" formControlName="endDate" placeholder="jj-mm-aaaa hh:mm"
+			[ngClass]="{'is-valid': eventForm.get('endDate').valid && eventForm.get('endDate').dirty,
+			 'is-invalid': eventForm.get('endDate').invalid && eventForm.get('endDate').dirty }" />
 		</div>
 	</div>
-	<button class="btn btn-primary" [disabled]="eventForm.invalid || sending">Ajouter</button>
+	<div class="form-group row">
+		<label class="col-form-label col-sm-2 offset-md-1 offset-lg-2" for="price">Prix</label>
+		<div class="col-sm-6 col-md-4 col-lg-2">
+			<input type="number" class="form-control" name="price" formControlName="price" [ngClass]="{'is-valid': eventForm.get('price').valid && eventForm.get('price').dirty,
+			 'is-invalid': eventForm.get('price').invalid && eventForm.get('price').dirty }" />
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-form-label col-sm-2 offset-md-1 offset-lg-2" for="maxPeople">Capacité</label>
+		<div class="col-sm-6 col-md-4 col-lg-2">
+			<input type="number" class="form-control" name="maxPeople" formControlName="maxPeople" [ngClass]="{'is-valid': eventForm.get('maxPeople').valid && eventForm.get('maxPeople').dirty,
+			 'is-invalid': eventForm.get('maxPeople').invalid && eventForm.get('maxPeople').dirty }" />
+		</div>
+	</div>
+	<button class="btn btn-primary order-3 offset-md-3 offset-lg-4" [disabled]="eventForm.invalid || sending">Ajouter</button>
 </form>

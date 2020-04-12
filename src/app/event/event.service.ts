@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class EventService {
-  private static readonly BASE_URL: string = DataService.SERVER_URL + "events/";
+  static readonly BASE_URL: string = DataService.SERVER_URL + "events/";
 
   constructor(private http: HttpClient, private dataService: DataService) { }
 
@@ -20,6 +20,14 @@ export class EventService {
   getEvents(): Observable<Event[]> {
     return this.http.get<Event[]>(EventService.BASE_URL, { headers: this.dataService.headers });
   }
+
+  /**
+   * Get a single {@link Event} from the server by its id
+   */
+  getEvent(id: number): Observable<Event> {
+    return this.http.get<Event>(EventService.BASE_URL + id, { headers: this.dataService.headers });
+  }
+
 
   /**
    * Post an event to the server to save it
