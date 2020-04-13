@@ -7,7 +7,6 @@ import { EventService } from '../event.service';
 import { Event } from 'src/app/event/event.model';
 import { UtilsService } from 'src/app/common/utils.service';
 import { Location } from '../../common/location.model';
-import * as $ from 'jquery';
 
 @Component({
     selector: 'app-event-form',
@@ -22,6 +21,7 @@ export class EventFormComponent implements OnInit {
     locationTimeout: NodeJS.Timeout; // Delay to search for addresses after user's input
     locations: Location[] = [];  // The found addresses
     minDate: Date = new Date(); // Minimum choosable Date
+    showDropdown: boolean = false; // True when the dropdown should be shown
 
     @Output() created = new EventEmitter<Event>();
 
@@ -42,6 +42,8 @@ export class EventFormComponent implements OnInit {
             name: new FormControl('Un nom au hasard', [Validators.required]),
             description: new FormControl('Un évènement comme un autre, il faut meubler pour remplir la textarea.', [Validators.required]),
             location: new FormControl('23, Rue de la Marquise', [Validators.required]),
+            latitude: new FormControl(),
+            longitude: new FormControl(),
             startDate: new FormControl(UtilsService.dateToJSONLocal(startDate).slice(0, 16), [Validators.required]),
             endDate: new FormControl(UtilsService.dateToJSONLocal(endDate).slice(0, 16), [Validators.required]),
             price: new FormControl(0, [Validators.required, Validators.min(0)]),
@@ -57,13 +59,18 @@ export class EventFormComponent implements OnInit {
         // Don't search if address is empty or if value has been set by `setFormLocation()`
         if (address && (!this.locationChoosed || address !== this.locationChoosed.label)) {
             this.locationChoosed = null;
-            $("#dropdownLocations").addClass("show");
+            this.showDropdown = true;
             clearTimeout(this.locationTimeout);
             this.locationTimeout = setTimeout(() => {
                 this.utilsService.getLocations(address).subscribe(
                     (locs: Location[]) => {
-                        $("#dropdownLocations").addClass("show");
+                        this.showDropdown = true;
                         this.locations = locs;
+
+                        if (!locs.length) {
+                            this.showDropdown = false;
+                            this.locationChoosed = null;
+                        }
                     },
                     (err: Error) => {
                         console.log(err);
@@ -79,10 +86,10 @@ export class EventFormComponent implements OnInit {
      */
     setFormLocation(location: Location): void {
         this.locationChoosed = location;
-        this.eventForm.value.latitude = location.lat;
-        this.eventForm.value.longitude = location.long;
+        this.eventForm.get("latitude").setValue(location.lat);
+        this.eventForm.get("longitude").setValue(location.long);
         this.eventForm.get("location").setValue(location.label);
-        $("#dropdownLocations").removeClass("show");
+        this.showDropdown = false;
         this.locations = [];
     }
 
