@@ -14,7 +14,7 @@ import { Event } from 'src/app/event/event.model';
 export class EventComponent implements OnInit {
 
   events: Array<Event> = [];
-  showForm: boolean = true; //TODO: false;
+  showForm: boolean = false;
 
   constructor(private eventService: EventService) { }
 
