@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class UtilsService {
-  static readonly ADDRESS_API_URL: string = "https://api-adresse.data.gouv.fr/search/?q=";
+  static readonly ADDRESS_API_URL: string = "location?address=";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -21,7 +21,7 @@ export class UtilsService {
    * @param address the address to search for
    */
   getLocations(address: string): Observable<Location[]> {
-    return this.httpClient.get(encodeURI(UtilsService.ADDRESS_API_URL + address))
+    return this.httpClient.get('location?address='.concat(address))
       .pipe(map((res: Response) => 
         res["features"].map((item) => Location.mapFromJson(item))));
   }

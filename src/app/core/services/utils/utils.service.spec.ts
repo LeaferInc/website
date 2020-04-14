@@ -68,7 +68,7 @@ describe('UtilsService', () => {
       expect(locs[0].long).toBe(2.432068);
     });
 
-    const req: TestRequest = httpMock.expectOne(UtilsService.ADDRESS_API_URL + "23%20rue%20de%20l'abb%C3%A9%20niort");
+    const req: TestRequest = httpMock.expectOne(UtilsService.ADDRESS_API_URL + "23 rue de l'abbé niort");
     req.flush(response);
     expect(req.request.method).toBe('GET');
 
