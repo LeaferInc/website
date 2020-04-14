@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+	background-color: #f2f2f2;
+}
+
+.container {
+	margin-top: 50px;
+	background-color: white;
+	padding: 50px;
+	border-radius: 1em;
+}
+
+.btn-float {
+	position: absolute;
+	width: 60px;
+	height: 60px;
+	bottom: 40px;
+	right: 40px;
+	background-color: #0C9;
+	color: #FFF;
+	border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+	box-shadow: 2px 2px 3px #999;
+}
