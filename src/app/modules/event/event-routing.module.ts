@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CreateEventComponent } from './pages/create-event/create-event.component';
 
 const routes: Routes = [
-  { path: '', component: CreateEventComponent },
+  { path: '', redirectTo: 'create' },
   { path: 'create', component: CreateEventComponent }
 ];
 
