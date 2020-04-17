@@ -8,9 +8,11 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
 
+  static readonly USER_URL = 'user';
+
   constructor(private http: HttpClient) { }
 
   create(user: User, password: string): Observable<User> {
-    return this.http.post<User>('user', {...user, ...{password: password}});
+    return this.http.post<User>(UserService.USER_URL, {...user, ...{password: password}});
   }
 }

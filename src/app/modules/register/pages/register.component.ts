@@ -72,7 +72,7 @@ export class RegisterComponent {
     }
 
     this.userService
-      .create(user, this.registerForm.get('passwordInput').value)
+      .create(user, this.passwordInput.value)
       .subscribe();
   }
 }

@@ -9,6 +9,7 @@ import { UserAuth } from 'src/app/shared/models/auth/auth';
 })
 export class AuthService {
 
+  static readonly AUTH_URL = 'auth';
   public userAuth: BehaviorSubject<UserAuth> = new BehaviorSubject<UserAuth>({} as UserAuth);
 
   constructor(
@@ -16,7 +17,7 @@ export class AuthService {
   ) { }
 
   login(username: string, password: string) {
-    return this.http.post<UserAuth>('auth/login', { username: username, password: password })
+    return this.http.post<UserAuth>(`${AuthService.AUTH_URL}/login`, { username: username, password: password })
       .pipe(
         map(userAuth => {
           this.userAuth.next(userAuth);
