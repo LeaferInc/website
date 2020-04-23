@@ -6,10 +6,10 @@
   const node_env = process.env.NODE_ENV.trim();
 
   if(node_env === 'development') {
-    child = exec('npm run build');
+    child = exec('npm run build:dev');
   } 
   else if(node_env == 'production') {
-    child = exec('npm run build-prod');
+    child = exec('npm run build:prod');
   } 
   else {
     throw new Error('NODE_ENV not correctly defined');
