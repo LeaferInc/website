@@ -1,0 +1,25 @@
+<div *ngIf="event" class="offset-md-1 offset-lg-2 offset-xl-3">
+	<div class="row">
+		<img src="../../../../../assets/images/event-temp.jpg" alt="Picture of the event">
+	</div>
+	<div class="row">
+		<h3>{{event.name}}</h3>
+	</div>
+	<div class="row">
+		<h6><i class="fas fa-map-marker-alt"></i> {{event.location}}</h6>
+	</div>
+	<div class="row">
+		{{event.description}}
+	</div>
+	<div class="row">
+		<span class="font-weight-bold">Début:</span>&nbsp;{{event.startDate | date:'medium'}}
+	</div>
+	<div class="row">
+		<span class="font-weight-bold">Fin:</span>&nbsp;{{event.endDate | date:'medium'}}
+	</div>
+	<br />
+	<div class="row" *ngIf="participating !== null">
+		<button *ngIf="!participating" class="btn btn-success" (click)="participate()">Participer</button>
+		<button *ngIf="participating" class="btn btn-warning" (click)="leave()">Quitter</button>
+	</div>
+</div>
