@@ -42,7 +42,11 @@ describe('AuthService', () => {
     service.login(username, password).subscribe((e: UserAuth) => {
       expect(e).toBeTruthy();
       expect(e).toEqual(userAuth);
-      expect(service.userAuth.getValue()).toEqual(userAuth);
+      service
+        .getUserAuth()
+        .subscribe((userAuth: UserAuth) => {
+          expect(e).toEqual(userAuth);
+        });
     });
 
     const req: TestRequest = httpMock.expectOne(`${AuthService.AUTH_URL}/login`);

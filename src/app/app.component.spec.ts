@@ -2,12 +2,20 @@ import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { AuthService } from './core/services/auth/auth.service';
 
 describe('AppComponent', () => {
+  const authServiceMock = {
+    getUserFromToken: jest.fn()
+  };
+  
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule
+      ],
+      providers: [ 
+        { provide: AuthService, useValue: authServiceMock } 
       ],
       declarations: [
         AppComponent
