@@ -1,0 +1,10 @@
+<h2>Exchange</h2>
+<div class="container-fluid">
+  <div class="row">
+    <div *ngFor="let cutting of cuttings" class="col-lg-3 col-md-4 col-sm-6 col-12 my-2">
+      <app-list-cutting-card
+        [cutting]="cutting"
+      ></app-list-cutting-card>
+    </div>
+  </div>
+</div>

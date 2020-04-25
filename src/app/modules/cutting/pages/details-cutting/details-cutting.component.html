@@ -1,0 +1,21 @@
+<div class="container-fluid" *ngIf="!loading">
+  <div id="details_cutting_header" class="row">
+    <a id="details_cutting_shared_icon" href="">
+      <i class="fas fa-lg fa-share-alt"></i>
+    </a>
+    <img src="/assets/photo_test.jpg" class="rounded w-100" style="height: 450px; object-fit: cover;">
+  </div>
+  <div class="row mt-3">
+    <h2>{{ cutting.name }}</h2>
+  </div>
+  <div class="row">
+    <p>{{ cutting.description }}</p>
+  </div>
+  <div class="row" *ngIf="cutting.tradeWith">
+    <h6>A échanger contre : {{ cutting.tradeWith }}</h6>
+  </div>
+  <div class="row mt-2">
+    <button type="button" class="btn btn-primary btn-lg btn-block">Modifier</button>
+    <button type="button" class="btn btn-secondary btn-lg btn-block">Supprimer</button>
+  </div>
+</div>

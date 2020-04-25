@@ -1,0 +1,8 @@
+
+<div class="card" (click)="onCardClick()">
+  <img src="/assets/photo_test.jpg" class="card-img-top" alt="photo test" />
+  <div class="card-body">
+    <h5 class="card-title text-truncate">{{ cutting.name }}</h5>
+    <p class="card-text">{{ cutting.owner?.firstname }} {{cutting.owner?.location}}</p>
+  </div>
+</div>

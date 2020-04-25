@@ -1,0 +1,95 @@
+<h1 class="d-flex justify-content-center">Create Cuttings</h1>
+
+<form [formGroup]="createCuttingForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="cutting-name-input">Cutting name*</label>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="cutting-name-icon"><i class="fas fa-user"></i></span>
+      </div>
+      <input
+        [formControl]="nameInput"
+        [ngClass]="{ 'is-invalid': (submitted || nameInput.touched) && nameInput.invalid }"
+        type="text"
+        class="form-control"
+        id="cutting-name-input"
+        aria-describedby="cutting-name-icon"
+        placeholder="Name"
+        required
+      />
+    </div>
+    <div *ngIf="submitted || nameInput.touched">
+      <div *ngIf="nameInput.hasError('required')" class="invalid-feedback d-block">
+        Name is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="description-input">Description*</label>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="description-icon"><i class="fas fa-key"></i></span>
+      </div>
+      <textarea
+        [formControl]="descriptionInput"
+        [ngClass]="{ 'is-invalid': (submitted || descriptionInput.touched) && descriptionInput.invalid }"
+        type="text"
+        class="form-control"
+        id="description-input"
+        aria-describedby="description-icon"
+        placeholder="description"
+        required
+      ></textarea>
+    </div>
+    <div *ngIf="submitted || descriptionInput.touched">
+      <div *ngIf="descriptionInput.hasError('required')" class="invalid-feedback d-block">
+        Description is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="trade-with-input">Trade with</label>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="trade-with-icon"><i class="fas fa-user"></i></span>
+      </div>
+      <input
+        [formControl]="tradeWithInput"
+        [ngClass]="{ 'is-invalid': (submitted || tradeWithInput.touched) && tradeWithInput.invalid }"
+        type="text"
+        class="form-control"
+        id="trade-with-input"
+        aria-describedby="trade-with-icon"
+        placeholder="Trade with"
+      />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="photo-input">Photo</label>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="photo-icon"><i class="fas fa-user"></i></span>
+      </div>
+      <div class="custom-file">
+        <input
+          [formControl]="photoInput"
+          [ngClass]="{ 'is-invalid': (submitted || photoInput.touched) && photoInput.invalid }"
+          type="file"
+          class="custom-file-input"
+          id="photo-input"
+          accept="image/png, image/jpeg"
+          aria-describedby="photo-icon"
+          placeholder="..."
+        />
+        <label class="custom-file-label" for="photo-input" data-browse="Browse">Choose photo</label>
+      </div>
+    </div>
+    <small id="photo-help" class="form-text text-muted">5 photos maximum</small>
+    <div *ngIf="submitted || photoInput.touched"></div>
+  </div>
+
+  <button  type="submit" class="btn btn-primary">Create</button>
+</form>
