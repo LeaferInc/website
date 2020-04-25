@@ -1,1 +1,5 @@
-<p>event-card works!</p>
+<div *ngIf="event" class="event-card" routerLink="/events/{{event.id}}">
+    <img src="../../../../../assets/images/event-temp.jpg" alt="Squared picture of the Event">
+	<h6>{{event.name}}</h6>
+	<p>{{event.location}}</p>
+</div>

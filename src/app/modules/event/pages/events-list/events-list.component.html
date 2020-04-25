@@ -1,1 +1,7 @@
-<button class="btn-float" routerLink="/events/create">+</button>
+<h1>À venir</h1>
+
+<div class="row" *ngFor="let event of events">
+    <app-event-card class="col-sm-6 col-md-4 col-lg-3" [event]="event"></app-event-card>
+</div>
+
+<button class="btn-float" routerLink="/events/create"><i class="fas fa-plus"></i></button>
