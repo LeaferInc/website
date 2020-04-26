@@ -11,13 +11,8 @@ export class MyCuttingCardComponent implements OnInit {
 
   @Input() cutting: Cutting
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
-
-  onCardClick() {
-    this.router.navigate(['cutting', this.cutting.id]);
-  }
-
 }

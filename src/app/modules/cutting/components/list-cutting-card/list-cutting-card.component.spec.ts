@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListCuttingCardComponent } from './list-cutting-card.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Cutting } from 'src/app/shared/models/cutting/cutting';
 
 describe('ListCuttingCardComponent', () => {
   let component: ListCuttingCardComponent;
@@ -8,6 +10,7 @@ describe('ListCuttingCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ RouterTestingModule ],
       declarations: [ ListCuttingCardComponent ]
     })
     .compileComponents();
@@ -16,6 +19,13 @@ describe('ListCuttingCardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ListCuttingCardComponent);
     component = fixture.componentInstance;
+    
+    const cutting = new Cutting();
+    cutting.id = 0;
+    cutting.name = 'name';
+    cutting.description = 'description';
+    component.cutting = cutting;
+
     fixture.detectChanges();
   });
 

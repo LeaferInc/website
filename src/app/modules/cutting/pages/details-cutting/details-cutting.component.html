@@ -1,6 +1,6 @@
 <div class="container-fluid" *ngIf="!loading">
-  <div id="details_cutting_header" class="row">
-    <a id="details_cutting_shared_icon" href="">
+  <div id="details-cutting-header" class="row">
+    <a id="details-cutting-shared-icon" routerLink="">
       <i class="fas fa-lg fa-share-alt"></i>
     </a>
     <img src="/assets/photo_test.jpg" class="rounded w-100" style="height: 450px; object-fit: cover;">
@@ -15,7 +15,13 @@
     <h6>A échanger contre : {{ cutting.tradeWith }}</h6>
   </div>
   <div class="row mt-2">
-    <button type="button" class="btn btn-primary btn-lg btn-block">Modifier</button>
-    <button type="button" class="btn btn-secondary btn-lg btn-block">Supprimer</button>
+    <ng-container *ngIf="cutting.ownerId === currentUser.id; else notOwner">
+      <button (click)="onEdit()" type="button" class="btn btn-primary btn-lg btn-block">Modifier</button>
+      <button (click)="onDelete()" type="button" class="btn btn-secondary btn-lg btn-block">Supprimer</button>
+    </ng-container>
+    <ng-template #notOwner>
+      <button (click)="onOffer()" type="button" class="btn btn-primary btn-lg btn-block"><i class="fas fa-lg fa-handshake mr-3"></i> Proposer un échange</button>
+      <button (click)="onSendMessage()" type="button" class="btn btn-secondary btn-lg btn-block"><i class="fas fa-lg fa-comment mr-3"></i> Envoyer un message</button>
+    </ng-template>
   </div>
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Cutting } from 'src/app/shared/models/cutting/cutting';
 import { CuttingService } from 'src/app/core/services/cutting/cutting.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-list-cutting',
@@ -12,16 +13,29 @@ export class ListCuttingComponent implements OnInit {
   public cuttings: Array<Cutting> = [];
   public loading: boolean = true;
 
+  public searchInput = new FormControl('');
+  public searchForm = new FormGroup({});
+
   constructor(private cuttingService: CuttingService) { }
 
   ngOnInit(): void {
     this.loading = true;
     this.cuttingService
-      .findAll()
+      .findAllExchange()
       .subscribe((cuttings: Array<Cutting>) => {
         this.cuttings = cuttings;
         this.loading = false;
       });
+  }
+
+  onSearch() {
+
+    if(this.searchForm.invalid) {
+      return;
+    }
+
+    alert(this.searchInput.value);
+
   }
 
 }

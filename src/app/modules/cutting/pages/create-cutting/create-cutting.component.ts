@@ -8,7 +8,7 @@ import { Cutting } from 'src/app/shared/models/cutting/cutting';
   templateUrl: './create-cutting.component.html',
   styleUrls: ['./create-cutting.component.scss']
 })
-export class CreateCuttingComponent implements OnInit {
+export class CreateCuttingComponent {
 
   public nameInput = new FormControl('', Validators.required);
   public descriptionInput = new FormControl('', Validators.required);
@@ -26,9 +26,6 @@ export class CreateCuttingComponent implements OnInit {
 
   constructor(private cuttingService: CuttingService) { }
 
-  ngOnInit(): void {
-  }
-
   onSubmit() {
 
     this.submitted = true;
@@ -40,7 +37,7 @@ export class CreateCuttingComponent implements OnInit {
     const cutting: Cutting = new Cutting()
     cutting.name = this.nameInput.value,
     cutting.description = this.descriptionInput.value,
-    // cutting.tradeWith = this.tradeWithInput.value
+    cutting.tradeWith = this.tradeWithInput.value
 
     this.cuttingService.create(cutting)
       .subscribe(

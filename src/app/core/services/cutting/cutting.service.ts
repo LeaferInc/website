@@ -24,7 +24,7 @@ export class CuttingService {
     return this.http.get<Cutting>(`${CuttingService.USER_URL}/${id}`);
   }
 
-  findAll(): Observable<Cutting[]> {
-    return this.http.get<Cutting[]>(`${CuttingService.USER_URL}`);
+  findAllExchange(): Observable<Cutting[]> {
+    return this.http.get<Cutting[]>(`${CuttingService.USER_URL}/exchange`);
   }
 }
