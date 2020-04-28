@@ -26,7 +26,7 @@ describe('EventCardComponent', () => {
   });
 
   it('should create', () => {
-    component.event = new Event("Test name 1", "Test description 1.", "23 Test street", new Date(), new Date(), 0, 10, 43.656653, 4.21212, 1);
+    component.event = new Event("Test name 1", "Test description 1.", "23 Test street", new Date(), new Date(), 0, 10, 43.656653, 4.21212, false, 1);
     expect(component).toBeTruthy();
   });
 });

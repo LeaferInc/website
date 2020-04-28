@@ -10,6 +10,7 @@ export class Event {
         public maxPeople: number,
         public latitude: number,
         public longitude: number,
+        public joined: boolean = false,
         public id?: number,
         public organizer?: User) { }
 }

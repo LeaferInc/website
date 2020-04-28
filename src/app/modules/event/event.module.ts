@@ -15,17 +15,19 @@ import { EventsListComponent } from './pages/events-list/events-list.component';
 
 import { EventService } from 'src/app/core/services/event/event.service';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
+import { EntryService } from 'src/app/core/services/entry/entry.service';
 
 @NgModule({
   declarations: [EventFormComponent, CreateEventComponent, EventInfosComponent, EventCardComponent, EventsListComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    EventRoutingModule
+    EventRoutingModule,
   ],
   providers: [
     EventService,
-    UtilsService
+    EntryService,
+    UtilsService,
   ]
 })
 export class EventModule { }

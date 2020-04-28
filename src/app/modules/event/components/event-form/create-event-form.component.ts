@@ -7,6 +7,7 @@ import { EventService } from 'src/app/core/services/event/event.service';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { Event } from 'src/app/shared/models/event/event.model';
 import { Location } from 'src/app/shared/models/location/location.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-create-event-form',
@@ -34,7 +35,7 @@ export class EventFormComponent implements OnInit {
         startDate.setMinutes(0);
 
         // Default end date is `startDate` plus 4 hours
-        const endDate: Date = new Date(startDate)
+        const endDate: Date = new Date(startDate);
         endDate.setHours(startDate.getHours() + 4);
 
         // Form initialization
@@ -72,7 +73,7 @@ export class EventFormComponent implements OnInit {
                             this.locationChoosed = null;
                         }
                     },
-                    (err: Error) => {
+                    (err: HttpErrorResponse) => {
                         console.log(err);
                     }
                 );
@@ -94,7 +95,7 @@ export class EventFormComponent implements OnInit {
     }
 
     /**
-     * Submit the form to the server to add an {@link Event}
+     * Submit the form to the server to add an Event
      */
     submit(): void {
         // Display validation
@@ -111,7 +112,7 @@ export class EventFormComponent implements OnInit {
                 (event: Event) => {
                     this.created.emit(event);
                 },
-                (err: Error) => {
+                (err: HttpErrorResponse) => {
                     console.log(err);
                 }
             );

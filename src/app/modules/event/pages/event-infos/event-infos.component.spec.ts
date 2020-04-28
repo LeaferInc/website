@@ -3,9 +3,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EventInfosComponent } from './event-infos.component';
 import { EventService } from 'src/app/core/services/event/event.service';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { EntryService } from 'src/app/core/services/entry/entry.service';
 
 describe('EventInfosComponent', () => {
   let component: EventInfosComponent;
@@ -18,6 +19,11 @@ describe('EventInfosComponent', () => {
       declarations: [EventInfosComponent],
       providers: [
         EventService,
+        EntryService,
+        {
+          provide: Router,
+          useValue: { navigate: jest.fn() }
+        },
         { provide: ActivatedRoute, useValue: { params: of(params) } }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]

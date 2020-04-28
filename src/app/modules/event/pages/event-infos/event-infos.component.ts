@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { EventService } from 'src/app/core/services/event/event.service';
 import { Event } from 'src/app/shared/models/event/event.model';
+import { HttpErrorResponse } from '@angular/common/http';
+import { EntryService } from 'src/app/core/services/entry/entry.service';
 
 
 @Component({
@@ -11,9 +13,10 @@ import { Event } from 'src/app/shared/models/event/event.model';
 })
 export class EventInfosComponent implements OnInit {
   event: Event;
-  participating: boolean = null;
+  querying: boolean = false; // True if waiting for a server response
 
-  constructor(private route: ActivatedRoute, private eventService: EventService) { }
+  constructor(private route: ActivatedRoute, private router: Router,
+    private eventService: EventService, private entryService: EntryService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
@@ -23,23 +26,36 @@ export class EventInfosComponent implements OnInit {
             console.log(event);
             this.event = event;
           },
-          (e: Error) => {
-            console.log(e);
-          }
-        );
+          (err: HttpErrorResponse) => {
+            if (err.status === 404) {
+              this.router.navigate(['/404']);
+            }
+          });
       } else {
-        // TODO: redirect 404
+        this.router.navigate(['/404']);
       }
     });
-
-    // TODO: get Entry State
   }
 
   participate(): void {
-    // TODO: Add Entry
+    this.querying = true;
+    this.entryService.joinEvent(this.event.id).subscribe(
+      () => this.event.joined = true,
+      (err: HttpErrorResponse) => {
+        console.log(err);
+      },
+      () => this.querying = false
+    );
   }
 
   leave(): void {
-    // TODO: remove entry
+    this.querying = true;
+    this.entryService.unjoinEvent(this.event.id).subscribe(
+      () => this.event.joined = false,
+      (err: HttpErrorResponse) => {
+        console.log(err);
+      },
+      () => this.querying = false
+    );
   }
 }

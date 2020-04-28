@@ -14,7 +14,7 @@ describe('EventService', () => {
 
   let events: Event[] = [
     new Event("Test name 1", "Test description 1.", 
-    "23 Test street", new Date(), new Date(), 0, 10, 43.656653, 4.21212),
+    "23 Test street", new Date(), new Date(), 0, 10, 43.656653, 4.21212, true),
     new Event("Test name 2", "Test description 2", 
     "2nd Street Test", new Date(), new Date(), 0, 200, 12.6653, 35.76687)]
 
@@ -29,7 +29,6 @@ describe('EventService', () => {
 
   it('should be created', () => {
     expect(service).toBeTruthy();
-    // expect(EventService.BASE_URL).toBe(DataService.SERVER_URL + "events/");
   });
 
   it('should return 2 events', async () => {
