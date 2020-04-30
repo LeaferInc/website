@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CuttingService } from 'src/app/core/services/cutting/cutting.service';
 import { Cutting } from 'src/app/shared/models/cutting/cutting';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-cutting',
@@ -24,7 +25,7 @@ export class CreateCuttingComponent {
 
   public submitted: boolean = false;
 
-  constructor(private cuttingService: CuttingService) { }
+  constructor(private router: Router, private cuttingService: CuttingService) { }
 
   onSubmit() {
 
@@ -41,7 +42,7 @@ export class CreateCuttingComponent {
 
     this.cuttingService.create(cutting)
       .subscribe(
-        (res: Cutting) => console.log(res),
+        (cuttingNewlyCreated: Cutting) => this.router.navigate(['cutting', cuttingNewlyCreated.id]),
         err => console.error(err)
       )
   }

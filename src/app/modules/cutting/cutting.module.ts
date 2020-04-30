@@ -8,14 +8,15 @@ import { ListCuttingComponent } from './pages/list-cutting/list-cutting.componen
 import { ReactiveFormsModule } from '@angular/forms';
 import { MyCuttingCardComponent } from './components/my-cutting-card/my-cutting-card.component';
 import { ListCuttingCardComponent } from './components/list-cutting-card/list-cutting-card.component';
-import { MessagingCuttingComponent } from './pages/messaging-cutting/messaging-cutting.component';
-
 @NgModule({
-  declarations: [CreateCuttingComponent, DetailsCuttingComponent, MyCuttingComponent, ListCuttingComponent, MyCuttingCardComponent, ListCuttingCardComponent, MessagingCuttingComponent],
-  imports: [
-    CommonModule,
-    CuttingRoutingModule,
-    ReactiveFormsModule
-  ]
+  declarations: [
+    CreateCuttingComponent,
+    DetailsCuttingComponent,
+    MyCuttingComponent,
+    ListCuttingComponent,
+    MyCuttingCardComponent,
+    ListCuttingCardComponent
+  ],
+  imports: [CommonModule, CuttingRoutingModule, ReactiveFormsModule],
 })
-export class CuttingModule { }
+export class CuttingModule {}

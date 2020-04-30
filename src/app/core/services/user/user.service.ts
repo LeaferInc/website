@@ -15,4 +15,8 @@ export class UserService {
   create(user: User, password: string): Observable<User> {
     return this.http.post<User>(UserService.USER_URL, {...user, ...{password: password}});
   }
+
+  getTalkTo(): Observable<User[]> {
+    return this.http.get<User[]>(`${UserService.USER_URL}/talkto`);
+  }
 }

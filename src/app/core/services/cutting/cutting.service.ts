@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Cutting } from 'src/app/shared/models/cutting/cutting';
 import { Observable } from 'rxjs';
+import { ResultData } from 'src/app/shared/models/query/query';
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +17,25 @@ export class CuttingService {
     return this.http.post<Cutting>(CuttingService.USER_URL, cutting);
   }
 
-  findAllByUser(): Observable<Array<Cutting>> {
-    return this.http.get<Array<Cutting>>(`${CuttingService.USER_URL}/my`);
+  findAllByUser(skip?: number, take?: number): Observable<ResultData<Cutting>> {
+    return this.http.get<ResultData<Cutting>>(`${CuttingService.USER_URL}/my`, {
+      params: {
+        skip: String(skip),
+        take: String(take)
+      }
+    });
   }
 
   findOne(id: number): Observable<Cutting> {
     return this.http.get<Cutting>(`${CuttingService.USER_URL}/${id}`);
   }
 
-  findAllExchange(): Observable<Cutting[]> {
-    return this.http.get<Cutting[]>(`${CuttingService.USER_URL}/exchange`);
+  findAllExchange(skip?: number, take?: number): Observable<ResultData<Cutting>> {
+    return this.http.get<ResultData<Cutting>>(`${CuttingService.USER_URL}/exchange`, {
+      params: {
+        skip: String(skip),
+        take: String(take)
+      }
+    });
   }
 }

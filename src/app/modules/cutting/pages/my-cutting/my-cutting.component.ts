@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CuttingService } from 'src/app/core/services/cutting/cutting.service';
 import { Cutting } from 'src/app/shared/models/cutting/cutting';
+import { ResultData } from 'src/app/shared/models/query/query';
 
 @Component({
   selector: 'app-my-cutting',
@@ -9,7 +10,10 @@ import { Cutting } from 'src/app/shared/models/cutting/cutting';
 })
 export class MyCuttingComponent implements OnInit {
 
-  public myCuttings: Array<Cutting> = [];
+  public myCuttings: ResultData<Cutting>;
+  // public current_page = 1;
+  // public page_size = 6;
+  // public items_count = 200;
   public loading: boolean = true;
 
   constructor(private cuttingService: CuttingService) { }
@@ -17,9 +21,10 @@ export class MyCuttingComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
     this.cuttingService
-      .findAllByUser()
-      .subscribe((cuttings: Array<Cutting>) => {
+      .findAllByUser(/*this.current_page - 1, this.page_size*/)
+      .subscribe((cuttings: ResultData<Cutting>) => {
         this.myCuttings = cuttings;
+
         this.loading = false;
       });
   }
