@@ -42,6 +42,9 @@ export class EventInfosComponent implements OnInit {
     this.entryService.joinEvent(this.event.id).subscribe(
       () => this.event.joined = true,
       (err: HttpErrorResponse) => {
+        if (err.status === 403) {
+          alert('Aucune place disponible!');
+        }
         console.log(err);
       },
       () => this.querying = false

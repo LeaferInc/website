@@ -3,11 +3,13 @@ import { EventService } from '../../core/services/event/event.service';
 import { of, Observable } from 'rxjs';
 
 export class MockEventService extends EventService {
-  events: Event[] = [
+  public static events: Event[] = [
     new Event("Test name 1", "Test description 1.",
-      "23 Test street", new Date(), new Date(), 0, 10, 43.656653, 4.21212, false, 1)];
+      "23 Test street", new Date(2020, 10, 10, 15), new Date(2020, 10,10, 20), 0, 10, 43.656653, 4.21212, false, 1),
+      new Event("Test name 2", "Test description 2",
+      "19 of another street", new Date(2020, 5, 3, 23), new Date(2020, 5, 4, 4), 0, 10, 45.43, 2.12, true, 2)];
 
   getEvents(): Observable<Event[]> {
-    return of(this.events);
+    return of(MockEventService.events);
   }
 }

@@ -7,6 +7,8 @@ import { EventCardComponent } from '../../components/event-card/event-card.compo
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { EventPipe } from 'src/app/shared/pipes/event.pipe';
+import { FormsModule } from '@angular/forms';
 
 describe('EventsListComponent', () => {
   let component: EventsListComponent;
@@ -14,8 +16,12 @@ describe('EventsListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule,RouterTestingModule],
-      declarations: [EventsListComponent, EventCardComponent],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+        FormsModule
+      ],
+      declarations: [EventsListComponent, EventCardComponent, EventPipe],
       providers: [
         {
           provide: EventService,

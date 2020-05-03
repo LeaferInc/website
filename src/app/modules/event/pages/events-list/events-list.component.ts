@@ -10,6 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class EventsListComponent implements OnInit {
   events: Array<Event> = [];
+  filter: string; // Research filter
 
   constructor(private eventService: EventService) { }
 
