@@ -21,12 +21,25 @@ export class EventService {
   }
 
   /**
+   * Get incoming events
+   */
+  getIncomingEvents(): Observable<Event[]> {
+    return this.http.get<Event[]>(EventService.BASE_URL + "incoming");
+  }
+
+  /**
+   * Get joined events
+   */
+  getJoinedEvents(): Observable<Event[]> {
+    return this.http.get<Event[]>(EventService.BASE_URL + "joined");
+  }
+
+  /**
    * Get a single Event from the server by its id
    */
   getEvent(id: number): Observable<Event> {
     return this.http.get<Event>(EventService.BASE_URL + id);
   }
-
 
   /**
    * Post an event to the server to save it
