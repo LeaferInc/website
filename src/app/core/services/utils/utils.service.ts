@@ -22,7 +22,7 @@ export class UtilsService {
    */
   getLocations(address: string): Observable<Location[]> {
     return this.httpClient.get('location?address='.concat(address))
-      .pipe(map((res: Response) => 
+      .pipe(map((res: Response) =>
         res["features"].map((item) => Location.mapFromJson(item))));
   }
 

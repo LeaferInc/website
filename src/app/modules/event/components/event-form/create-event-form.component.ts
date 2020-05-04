@@ -8,6 +8,7 @@ import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { Event } from 'src/app/shared/models/event/event.model';
 import { Location } from 'src/app/shared/models/location/location.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-create-event-form',
@@ -24,9 +25,7 @@ export class EventFormComponent implements OnInit {
     minDate: Date = new Date(); // Minimum choosable Date
     showDropdown: boolean = false; // True when the dropdown should be shown
 
-    @Output() created = new EventEmitter<Event>();
-
-    constructor(private eventService: EventService, private utilsService: UtilsService) { }
+    constructor(private eventService: EventService, private utilsService: UtilsService, private router: Router) { }
 
     ngOnInit(): void {
         // Default start date is next day
@@ -43,13 +42,16 @@ export class EventFormComponent implements OnInit {
             name: new FormControl('Un nom au hasard', [Validators.required]),
             description: new FormControl('Un évènement comme un autre, il faut meubler pour remplir la textarea.', [Validators.required]),
             location: new FormControl('23, Rue de la Marquise', [Validators.required]),
-            latitude: new FormControl(),
-            longitude: new FormControl(),
+            latitude: new FormControl('', [Validators.required]),
+            longitude: new FormControl('', [Validators.required]),
             startDate: new FormControl(UtilsService.dateToJSONLocal(startDate).slice(0, 16), [Validators.required]),
             endDate: new FormControl(UtilsService.dateToJSONLocal(endDate).slice(0, 16), [Validators.required]),
             price: new FormControl(0, [Validators.required, Validators.min(0)]),
             maxPeople: new FormControl(10, [Validators.required, Validators.min(1)]),
         });
+
+        console.log(this.eventForm.get('startDate').value);
+        console.log(typeof this.eventForm.get('startDate').value);
     }
 
     /**
@@ -95,7 +97,8 @@ export class EventFormComponent implements OnInit {
     }
 
     /**
-     * Submit the form to the server to add an Event
+     * Submit the form to the server to add an Event.
+     * Checks the anteriority of the start Date over the end Date
      */
     submit(): void {
         // Display validation
@@ -103,18 +106,21 @@ export class EventFormComponent implements OnInit {
             this.eventForm.get(key).markAsDirty();
         });
 
+        const startBeforeEnd: boolean = this.eventForm.get('startDate').value < this.eventForm.get('endDate').value;
+
         // Create form
-        if (this.eventForm.valid) {
+        if (startBeforeEnd && this.eventForm.valid && this.locationChoosed) {
             this.sending = true;
 
             const event: Event = this.eventForm.value;
             this.eventService.addEvent(event).subscribe(
                 (event: Event) => {
-                    this.created.emit(event);
+                    this.router.navigate(['/events/' + event.id]);
                 },
                 (err: HttpErrorResponse) => {
                     console.log(err);
-                }
+                },
+                () => this.sending = false
             );
         }
     }

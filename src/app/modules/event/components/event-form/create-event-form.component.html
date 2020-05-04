@@ -37,8 +37,8 @@
 	<div class="form-group row">
 		<label class="col-form-label col-sm-2 offset-md-1 offset-lg-2" for="endDate">Date fin</label>
 		<div class="col-sm-10 col-md-6 col-lg-4 col-xl-3">
-			<input type="datetime-local" class="form-control" name="endDate" formControlName="endDate" placeholder="jj-mm-aaaa hh:mm" [min]="minDate.toJSON().slice(0, 16)" [ngClass]="{'is-valid': eventForm.get('endDate').valid && eventForm.get('endDate').dirty,
-			 'is-invalid': eventForm.get('endDate').invalid && eventForm.get('endDate').dirty }" />
+			<input type="datetime-local" class="form-control" name="endDate" formControlName="endDate" placeholder="jj-mm-aaaa hh:mm" [min]="eventForm.get('startDate').value" [ngClass]="{'is-valid': eventForm.get('endDate').valid && eventForm.get('endDate').dirty && eventForm.get('startDate').value <= eventForm.get('endDate').value,
+			 'is-invalid': (eventForm.get('endDate').invalid && eventForm.get('endDate').dirty) || eventForm.get('startDate').value >= eventForm.get('endDate').value}" />
 		</div>
 	</div>
 	<div class="form-group row">
@@ -55,5 +55,5 @@
 			 'is-invalid': eventForm.get('maxPeople').invalid && eventForm.get('maxPeople').dirty }" />
 		</div>
 	</div>
-	<button class="btn btn-primary order-3 offset-md-3 offset-lg-4" [disabled]="eventForm.invalid || sending">Ajouter</button>
+	<button class="btn btn-primary order-3 offset-md-3 offset-lg-4" [disabled]="sending">Ajouter</button>
 </form>

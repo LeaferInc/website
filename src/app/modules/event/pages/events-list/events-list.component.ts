@@ -9,8 +9,10 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./events-list.component.scss']
 })
 export class EventsListComponent implements OnInit {
-  events: Array<Event> = [];
-  filter: string; // Research filter
+  incomingEvents: Array<Event> = []; // List of incoming events
+  enteredEvents: Array<Event> = []; // List of entered events
+  interestedEvent: Array<Event> = []; // List of favorited events
+  filter: string; // Event filter
 
   constructor(private eventService: EventService) { }
 
@@ -18,10 +20,11 @@ export class EventsListComponent implements OnInit {
    * Load the list of Events to be displayed.
    */
   ngOnInit(): void {
-    console.log("on Init");
     this.eventService.getEvents().subscribe(
       (events: Event[]) => {
-        this.events = events;
+        this.enteredEvents = events;
+        this.incomingEvents = events;
+        this.interestedEvent = events;
         console.log(events);
       },
       (err: HttpErrorResponse) => {

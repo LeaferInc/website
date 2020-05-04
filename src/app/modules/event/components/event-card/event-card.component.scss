@@ -1,6 +1,5 @@
 .event-card {
-    width: 180px;
-    border: 1px solid black;
+    width: 170px;
     padding: 5px;
     cursor: pointer;
 }
@@ -9,5 +8,6 @@
     object-fit: none; /* Do not scale the image */
     object-position: center; /* Center the image within the element */  
     width: 100%;
-    height: 180px;
+    height: 170px;
+    border-radius: 1em;
 }
