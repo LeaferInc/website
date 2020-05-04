@@ -1,56 +1,54 @@
-<div class="container">
-  <h1 class="d-flex justify-content-center">Login</h1>
+<h1 class="d-flex justify-content-center">Login</h1>
 
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="username-input">Username</label>
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="username-icon"><i class="fas fa-user"></i></span>
-        </div>
-        <input
-          [formControl]="usernameInput"
-          [ngClass]="{ 'is-invalid': (submitted || usernameInput.touched) && usernameInput.invalid }"
-          type="text"
-          class="form-control"
-          id="username-input"
-          aria-describedby="username-icon"
-          placeholder="username"
-          required
-        />
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="username-input">Username</label>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="username-icon"><i class="fas fa-user"></i></span>
       </div>
-      <div *ngIf="submitted || usernameInput.touched">
-        <div *ngIf="usernameInput.hasError('required')" class="invalid-feedback d-block">
-          Username is required
-        </div>
+      <input
+        [formControl]="usernameInput"
+        [ngClass]="{ 'is-invalid': (submitted || usernameInput.touched) && usernameInput.invalid }"
+        type="text"
+        class="form-control"
+        id="username-input"
+        aria-describedby="username-icon"
+        placeholder="username"
+        required
+      />
+    </div>
+    <div *ngIf="submitted || usernameInput.touched">
+      <div *ngIf="usernameInput.hasError('required')" class="invalid-feedback d-block">
+        Username is required
       </div>
     </div>
+  </div>
 
-    <div class="form-group">
-      <label for="password-input">Password</label>
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="password-icon"><i class="fas fa-key"></i></span>
-        </div>
-        <input
-          [formControl]="passwordInput"
-          [ngClass]="{ 'is-invalid': (submitted || passwordInput.touched) && passwordInput.invalid }"
-          type="password"
-          class="form-control"
-          id="password-input"
-          aria-describedby="password-icon"
-          placeholder="password"
-          autocomplete="on"
-          required
-        />
+  <div class="form-group">
+    <label for="password-input">Password</label>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="password-icon"><i class="fas fa-key"></i></span>
       </div>
-      <div *ngIf="submitted || passwordInput.touched">
-        <div *ngIf="passwordInput.hasError('required')" class="invalid-feedback d-block">
-          Password is required
-        </div>
+      <input
+        [formControl]="passwordInput"
+        [ngClass]="{ 'is-invalid': (submitted || passwordInput.touched) && passwordInput.invalid }"
+        type="password"
+        class="form-control"
+        id="password-input"
+        aria-describedby="password-icon"
+        placeholder="password"
+        autocomplete="on"
+        required
+      />
+    </div>
+    <div *ngIf="submitted || passwordInput.touched">
+      <div *ngIf="passwordInput.hasError('required')" class="invalid-feedback d-block">
+        Password is required
       </div>
     </div>
+  </div>
 
-    <button type="submit" class="btn btn-primary">Login</button>
-  </form>
-</div>
+  <button type="submit" class="btn btn-primary">Login</button>
+</form>

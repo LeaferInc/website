@@ -38,4 +38,12 @@ export class CuttingService {
       }
     });
   }
+
+  edit(cutting: Cutting): Observable<Cutting> {
+    return this.http.put<Cutting>(CuttingService.USER_URL, cutting);
+  }
+
+  delete(id: number): Observable<unknown> {
+    return this.http.delete(`${CuttingService.USER_URL}/${id}`);
+  }
 }

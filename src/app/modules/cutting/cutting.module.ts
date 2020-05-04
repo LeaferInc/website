@@ -15,7 +15,7 @@ import { ListCuttingCardComponent } from './components/list-cutting-card/list-cu
     MyCuttingComponent,
     ListCuttingComponent,
     MyCuttingCardComponent,
-    ListCuttingCardComponent
+    ListCuttingCardComponent,
   ],
   imports: [CommonModule, CuttingRoutingModule, ReactiveFormsModule],
 })

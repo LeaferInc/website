@@ -16,9 +16,9 @@ export class MessageService {
     return this.http.post<Message>(MessageService.MESSAGE_URL, message);
   }
 
-  findConversation(receiverId: number): Observable<Message[]> {
+  findConversation(roomId: number): Observable<Message[]> {
     return this.http.get<Message[]>(`${MessageService.MESSAGE_URL}/conversation`, {
-      params: { receiverId: String(receiverId) }
+      params: { roomId: String(roomId) }
     });
   }
 } 

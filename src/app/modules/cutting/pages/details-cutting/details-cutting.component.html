@@ -1,26 +1,108 @@
-<div class="container" *ngIf="!loading">
+<ng-container *ngIf="!loading">
   <div id="details-cutting-header" class="row">
     <a id="details-cutting-shared-icon" routerLink="">
       <i class="fas fa-lg fa-share-alt"></i>
     </a>
     <img src="/assets/photo_test.jpg" class="rounded w-100" style="height: 450px; object-fit: cover;" />
   </div>
-  <div class="row mt-3">
-    <h2>{{ cutting.name }}</h2>
-  </div>
-  <div class="row">
-    <p>{{ cutting.description }}</p>
-  </div>
-  <div class="row" *ngIf="cutting.tradeWith">
-    <h6>A échanger contre : {{ cutting.tradeWith }}</h6>
-  </div>
+
+  <!-- TODO: Refactor => create and update are the same -->
+  <ng-container *ngIf="isOnEditMode; else displayInformation">
+    <form [formGroup]="updateCuttingForm" class="my-4">
+      <div class="form-group">
+        <label for="cutting-name-input">Cutting name*</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="cutting-name-icon"><i class="fas fa-user"></i></span>
+          </div>
+          <input
+            [formControl]="nameInput"
+            [ngClass]="{ 'is-invalid': (submitted || nameInput.touched) && nameInput.invalid }"
+            type="text"
+            class="form-control"
+            id="cutting-name-input"
+            aria-describedby="cutting-name-icon"
+            placeholder="Name"
+            required
+          />
+        </div>
+        <div *ngIf="submitted || nameInput.touched">
+          <div *ngIf="nameInput.hasError('required')" class="invalid-feedback d-block">
+            Name is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description-input">Description*</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="description-icon"><i class="fas fa-key"></i></span>
+          </div>
+          <textarea
+            [formControl]="descriptionInput"
+            [ngClass]="{ 'is-invalid': (submitted || descriptionInput.touched) && descriptionInput.invalid }"
+            type="text"
+            class="form-control"
+            id="description-input"
+            aria-describedby="description-icon"
+            placeholder="description"
+            required
+          ></textarea>
+        </div>
+        <div *ngIf="submitted || descriptionInput.touched">
+          <div *ngIf="descriptionInput.hasError('required')" class="invalid-feedback d-block">
+            Description is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="trade-with-input">Trade with</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="trade-with-icon"><i class="fas fa-user"></i></span>
+          </div>
+          <input
+            [formControl]="tradeWithInput"
+            [ngClass]="{ 'is-invalid': (submitted || tradeWithInput.touched) && tradeWithInput.invalid }"
+            type="text"
+            class="form-control"
+            id="trade-with-input"
+            aria-describedby="trade-with-icon"
+            placeholder="Trade with"
+          />
+        </div>
+      </div>
+    </form>
+  </ng-container>
+
+  <ng-template #displayInformation>
+    <div class="row mt-3">
+      <h2>{{ cutting.name }}</h2>
+    </div>
+    <div class="row">
+      <p>{{ cutting.description }}</p>
+    </div>
+    <div class="row" *ngIf="cutting.tradeWith">
+      <h6>A échanger contre : {{ cutting.tradeWith }}</h6>
+    </div>
+  </ng-template>
+
   <div class="row mt-2">
     <ng-container *ngIf="cutting.ownerId === currentUser.id; else notOwner">
-      <button (click)="onEdit()" type="button" class="btn btn-primary btn-lg btn-block">Modifier</button>
-      <button (click)="onDelete()" type="button" class="btn btn-secondary btn-lg btn-block">Supprimer</button>
+      <ng-container *ngIf="isOnEditMode; else notEditMode">
+        <button (click)="onConfirmEdit()" type="button" class="btn btn-primary btn-lg btn-block">Valider</button>
+        <button (click)="onCancelEdit()" type="button" class="btn btn-secondary btn-lg btn-block">Annuler</button>
+      </ng-container>
+
+      <ng-template #notEditMode>
+        <button (click)="onEdit()" type="button" class="btn btn-primary btn-lg btn-block">Modifier</button>
+        <button (click)="onDelete()" type="button" class="btn btn-secondary btn-lg btn-block">Supprimer</button>
+      </ng-template>
     </ng-container>
     <ng-template #notOwner>
-      <button (click)="onOffer()" type="button" class="btn btn-primary btn-lg btn-block">
+      <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#offerModal">
         <i class="fas fa-lg fa-handshake mr-3"></i> Proposer un échange
       </button>
       <button (click)="onSendMessage()" type="button" class="btn btn-secondary btn-lg btn-block">
@@ -28,4 +110,34 @@
       </button>
     </ng-template>
   </div>
-</div>
+
+  <div class="modal fade" id="offerModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Message</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="offerForm">
+            <div class="form-group">
+              <label for="messageFormControlTextarea">Message</label>
+              <textarea
+                [formControl]="offerInput"
+                class="form-control"
+                id="messageFormControlTextarea"
+                rows="3"
+              ></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="onOffer()">Envoyer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

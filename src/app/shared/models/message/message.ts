@@ -1,8 +1,9 @@
 import { User } from '../user/user';
+import { Room } from '../room/room';
 
 export class CreateMessage {
   message_content: string;
-  receiverId: number;
+  roomId: number;
 }
 
 export class Message {
@@ -10,6 +11,6 @@ export class Message {
   createdAt: Date;
   enabled;
   message_content: string;
-  sender: User;
-  receiver: User;
+  room: Room;
+  user: User;
 }

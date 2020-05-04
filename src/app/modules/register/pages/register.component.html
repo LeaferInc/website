@@ -1,165 +1,164 @@
-<div class="container">
-  <h1 class="d-flex justify-content-center">Register</h1>
+<h1 class="d-flex justify-content-center">Register</h1>
 
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <div class="form-row">
-      <div class="col-6">
-        <div class="form-group">
-          <label for="username-input">Username *</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="username-icon"><i class="fas fa-user"></i></span>
-            </div>
-            <input
-              [formControl]="usernameInput"
-              [ngClass]="{ 'is-invalid': (submitted || usernameInput.touched) && usernameInput.invalid }"
-              type="text"
-              class="form-control"
-              id="username-input"
-              aria-describedby="username-icon"
-              placeholder="username"
-              required
-            />
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div class="form-row">
+    <div class="col-6">
+      <div class="form-group">
+        <label for="username-input">Username *</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="username-icon"><i class="fas fa-user"></i></span>
           </div>
-          <div *ngIf="submitted || usernameInput.touched">
-            <div *ngIf="usernameInput.hasError('required')" class="invalid-feedback d-block">
-              Username is required
-            </div>
+          <input
+            [formControl]="usernameInput"
+            [ngClass]="{ 'is-invalid': (submitted || usernameInput.touched) && usernameInput.invalid }"
+            type="text"
+            class="form-control"
+            id="username-input"
+            aria-describedby="username-icon"
+            placeholder="username"
+            required
+          />
+        </div>
+        <div *ngIf="submitted || usernameInput.touched">
+          <div *ngIf="usernameInput.hasError('required')" class="invalid-feedback d-block">
+            Username is required
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="col-6">
-        <div class="form-group">
-          <label for="email-input">Email address *</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="email-icon"><i class="fas fa-user"></i></span>
-            </div>
-            <input
-              [formControl]="emailInput"
-              [ngClass]="{ 'is-invalid': (submitted || emailInput.touched) && emailInput.invalid }"
-              type="email"
-              class="form-control"
-              id="email-input"
-              aria-describedby="email-icon"
-              placeholder="email"
-              required
-            />
+    <div class="col-6">
+      <div class="form-group">
+        <label for="email-input">Email address *</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="email-icon"><i class="fas fa-user"></i></span>
           </div>
-          <div *ngIf="submitted || emailInput.touched">
-            <div *ngIf="emailInput.hasError('required')" class="invalid-feedback d-block">
-              Email is required
-            </div>
-            <div *ngIf="emailInput.hasError('email')" class="invalid-feedback d-block">
-              Please enter a valid email
-            </div>
+          <input
+            [formControl]="emailInput"
+            [ngClass]="{ 'is-invalid': (submitted || emailInput.touched) && emailInput.invalid }"
+            type="email"
+            class="form-control"
+            id="email-input"
+            aria-describedby="email-icon"
+            placeholder="email"
+            required
+          />
+        </div>
+        <div *ngIf="submitted || emailInput.touched">
+          <div *ngIf="emailInput.hasError('required')" class="invalid-feedback d-block">
+            Email is required
+          </div>
+          <div *ngIf="emailInput.hasError('email')" class="invalid-feedback d-block">
+            Please enter a valid email
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="col-6">
-        <div class="form-group">
-          <label for="password-input">Password *</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="password-icon"><i class="fas fa-user"></i></span>
-            </div>
-            <input
-              [formControl]="passwordInput"
-              [ngClass]="{ 'is-invalid': (submitted || passwordInput.touched) && passwordInput.invalid }"
-              type="password"
-              class="form-control"
-              id="password-input"
-              aria-describedby="password-icon"
-              placeholder="password"
-              autocomplete="on"
-              required
-            />
+    <div class="col-6">
+      <div class="form-group">
+        <label for="password-input">Password *</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="password-icon"><i class="fas fa-user"></i></span>
           </div>
-          <div *ngIf="submitted || passwordInput.touched">
-            <div *ngIf="passwordInput.hasError('required')" class="invalid-feedback d-block">
-              Password is required
-            </div>
+          <input
+            [formControl]="passwordInput"
+            [ngClass]="{ 'is-invalid': (submitted || passwordInput.touched) && passwordInput.invalid }"
+            type="password"
+            class="form-control"
+            id="password-input"
+            aria-describedby="password-icon"
+            placeholder="password"
+            autocomplete="on"
+            required
+          />
+        </div>
+        <div *ngIf="submitted || passwordInput.touched">
+          <div *ngIf="passwordInput.hasError('required')" class="invalid-feedback d-block">
+            Password is required
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="col-6">
-        <div class="form-group">
-          <label for="password-confirm-input">Confirm password *</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="password-confirm-icon"><i class="fas fa-user"></i></span>
-            </div>
-            <input
-              [formControl]="passwordConfirmInput"
-              [ngClass]="{
-                'is-invalid': (submitted || passwordConfirmInput.touched) && passwordConfirmInput.invalid
-              }"
-              type="password"
-              class="form-control"
-              id="password-confirm-input"
-              aria-describedby="password-confirm-icon"
-              placeholder="confirm password"
-              autocomplete="on"
-              required
-            />
+    <div class="col-6">
+      <div class="form-group">
+        <label for="password-confirm-input">Confirm password *</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="password-confirm-icon"><i class="fas fa-user"></i></span>
           </div>
-          <div *ngIf="submitted || passwordConfirmInput.touched">
-            <div *ngIf="passwordConfirmInput.hasError('required')" class="invalid-feedback d-block">
-              Confirm password is required
-            </div>
-            <div *ngIf="registerForm.hasError('missmatch')" class="invalid-feedback d-block">
-              Password doesn't match
-            </div>
+          <input
+            [formControl]="passwordConfirmInput"
+            [ngClass]="{
+              'is-invalid': (submitted || passwordConfirmInput.touched) && passwordConfirmInput.invalid
+            }"
+            type="password"
+            class="form-control"
+            id="password-confirm-input"
+            aria-describedby="password-confirm-icon"
+            placeholder="confirm password"
+            autocomplete="on"
+            required
+          />
+        </div>
+        <div *ngIf="submitted || passwordConfirmInput.touched">
+          <div *ngIf="passwordConfirmInput.hasError('required')" class="invalid-feedback d-block">
+            Confirm password is required
+          </div>
+          <div *ngIf="registerForm.hasError('missmatch')" class="invalid-feedback d-block">
+            Password doesn't match
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="col-6">
-        <div class="form-group">
-          <label for="firstname-input">Firstname</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="firstname-icon"><i class="fas fa-user"></i></span>
-            </div>
-            <input
-              [formControl]="firstnameInput"
-              [ngClass]="{ 'is-invalid': (submitted || firstnameInput.touched) && firstnameInput.invalid }"
-              type="text"
-              class="form-control"
-              id="firstname-input"
-              aria-describedby="firstname-icon"
-              placeholder="firstname"
-            />
+    <div class="col-6">
+      <div class="form-group">
+        <label for="firstname-input">Firstname</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="firstname-icon"><i class="fas fa-user"></i></span>
           </div>
-          <div *ngIf="submitted || firstnameInput.touched"></div>
+          <input
+            [formControl]="firstnameInput"
+            [ngClass]="{ 'is-invalid': (submitted || firstnameInput.touched) && firstnameInput.invalid }"
+            type="text"
+            class="form-control"
+            id="firstname-input"
+            aria-describedby="firstname-icon"
+            placeholder="firstname"
+          />
         </div>
+        <div *ngIf="submitted || firstnameInput.touched"></div>
       </div>
+    </div>
 
-      <div class="col-6">
-        <div class="form-group">
-          <label for="lastname-input">Lastname</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="lastname-icon"><i class="fas fa-user"></i></span>
-            </div>
-            <input
-              [formControl]="lastnameInput"
-              [ngClass]="{ 'is-invalid': (submitted || lastnameInput.touched) && lastnameInput.invalid }"
-              type="text"
-              class="form-control"
-              id="lastname-input"
-              aria-describedby="lastname-icon"
-              placeholder="lastname"
-            />
+    <div class="col-6">
+      <div class="form-group">
+        <label for="lastname-input">Lastname</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="lastname-icon"><i class="fas fa-user"></i></span>
           </div>
-          <div *ngIf="submitted"></div>
+          <input
+            [formControl]="lastnameInput"
+            [ngClass]="{ 'is-invalid': (submitted || lastnameInput.touched) && lastnameInput.invalid }"
+            type="text"
+            class="form-control"
+            id="lastname-input"
+            aria-describedby="lastname-icon"
+            placeholder="lastname"
+          />
         </div>
+        <div *ngIf="submitted"></div>
       </div>
+    </div>
 
-      <!-- <div class="col-6">
+    <!-- <div class="col-6">
         <div class="form-group">
           <label for="location-input">Location</label>
           <div class="input-group">
@@ -180,7 +179,7 @@
         </div>
       </div> -->
 
-      <!-- <div class="col-6">
+    <!-- <div class="col-6">
         <div class="form-group">
           <label for="birthdate-input">Birthdate</label>
           <div class="input-group">
@@ -201,7 +200,7 @@
         </div>
       </div> -->
 
-      <!-- <div class="form-group">
+    <!-- <div class="form-group">
       <label for="biography-input">Biography</label>
       <div class="input-group">
         <div class="input-group-prepend">
@@ -218,7 +217,7 @@
       </div>
       <div *ngIf="submitted || biographyInput.touched"></div>
     </div> -->
-      <!-- <div class="col-6">
+    <!-- <div class="col-6">
         <div class="form-group">
           <label for="photo-input">Photo</label>
           <div class="input-group">
@@ -242,8 +241,7 @@
           <div *ngIf="submitted || photoInput.touched"></div>
         </div>
       </div> -->
-    </div>
+  </div>
 
-    <button type="submit" class="btn btn-primary">Register</button>
-  </form>
-</div>
+  <button type="submit" class="btn btn-primary">Register</button>
+</form>
