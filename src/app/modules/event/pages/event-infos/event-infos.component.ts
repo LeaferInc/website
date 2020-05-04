@@ -23,7 +23,6 @@ export class EventInfosComponent implements OnInit {
       if (params.id && Number.isInteger(Number.parseInt(params.id))) {
         this.eventService.getEvent(params.id).subscribe(
           (event: Event) => {
-            console.log(event);
             this.event = event;
           },
           (err: HttpErrorResponse) => {

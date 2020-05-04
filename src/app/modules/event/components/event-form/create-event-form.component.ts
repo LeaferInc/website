@@ -49,9 +49,6 @@ export class EventFormComponent implements OnInit {
             price: new FormControl(0, [Validators.required, Validators.min(0)]),
             maxPeople: new FormControl(10, [Validators.required, Validators.min(1)]),
         });
-
-        console.log(this.eventForm.get('startDate').value);
-        console.log(typeof this.eventForm.get('startDate').value);
     }
 
     /**
