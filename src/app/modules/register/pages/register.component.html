@@ -2,7 +2,6 @@
 
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
   <div class="form-row">
-
     <div class="col-6">
       <div class="form-group">
         <label for="username-input">Username *</label>
@@ -160,88 +159,88 @@
     </div>
 
     <!-- <div class="col-6">
-      <div class="form-group">
-        <label for="location-input">Location</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="location-icon"><i class="fas fa-user"></i></span>
+        <div class="form-group">
+          <label for="location-input">Location</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="location-icon"><i class="fas fa-user"></i></span>
+            </div>
+            <input
+              [formControl]="locationInput"
+              [ngClass]="{ 'is-invalid': (submitted || locationInput.touched) && locationInput.invalid }"
+              type="text"
+              class="form-control"
+              id="location-input"
+              aria-describedby="location-icon"
+              placeholder="location"
+            />
           </div>
-          <input
-            [formControl]="locationInput"
-            [ngClass]="{ 'is-invalid': (submitted || locationInput.touched) && locationInput.invalid }"
-            type="text"
-            class="form-control"
-            id="location-input"
-            aria-describedby="location-icon"
-            placeholder="location"
-          />
+          <div *ngIf="submitted || locationInput.touched"></div>
         </div>
-        <div *ngIf="submitted || locationInput.touched"></div>
-      </div>
-    </div> -->
+      </div> -->
 
     <!-- <div class="col-6">
-      <div class="form-group">
-        <label for="birthdate-input">Birthdate</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="birthdate-icon"><i class="fas fa-user"></i></span>
+        <div class="form-group">
+          <label for="birthdate-input">Birthdate</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="birthdate-icon"><i class="fas fa-user"></i></span>
+            </div>
+            <input
+              [formControl]="birthdateInput"
+              [ngClass]="{ 'is-invalid': (submitted || birthdateInput.touched) && birthdateInput.invalid }"
+              type="date"
+              class="form-control"
+              id="birthdate-input"
+              aria-describedby="birthdate-icon"
+              placeholder="birthdate"
+            />
           </div>
-          <input
-            [formControl]="birthdateInput"
-            [ngClass]="{ 'is-invalid': (submitted || birthdateInput.touched) && birthdateInput.invalid }"
-            type="date"
-            class="form-control"
-            id="birthdate-input"
-            aria-describedby="birthdate-icon"
-            placeholder="birthdate"
-          />
+          <div *ngIf="submitted || birthdateInput.touched"></div>
         </div>
-        <div *ngIf="submitted || birthdateInput.touched"></div>
-      </div>
-    </div> -->
+      </div> -->
 
     <!-- <div class="form-group">
-    <label for="biography-input">Biography</label>
-    <div class="input-group">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="biography-icon"><i class="fas fa-user"></i></span>
-      </div>
-      <textarea
-        [formControl]="biographyInput"
-        [ngClass]="{ 'is-invalid': (submitted || biographyInput.touched) && biographyInput.invalid }"
-        class="form-control"
-        id="biography-input"
-        aria-describedby="biography-icon"
-        placeholder="biography"
-      ></textarea>
-    </div>
-    <div *ngIf="submitted || biographyInput.touched"></div>
-  </div> -->
-    <!-- <div class="col-6">
-      <div class="form-group">
-        <label for="photo-input">Photo</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="photo-icon"><i class="fas fa-user"></i></span>
-          </div>
-          <div class="custom-file">
-            <input
-              [formControl]="photoInput"
-              [ngClass]="{ 'is-invalid': (submitted || photoInput.touched) && photoInput.invalid }"
-              type="file"
-              class="custom-file-input"
-              id="photo-input"
-              accept="image/png, image/jpeg"
-              aria-describedby="photo-icon"
-              placeholder="..."
-            />
-            <label class="custom-file-label" for="photo-input" data-browse="Browse">Choose photo</label>
-          </div>
+      <label for="biography-input">Biography</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="biography-icon"><i class="fas fa-user"></i></span>
         </div>
-        <div *ngIf="submitted || photoInput.touched"></div>
+        <textarea
+          [formControl]="biographyInput"
+          [ngClass]="{ 'is-invalid': (submitted || biographyInput.touched) && biographyInput.invalid }"
+          class="form-control"
+          id="biography-input"
+          aria-describedby="biography-icon"
+          placeholder="biography"
+        ></textarea>
       </div>
+      <div *ngIf="submitted || biographyInput.touched"></div>
     </div> -->
+    <!-- <div class="col-6">
+        <div class="form-group">
+          <label for="photo-input">Photo</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="photo-icon"><i class="fas fa-user"></i></span>
+            </div>
+            <div class="custom-file">
+              <input
+                [formControl]="photoInput"
+                [ngClass]="{ 'is-invalid': (submitted || photoInput.touched) && photoInput.invalid }"
+                type="file"
+                class="custom-file-input"
+                id="photo-input"
+                accept="image/png, image/jpeg"
+                aria-describedby="photo-icon"
+                placeholder="..."
+              />
+              <label class="custom-file-label" for="photo-input" data-browse="Browse">Choose photo</label>
+            </div>
+          </div>
+          <div *ngIf="submitted || photoInput.touched"></div>
+        </div>
+      </div> -->
   </div>
 
   <button type="submit" class="btn btn-primary">Register</button>

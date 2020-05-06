@@ -1,0 +1,8 @@
+<div class="card">
+  <img src="/assets/photo_test.jpg" class="card-img-top" alt="photo test" />
+  <div class="card-body">
+    <h5 class="card-title text-truncate">{{ cutting.name }}</h5>
+    <p class="card-text">Vues : {{ cutting.views_count }}</p>
+    <a [routerLink]="['/cutting', cutting.id]" class="stretched-link"></a>
+  </div>
+</div>
