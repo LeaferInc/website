@@ -18,12 +18,14 @@ export class LoginComponent {
     passwordInput: this.passwordInput
   });
 
-  public submitted: boolean = false;
-
   constructor(private authService: AuthService) { }
 
   onSubmit() {
-    this.submitted = true;
+
+    for (const key in this.loginForm.controls) {
+      this.loginForm.controls[key].markAsDirty();
+      this.loginForm.controls[key].updateValueAndValidity();
+    }
 
     if(this.loginForm.invalid) {
       return;

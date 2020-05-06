@@ -11,3 +11,42 @@
   font-size: 30px;
 	box-shadow: 2px 2px 3px #999;
 }
+
+nz-header {
+  justify-content: space-between;
+}
+
+nz-header, .left-nav {
+  display: flex;
+}
+
+.logo {
+  width: 120px;
+  height: 31px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px 24px 16px 0;
+}
+
+[nz-menu] {
+  line-height: 64px;
+}
+
+
+nz-content {
+  overflow-y: auto;
+  flex-direction: column;
+  padding: 30px;
+}
+
+nz-footer {
+  text-align: center;
+}
+
+.inner-content {
+  background: #fff;
+  padding: 24px;
+}
+
+nz-layout {
+  height: 100%;
+}

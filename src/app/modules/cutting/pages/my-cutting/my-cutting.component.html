@@ -1,19 +1,22 @@
-<h2>Mes boutures à échanger</h2>
-<div class="container-fluid">
-  <div class="row">
-    <div *ngFor="let cutting of myCuttings?.items" class="col-lg-3 col-md-4 col-sm-6 col-12 my-2">
-      <app-my-cutting-card [cutting]="cutting"></app-my-cutting-card>
-    </div>
+<div nz-row>
+  <h2 nz-col nzOffset="8" nzSpan="8">Mes boutures à échanger</h2>
+</div>
+
+<div nz-row>
+  <div nz-col nzOffset="8" nzSpan="8">
+    <nz-input-group [nzSuffix]="suffixIconSearch">
+      <input type="text" nz-input placeholder="input search text" />
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+      <i nz-icon nzType="search"></i>
+    </ng-template>
   </div>
-  <!-- <div class="row justify-content-center pt-3">
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
-      </nav>
-    </div> -->
+</div>
+
+<div nz-row class="cutting-list">
+  <ng-container *ngFor="let cutting of myCuttings?.items">
+    <!-- <div nz-col [nzSpan]="4"> -->
+    <app-list-cutting-card nz-col [nzSpan]="4" [cutting]="cutting"></app-list-cutting-card>
+    <!-- </div> -->
+  </ng-container>
 </div>
