@@ -1,9 +1,11 @@
-#details-cutting-shared-icon {
-  position: absolute;
-  right: 15px;
-  top: 15px;
+[nz-button] {
+  margin-bottom: 10px;
 }
 
-#details-cutting-header {
-  position: relative;
+nz-form-item {
+  margin: 5px;
+}
+
+#informations-section, #buttons-section {
+  margin: 20px 0;
 }
