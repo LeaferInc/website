@@ -40,7 +40,9 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="24" nzFor="location">Location</nz-form-label>
         <nz-form-control [nzSpan]="24" [nzErrorTip]="locationErrorTpl">
-          <input formControlName="location" type="text" name="location" nz-input />
+          <!-- <input formControlName="location" type="text" name="location" nz-input /> -->
+          <input nz-input placeholder="input here" (input)="getLocations($event.target?.value)" [nzAutocomplete]="auto" />
+          <nz-autocomplete [nzDataSource]="locations" nzBackfill #auto></nz-autocomplete>
           <ng-template #locationErrorTpl>
             <ng-container *ngIf="eventForm.get('location').hasError('required')">
               Please input a location !

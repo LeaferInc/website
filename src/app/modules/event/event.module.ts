@@ -21,6 +21,8 @@ import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { EntryService } from 'src/app/core/services/entry/entry.service';
 import { EventPipe } from 'src/app/shared/pipes/event.pipe';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { EventPipe } from 'src/app/shared/pipes/event.pipe';
     NzButtonModule,
     NzGridModule,
     NzInputNumberModule,
-    NzDatePickerModule
+    NzDatePickerModule,
+    NzCardModule,
+    NzAutocompleteModule
   ],
   providers: [
     EventService,
