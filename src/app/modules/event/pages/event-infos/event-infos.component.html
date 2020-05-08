@@ -1,29 +1,31 @@
-<div *ngIf="event" class="offset-md-1 offset-lg-2 offset-xl-3">
-	<div class="row">
-		<img src="../../../../../assets/images/event-temp.jpg" alt="Picture of the event">
-	</div>
-	<div class="row">
+<div nz-row>
+  <div nz-col [nzSpan]="16" [nzOffset]="4">
+    <img src="../../../../../assets/images/event-temp.jpg" style="height: 450px; width: 100%; object-fit: cover;" />
+  </div>
+</div>
+
+<div nz-col [nzSpan]="16" [nzOffset]="4" *ngIf="event">
+	<div nz-row>
 		<h3>{{event.name}}</h3>
 	</div>
-	<div class="row">
-		<h6><i class="fas fa-map-marker-alt"></i> {{event.location}}</h6>
+	<div nz-row>
+		<p>{{event.location}}</p>
 	</div>
-	<div class="row">
-		{{event.description}}
+	<div nz-row>
+		<p>{{event.description}}</p>
 	</div>
-	<div class="row">
-		<span class="font-weight-bold">Début&nbsp;:</span>&nbsp;{{event.startDate | date:'EEE d MMM y à HH:mm'}}
+	<div nz-row>
+		<p>Début&nbsp;:&nbsp;{{event.startDate | date:'EEE d MMM y à HH:mm'}}</p>
 	</div>
-	<div class="row">
-		<span class="font-weight-bold">Fin&nbsp;:</span>&nbsp;{{event.endDate | date:'EEE d MMM y à HH:mm'}}
-	</div>
-	<br />
-	<div class="row">
-		<button *ngIf="!event.joined" class="btn btn-success" (click)="participate()" [disabled]="querying">
-			<span *ngIf="querying"><i class="fas fa-spinner fa-spin"></i>&nbsp;</span>Participer
+	<div nz-row>
+		<p>Fin&nbsp;:&nbsp;{{event.endDate | date:'EEE d MMM y à HH:mm'}}</p>
+  </div>
+  <div nz-row>
+    <button nz-button *ngIf="!event.joined" (click)="participate()" [disabled]="querying">
+			Participer
 		</button>
-		<button *ngIf="event.joined" class="btn btn-warning" (click)="leave()" [disabled]="querying">
-			<span *ngIf="querying"><i class="fas fa-spinner fa-spin"></i></span>Ne plus participer
+		<button nz-button nzDanger *ngIf="event.joined" (click)="leave()" [disabled]="querying">
+			>Ne plus participer
 		</button>
-	</div>
+  </div>
 </div>
