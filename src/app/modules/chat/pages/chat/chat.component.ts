@@ -1,11 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, AfterViewInit, AfterContentChecked, AfterContentInit, AfterViewChecked } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/core/services/user/user.service';
 import { User } from 'src/app/shared/models/user/user';
 import { Message, CreateMessage } from 'src/app/shared/models/message/message';
 import { MessageService } from 'src/app/core/services/message/message.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { SocketioService } from 'src/app/core/services/socketio/socketio.service';
+import { AppService } from 'src/app/core/services/app/app.service';
 
 @Component({
   selector: 'app-chat',
@@ -20,8 +21,12 @@ export class ChatComponent implements OnInit, OnDestroy {
   constructor(
     public activatedRoute: ActivatedRoute,
     private userService: UserService,
-    private socketService: SocketioService
-  ) {}
+    private socketService: SocketioService,
+    private appService: AppService,
+    private router: Router
+  ) {
+    this.appService.setFullHeigh(true); // TODO: ?????
+  }
 
   ngOnInit(): void {
     this.userService.getTalkTo().subscribe((users) => (this.users = users));
@@ -52,6 +57,12 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.appService.setFullHeigh(false);
     this.socketService.disconnect();
+  }
+
+  onCuttingClicked(ev: Event) {
+    ev.stopPropagation();
+    this.router.navigate(['cutting']);
   }
 }

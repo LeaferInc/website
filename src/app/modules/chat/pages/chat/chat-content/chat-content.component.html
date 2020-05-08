@@ -1,4 +1,31 @@
-<div class="d-flex flex-column">
+<div nz-row style="flex-direction: column; height: 100%;">
+  <div nz-col nzFlex="1 1 0" class="overflow-auto">
+    <ng-container *ngFor="let message of messages">
+      <app-chat-message [message]="message" [leftIcon]="message.user.id !== currentUser.id"></app-chat-message>
+    </ng-container>
+  </div>
+
+  <div nz-col nzFlex="0 1 auto" style="display: flex; justify-content: center;">
+    <form nz-form [formGroup]="messageForm" nzLayout="inline" (ngSubmit)="onSubmitMessage()">
+      <nz-form-item style="width: 500px;">
+        <nz-form-control>
+          <input nz-input formControlName="messageInput" type="text" />
+        </nz-form-control>
+      </nz-form-item>
+  
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button type="submit">Envoyer</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+
+
+
+<!-- <div class="d-flex flex-column">
   <ng-container *ngFor="let message of messages">
     <app-chat-message [leftIcon]="message.user.id !== currentUser.id">{{ message.message_content }}</app-chat-message>
   </ng-container>
@@ -10,4 +37,4 @@
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
-</div>
+</div> -->

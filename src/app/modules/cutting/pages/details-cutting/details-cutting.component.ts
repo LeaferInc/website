@@ -122,12 +122,13 @@ export class DetailsCuttingComponent implements OnInit {
       return;
     }
 
-    const messageValue = this.updateCuttingForm.get('offerInput').value;
+    const messageValue = this.offerForm.get('offerInput').value;
 
     this.participantService.createWithRoom(this.cutting.ownerId).subscribe((res: any) => {
       console.log('Yo', res);
       this.messageService.create({ message_content: messageValue, roomId: res.room.id }).subscribe((res) => {
         console.log('Ha', res);
+        this.modal.closeAll();
         this.router.navigate(['chat', res.room.id]);
       });
     });

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from './core/services/auth/auth.service';
 import { User } from './shared/models/user/user';
 import { UserAuth } from './shared/models/auth/auth';
-import { SocketioService } from './core/services/socketio/socketio.service';
+import { AppService } from './core/services/app/app.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,8 @@ export class AppComponent implements OnInit {
   title = 'Leafer';
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    public appService: AppService,
   ) {}
 
   ngOnInit() {

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Message } from 'src/app/shared/models/message/message';
 
 @Component({
   selector: 'app-chat-message',
@@ -7,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ChatMessageComponent implements OnInit {
 
+  @Input() message: Message;
   @Input() leftIcon: boolean = true;
 
   constructor() { }

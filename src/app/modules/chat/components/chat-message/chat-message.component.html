@@ -1,8 +1,13 @@
-<div class="row p-3">
-  <div class="col flex-shrink-1 flex-grow-0" [ngClass]="leftIcon ? null : 'order-1'">
-    <img src="https://www.w3schools.com/w3images/avatar2.png" class="rounded-circle" style="width: 40px;"/>
+<div nz-row class="chat-message">
+  <div *ngIf="leftIcon" nz-col nzFlex="50px" class="avatar-left">
+    <nz-avatar nzIcon="user" nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
   </div>
-  <div class="col">
-    <ng-content></ng-content>
+  <div nz-col nzFlex="1 0 auto" [nzOffset]="leftIcon ? 0 : 1" class="message">
+    <div nz-col nzFlex="1 0 auto" [ngClass]="leftIcon ? null : 'text-right'">
+      {{ message.message_content }}
+    </div>
+  </div>
+  <div *ngIf="!leftIcon" nz-col nzFlex="50px" class="avatar-right">
+    <nz-avatar nzIcon="user" nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
   </div>
 </div>

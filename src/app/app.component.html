@@ -9,7 +9,7 @@
             <li nz-menu-item [routerLink]="['cutting', 'create']">Publier une bouture</li>
             <li nz-menu-item [routerLink]="['cutting', 'exchange']">Echange</li>
             <li nz-menu-item [routerLink]="['cutting', 'inventory']">Inventaire</li>
-            <li nz-menu-item [routerLink]="['cutting', 'message']">Mes messages</li>
+            <li nz-menu-item [routerLink]="['chat']">Mes messages</li>
             <li nz-menu-item [routerLink]="['']">Mes favoris</li>
           </ul>
         </li>
@@ -48,7 +48,7 @@
     </div>
   </nz-header>
   <nz-content>
-    <div class="inner-content">
+    <div class="inner-content" [class.full-height]="(appService.currentFullHeight | async)">
       <router-outlet></router-outlet>
     </div>
   </nz-content>
