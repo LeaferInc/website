@@ -7,6 +7,8 @@ import { EventService } from 'src/app/core/services/event/event.service';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { Event } from 'src/app/shared/models/event/event.model';
 import { Location } from 'src/app/shared/models/location/location.model';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-event-form',
@@ -24,7 +26,7 @@ export class EventFormComponent implements OnInit {
 
   @Output() created = new EventEmitter<Event>();
 
-  constructor(private eventService: EventService, private utilsService: UtilsService) {}
+  constructor(private eventService: EventService, private utilsService: UtilsService, private router: Router) {}
 
   ngOnInit(): void {
     // Default start date is next day
@@ -95,7 +97,8 @@ export class EventFormComponent implements OnInit {
   }
 
   /**
-   * Submit the form to the server to add an {@link Event}
+   * Submit the form to the server to add an Event.
+   * Checks the anteriority of the start Date over the end Date
    */
   submit(): void {
     // Display validation
@@ -104,18 +107,21 @@ export class EventFormComponent implements OnInit {
       this.eventForm.get(key).updateValueAndValidity();
     });
 
+    const startBeforeEnd: boolean = this.eventForm.get('startDate').value < this.eventForm.get('endDate').value;
+
     // Create form
-    if (this.eventForm.valid) {
+    if (startBeforeEnd && this.eventForm.valid && this.locationChoosed) {
       this.sending = true;
 
       const event: Event = this.eventForm.value;
       this.eventService.addEvent(event).subscribe(
         (event: Event) => {
-          this.created.emit(event);
+          this.router.navigate(['/events/' + event.id]);
         },
-        (err: Error) => {
+        (err: HttpErrorResponse) => {
           console.log(err);
-        }
+        },
+        () => (this.sending = false)
       );
     }
   }

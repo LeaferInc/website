@@ -7,6 +7,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Location } from 'src/app/shared/models/location/location.model';
 import { EventService } from 'src/app/core/services/event/event.service';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
+import { Router } from '@angular/router';
 
 describe('EventFormComponent', () => {
   let component: EventFormComponent;
@@ -16,7 +17,14 @@ describe('EventFormComponent', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, ReactiveFormsModule],
       declarations: [EventFormComponent],
-      providers: [EventService, UtilsService],
+      providers: [
+        EventService, 
+        UtilsService,
+        {
+          provide: Router,
+          useValue: { navigate: jest.fn() }
+        },
+      ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
       .compileComponents();

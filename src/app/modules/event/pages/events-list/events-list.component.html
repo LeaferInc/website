@@ -1,0 +1,48 @@
+<div class="row">
+	<div class="col-md-6">
+		<h2>À venir</h2>
+		<div class="row">
+			<div class="col-sm-6 col-xl-4" *ngFor="let event of incomingEvents | eventFilter:filter">
+				<app-event-card [event]="event"></app-event-card>
+			</div>
+			<div class="col not-found" *ngIf="incomingEvents.length === 0">
+				Aucun évènement trouvé
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<form class="form-inline">
+			<div class="form-group row">
+				<label class="col-form-label col-sm-2 col-md-3" for="search">Filtre&nbsp;</label>
+				<div class="col-sm-10 col-md-8 col-lg-6">
+					<input type="text" class="form-control" name="search" [(ngModel)]="filter" placeholder="Nom/Descr." />
+				</div>
+			</div>
+		</form>
+		<hr>
+
+		<h2>Je participe</h2>
+		<div class="row">
+			<div class="col-sm-6 col-xl-4" *ngFor="let event of joinedEvents | eventFilter:filter">
+				<app-event-card [event]="event"></app-event-card>
+			</div>
+			<div class="col not-found" *ngIf="joinedEvents.length === 0">
+				Aucun évènement trouvé
+			</div>
+		</div>
+
+		<hr>
+
+		<h2>Ça m'intéresse</h2>
+		<div class="row">
+			<div class="col-sm-6 col-xl-4" *ngFor="let event of interestedEvent | eventFilter:filter">
+				<app-event-card class="col-md-6 col-xl-4" [event]="event"></app-event-card>
+			</div>
+			<div class="col not-found" *ngIf="interestedEvent.length === 0">
+				Aucun évènement trouvé
+			</div>
+		</div>
+	</div>
+	<button class="btn-float" routerLink="/events/create"><i class="fas fa-plus"></i></button>
+</div>
