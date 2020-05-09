@@ -18,9 +18,11 @@ import { Router } from '@angular/router';
 export class EventFormComponent implements OnInit {
   eventForm: FormGroup;
   sending: boolean = false; // True when the form has been sent to server
+
   locationChoosed: Location = null; // The Location the user has selected
   locationTimeout: NodeJS.Timeout; // Delay to search for addresses after user's input
   locations: Location[] = []; // The found addresses
+  
   minDate: Date = new Date(); // Minimum choosable Date
   showDropdown: boolean = false; // True when the dropdown should be shown
 
@@ -44,11 +46,7 @@ export class EventFormComponent implements OnInit {
       description: new FormControl('Un évènement comme un autre, il faut meubler pour remplir la textarea.', [
         Validators.required,
       ]),
-      location: new FormControl({
-        label: '23, Rue de la Marquise',
-        lat: 45,
-        long: 3,
-      } as Location, [Validators.required]),
+      // location: new FormControl(this.locationChoosed?.label, [Validators.required]),
       // latitude: new FormControl(),
       // longitude: new FormControl(),
       startDate: new FormControl(UtilsService.dateToJSONLocal(startDate).slice(0, 16), [Validators.required]),
@@ -118,6 +116,12 @@ export class EventFormComponent implements OnInit {
       this.sending = true;
 
       const event: Event = this.eventForm.value;
+      event.location = this.locationChoosed.label;
+      event.latitude = this.locationChoosed.lat;
+      event.longitude = this.locationChoosed.long;
+      event.startDate = new Date(event.startDate);
+      event.endDate = new Date(event.endDate);
+
       this.eventService.addEvent(event).subscribe(
         (event: Event) => {
           this.router.navigate(['/events/' + event.id]);

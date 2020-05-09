@@ -45,13 +45,13 @@
 
           <input
             nz-input
-            formControlName="location"
-            [value]="eventForm.get('location').value"
+            [(ngModel)]="locationChoosed"
+            [ngModelOptions]="{standalone: true}"
             (input)="getLocations($event.target?.value)"
             [nzAutocomplete]="auto"
           />
           <nz-autocomplete nzBackfill #auto>
-            <nz-auto-option *ngFor="let location of locations" [nzValue]="location">
+            <nz-auto-option *ngFor="let location of locations" [nzValue]="location" [nzLabel]="location.label">
               {{ location.label }}
             </nz-auto-option>
           </nz-autocomplete>
