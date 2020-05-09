@@ -1,4 +1,16 @@
-<div class="row">
+<div nz-row>
+  <div nz-col>
+    <ng-container *ngFor="let event of incomingEvents | eventFilter:filter">
+      <app-event-card [event]="event"></app-event-card>
+    </ng-container>
+  </div>
+  
+  <div nz-col>
+   <div nz-row>Salut</div>
+  </div>
+</div>
+
+<!-- <div class="row">
 	<div class="col-md-6">
 		<h2>À venir</h2>
 		<div class="row">
@@ -45,4 +57,4 @@
 		</div>
 	</div>
 	<button class="btn-float" routerLink="/events/create"><i class="fas fa-plus"></i></button>
-</div>
+</div> -->
