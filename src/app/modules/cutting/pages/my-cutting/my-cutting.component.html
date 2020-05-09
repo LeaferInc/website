@@ -13,10 +13,14 @@
   </div>
 </div>
 
-<div nz-row class="cutting-list">
-  <ng-container *ngFor="let cutting of myCuttings?.items">
-    <!-- <div nz-col [nzSpan]="4"> -->
-    <app-list-cutting-card nz-col [nzSpan]="4" [cutting]="cutting"></app-list-cutting-card>
-    <!-- </div> -->
-  </ng-container>
-</div>
+<ng-container *ngFor="let cutting of myCuttings?.items">
+  <div nz-row class="cutting-list">
+    <app-my-cutting-card nz-col [nzSpan]="4" [cutting]="cutting"></app-my-cutting-card>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="myCuttings?.items.length === 0">
+  <div nz-row nzJustify="center" class="no-cutting">
+    <p>No cutting found</p>
+  </div>
+</ng-container>

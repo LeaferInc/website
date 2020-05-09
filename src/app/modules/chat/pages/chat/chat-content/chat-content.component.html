@@ -1,11 +1,11 @@
-<div nz-row style="flex-direction: column; height: 100%;">
-  <div nz-col nzFlex="1 1 0" class="overflow-auto">
+<div nz-row id="chat-content">
+  <div nz-col nzFlex="1 1 auto" class="overflow-auto">
     <ng-container *ngFor="let message of messages">
       <app-chat-message [message]="message" [leftIcon]="message.user.id !== currentUser.id"></app-chat-message>
     </ng-container>
   </div>
 
-  <div nz-col nzFlex="0 1 auto" style="display: flex; justify-content: center;">
+  <div nz-col nzFlex="0 1 auto" id="input-message">
     <form nz-form [formGroup]="messageForm" nzLayout="inline" (ngSubmit)="onSubmitMessage()">
       <nz-form-item style="width: 500px;">
         <nz-form-control>

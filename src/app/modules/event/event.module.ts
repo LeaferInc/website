@@ -23,6 +23,10 @@ import { EntryService } from 'src/app/core/services/entry/entry.service';
 import { EventPipe } from 'src/app/shared/pipes/event.pipe';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { SearchOutline } from '@ant-design/icons-angular/icons';
 
 @NgModule({
   declarations: [
@@ -45,7 +49,10 @@ import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
     NzInputNumberModule,
     NzDatePickerModule,
     NzCardModule,
-    NzAutocompleteModule
+    NzAutocompleteModule,
+    NzDividerModule,
+    NzTypographyModule,
+    NzIconModule.forChild([SearchOutline]),
   ],
   providers: [
     EventService,

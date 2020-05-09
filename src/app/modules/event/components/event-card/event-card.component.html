@@ -5,8 +5,11 @@
 </div> -->
 
 <nz-card nzHoverable [nzCover]="coverTemplate" [routerLink]="['/events', event.id]">
-  <nz-card-meta [nzTitle]="event.name" [nzDescription]="event.location"></nz-card-meta>
+  <nz-card-meta [nzTitle]="event.name" [nzDescription]="descriptionTemplate"></nz-card-meta>
 </nz-card>
 <ng-template #coverTemplate>
   <img alt="Squared picture of the Event" src="../../../../../assets/images/event-temp.jpg" />
+</ng-template>
+<ng-template #descriptionTemplate>
+  <p nz-typography nzEllipsis>{{ event.location }}</p>
 </ng-template>
