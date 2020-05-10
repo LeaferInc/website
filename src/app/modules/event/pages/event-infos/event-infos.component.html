@@ -1,0 +1,31 @@
+<div nz-row>
+  <div nz-col [nzSpan]="16" [nzOffset]="4">
+    <img src="../../../../../assets/images/event-temp.jpg" style="height: 450px; width: 100%; object-fit: cover;" />
+  </div>
+</div>
+
+<div nz-col [nzSpan]="16" [nzOffset]="4" *ngIf="event">
+	<div nz-row>
+		<h3>{{event.name}}</h3>
+	</div>
+	<div nz-row>
+		<p>{{event.location}}</p>
+	</div>
+	<div nz-row>
+		<p>{{event.description}}</p>
+	</div>
+	<div nz-row>
+		<p>Début&nbsp;:&nbsp;{{event.startDate | date:'EEE d MMM y à HH:mm'}}</p>
+	</div>
+	<div nz-row>
+		<p>Fin&nbsp;:&nbsp;{{event.endDate | date:'EEE d MMM y à HH:mm'}}</p>
+  </div>
+  <div nz-row>
+    <button nz-button *ngIf="!event.joined" (click)="participate()" [disabled]="querying">
+			Participer
+		</button>
+		<button nz-button nzDanger *ngIf="event.joined" (click)="leave()" [disabled]="querying">
+			Ne plus participer
+		</button>
+  </div>
+</div>
