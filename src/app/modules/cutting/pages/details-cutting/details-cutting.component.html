@@ -1,0 +1,86 @@
+<ng-container *ngIf="!loading">
+  <div nz-row>
+    <div nz-col [nzSpan]="16" [nzOffset]="4">
+      <img src="/assets/photo_test.jpg" style="height: 450px; width: 100%; object-fit: cover;" />
+    </div>
+  </div>
+
+  <div nz-row id="informations-section">
+    <div nz-col [nzSpan]="8" [nzOffset]="8">
+      <ng-container *ngIf="!isOnEditMode; else displayForm">
+        <h2 nz-row>{{ cutting.name }}</h2>
+        <div nz-row>
+          <p>{{ cutting.description }}</p>
+        </div>
+        <div nz-row *ngIf="cutting.tradeWith">
+          <p>A échanger contre : {{ cutting.tradeWith }}</p>
+        </div>
+      </ng-container>
+
+      <ng-template #displayForm>
+        <form nz-form novalidate [formGroup]="updateCuttingForm" (ngSubmit)="onConfirmEdit()" id="editForm" #editForm="ngForm">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="24" nzFor="name" nzRequired>Name</nz-form-label>
+            <nz-form-control [nzSpan]="24" [nzErrorTip]="nameErrorTpl">
+              <input formControlName="nameInput" type="text" name="name" nz-input placeholder="name" />
+              <ng-template #nameErrorTpl>
+                <ng-container *ngIf="updateCuttingForm.get('nameInput').hasError('required')">
+                  Please input a cutting name !
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label [nzSpan]="24" nzFor="description" nzRequired>Description</nz-form-label>
+            <nz-form-control [nzSpan]="24" [nzErrorTip]="descriptionErrorTpl">
+              <textarea rows="3" nz-input formControlName="descriptionInput" name="description" nz-input></textarea>
+              <ng-template #descriptionErrorTpl>
+                <ng-container *ngIf="updateCuttingForm.get('descriptionInput').hasError('required')">
+                  Please input a cutting description !
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label [nzSpan]="24" nzFor="tradeWith">Trade with</nz-form-label>
+            <nz-form-control [nzSpan]="24" [nzErrorTip]="tradeWithErrorTpl">
+              <input formControlName="tradeWithInput" type="text" name="tradeWith" nz-input />
+              <ng-template #tradeWithErrorTpl>
+                <ng-container *ngIf="updateCuttingForm.get('tradeWithInput').hasError('required')">
+                  Please input a trade with !
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </ng-template>
+    </div>
+  </div>
+
+  <div nz-row id="buttons-section">
+    <div nz-col [nzSpan]="6" [nzOffset]="9">
+      <ng-container *ngIf="cutting.ownerId === currentUser.id; else notOwner">
+        <ng-container *ngIf="isOnEditMode; else notEditMode">
+          <button form="editForm" nz-button nzType="default" nzBlock>Valider</button>
+          <button (click)="onCancelEdit()" nz-button nzType="primary" nzDanger nzBlock>Annuler</button>
+        </ng-container>
+
+        <ng-template #notEditMode>
+          <button (click)="onEdit()" nz-button nzType="default" nzBlock>Modifier</button>
+          <button (click)="onDelete()" nz-button nzType="primary" nzDanger nzBlock>Supprimer</button>
+        </ng-template>
+      </ng-container>
+      <ng-template #notOwner>
+        <button (click)="createModal(tplModal)" nz-button nzType="default" nzBlock>Proposer un echange</button>
+        <ng-template #tplModal>
+          <form [formGroup]="offerForm">
+            <textarea nz-input formControlName="offerInput" rows="3"></textarea>
+          </form>
+        </ng-template>
+        <button (click)="onSendMessage()" nz-button nzType="primary" nzBlock>Envoyer un message</button>
+      </ng-template>
+    </div>
+  </div>
+</ng-container>

@@ -51,6 +51,11 @@ export class RegisterComponent {
   onSubmit() {
     this.submitted = true;
 
+    for (const i in this.registerForm.controls) {
+      this.registerForm.controls[i].markAsDirty();
+      this.registerForm.controls[i].updateValueAndValidity();
+    }
+
     if (this.registerForm.invalid) {
       return;
     }

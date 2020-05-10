@@ -1,248 +1,132 @@
-<h1 class="d-flex justify-content-center">Register</h1>
 
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-  <div class="form-row">
-
-    <div class="col-6">
-      <div class="form-group">
-        <label for="username-input">Username *</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="username-icon"><i class="fas fa-user"></i></span>
-          </div>
-          <input
-            [formControl]="usernameInput"
-            [ngClass]="{ 'is-invalid': (submitted || usernameInput.touched) && usernameInput.invalid }"
-            type="text"
-            class="form-control"
-            id="username-input"
-            aria-describedby="username-icon"
-            placeholder="username"
-            required
-          />
-        </div>
-        <div *ngIf="submitted || usernameInput.touched">
-          <div *ngIf="usernameInput.hasError('required')" class="invalid-feedback d-block">
-            Username is required
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-6">
-      <div class="form-group">
-        <label for="email-input">Email address *</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="email-icon"><i class="fas fa-user"></i></span>
-          </div>
-          <input
-            [formControl]="emailInput"
-            [ngClass]="{ 'is-invalid': (submitted || emailInput.touched) && emailInput.invalid }"
-            type="email"
-            class="form-control"
-            id="email-input"
-            aria-describedby="email-icon"
-            placeholder="email"
-            required
-          />
-        </div>
-        <div *ngIf="submitted || emailInput.touched">
-          <div *ngIf="emailInput.hasError('required')" class="invalid-feedback d-block">
-            Email is required
-          </div>
-          <div *ngIf="emailInput.hasError('email')" class="invalid-feedback d-block">
-            Please enter a valid email
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-6">
-      <div class="form-group">
-        <label for="password-input">Password *</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="password-icon"><i class="fas fa-user"></i></span>
-          </div>
-          <input
-            [formControl]="passwordInput"
-            [ngClass]="{ 'is-invalid': (submitted || passwordInput.touched) && passwordInput.invalid }"
-            type="password"
-            class="form-control"
-            id="password-input"
-            aria-describedby="password-icon"
-            placeholder="password"
-            autocomplete="on"
-            required
-          />
-        </div>
-        <div *ngIf="submitted || passwordInput.touched">
-          <div *ngIf="passwordInput.hasError('required')" class="invalid-feedback d-block">
-            Password is required
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-6">
-      <div class="form-group">
-        <label for="password-confirm-input">Confirm password *</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="password-confirm-icon"><i class="fas fa-user"></i></span>
-          </div>
-          <input
-            [formControl]="passwordConfirmInput"
-            [ngClass]="{
-              'is-invalid': (submitted || passwordConfirmInput.touched) && passwordConfirmInput.invalid
-            }"
-            type="password"
-            class="form-control"
-            id="password-confirm-input"
-            aria-describedby="password-confirm-icon"
-            placeholder="confirm password"
-            autocomplete="on"
-            required
-          />
-        </div>
-        <div *ngIf="submitted || passwordConfirmInput.touched">
-          <div *ngIf="passwordConfirmInput.hasError('required')" class="invalid-feedback d-block">
-            Confirm password is required
-          </div>
-          <div *ngIf="registerForm.hasError('missmatch')" class="invalid-feedback d-block">
-            Password doesn't match
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-6">
-      <div class="form-group">
-        <label for="firstname-input">Firstname</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="firstname-icon"><i class="fas fa-user"></i></span>
-          </div>
-          <input
-            [formControl]="firstnameInput"
-            [ngClass]="{ 'is-invalid': (submitted || firstnameInput.touched) && firstnameInput.invalid }"
-            type="text"
-            class="form-control"
-            id="firstname-input"
-            aria-describedby="firstname-icon"
-            placeholder="firstname"
-          />
-        </div>
-        <div *ngIf="submitted || firstnameInput.touched"></div>
-      </div>
-    </div>
-
-    <div class="col-6">
-      <div class="form-group">
-        <label for="lastname-input">Lastname</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="lastname-icon"><i class="fas fa-user"></i></span>
-          </div>
-          <input
-            [formControl]="lastnameInput"
-            [ngClass]="{ 'is-invalid': (submitted || lastnameInput.touched) && lastnameInput.invalid }"
-            type="text"
-            class="form-control"
-            id="lastname-input"
-            aria-describedby="lastname-icon"
-            placeholder="lastname"
-          />
-        </div>
-        <div *ngIf="submitted"></div>
-      </div>
-    </div>
-
-    <!-- <div class="col-6">
-      <div class="form-group">
-        <label for="location-input">Location</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="location-icon"><i class="fas fa-user"></i></span>
-          </div>
-          <input
-            [formControl]="locationInput"
-            [ngClass]="{ 'is-invalid': (submitted || locationInput.touched) && locationInput.invalid }"
-            type="text"
-            class="form-control"
-            id="location-input"
-            aria-describedby="location-icon"
-            placeholder="location"
-          />
-        </div>
-        <div *ngIf="submitted || locationInput.touched"></div>
-      </div>
-    </div> -->
-
-    <!-- <div class="col-6">
-      <div class="form-group">
-        <label for="birthdate-input">Birthdate</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="birthdate-icon"><i class="fas fa-user"></i></span>
-          </div>
-          <input
-            [formControl]="birthdateInput"
-            [ngClass]="{ 'is-invalid': (submitted || birthdateInput.touched) && birthdateInput.invalid }"
-            type="date"
-            class="form-control"
-            id="birthdate-input"
-            aria-describedby="birthdate-icon"
-            placeholder="birthdate"
-          />
-        </div>
-        <div *ngIf="submitted || birthdateInput.touched"></div>
-      </div>
-    </div> -->
-
-    <!-- <div class="form-group">
-    <label for="biography-input">Biography</label>
-    <div class="input-group">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="biography-icon"><i class="fas fa-user"></i></span>
-      </div>
-      <textarea
-        [formControl]="biographyInput"
-        [ngClass]="{ 'is-invalid': (submitted || biographyInput.touched) && biographyInput.invalid }"
-        class="form-control"
-        id="biography-input"
-        aria-describedby="biography-icon"
-        placeholder="biography"
-      ></textarea>
-    </div>
-    <div *ngIf="submitted || biographyInput.touched"></div>
-  </div> -->
-    <!-- <div class="col-6">
-      <div class="form-group">
-        <label for="photo-input">Photo</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="photo-icon"><i class="fas fa-user"></i></span>
-          </div>
-          <div class="custom-file">
-            <input
-              [formControl]="photoInput"
-              [ngClass]="{ 'is-invalid': (submitted || photoInput.touched) && photoInput.invalid }"
-              type="file"
-              class="custom-file-input"
-              id="photo-input"
-              accept="image/png, image/jpeg"
-              aria-describedby="photo-icon"
-              placeholder="..."
-            />
-            <label class="custom-file-label" for="photo-input" data-browse="Browse">Choose photo</label>
-          </div>
-        </div>
-        <div *ngIf="submitted || photoInput.touched"></div>
-      </div>
-    </div> -->
+<div nz-row>
+  <div nz-col nzOffset="10" nzSpan="4">
+    <h1>Register</h1>
   </div>
+  <div nz-col nzOffset="10" nzSpan="4">
+    <form nz-form [formGroup]="registerForm" class="register-form" (ngSubmit)="onSubmit()">
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="usernameErrorTpl">
+          <nz-input-group nzPrefixIcon="user">
+            <input
+              [formControl]="usernameInput"
+              type="text"
+              nz-input
+              placeholder="Username"
+              autocomplete="on"
+            />
+            <ng-template #usernameErrorTpl>
+              <ng-container *ngIf="usernameInput.hasError('required')">
+                Please input your username !
+              </ng-container>
+            </ng-template>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
 
-  <button type="submit" class="btn btn-primary">Register</button>
-</form>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="emailErrorTpl">
+          <nz-input-group nzPrefixIcon="user">
+            <input
+              [formControl]="emailInput"
+              type="text"
+              nz-input
+              placeholder="Email"
+              autocomplete="on"
+            />
+            <ng-template #emailErrorTpl>
+              <ng-container *ngIf="emailInput.hasError('required')">
+                Please input your email !
+              </ng-container>
+            </ng-template>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="passwordErrorTpl">
+          <nz-input-group nzPrefixIcon="user">
+            <input
+              [formControl]="passwordInput"
+              type="password"
+              nz-input
+              placeholder="Password"
+              autocomplete="on"
+            />
+            <ng-template #passwordErrorTpl>
+              <ng-container *ngIf="passwordInput.hasError('required')">
+                Please input your password !
+              </ng-container>
+            </ng-template>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="confirmPasswordErrorTpl">
+          <nz-input-group nzPrefixIcon="user">
+            <input
+              [formControl]="passwordConfirmInput"
+              type="password"
+              nz-input
+              placeholder="Confirm password"
+              autocomplete="on"
+            />
+            <ng-template #confirmPasswordErrorTpl>
+              <ng-container *ngIf="passwordConfirmInput.hasError('required')">
+                Please input your confirm password !
+              </ng-container>
+              <ng-container *ngIf="passwordConfirmInput.hasError('missmatch')">
+                Password doesn't match
+              </ng-container>
+            </ng-template>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="firstnameErrorTpl">
+          <nz-input-group nzPrefixIcon="user">
+            <input
+              [formControl]="firstnameInput"
+              type="text"
+              nz-input
+              placeholder="Firstname"
+              autocomplete="on"
+            />
+            <ng-template #firstnameErrorTpl>
+              <ng-container *ngIf="firstnameInput.hasError('required')">
+                Please input your firstname !
+              </ng-container>
+            </ng-template>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="lastnameErrorTpl">
+          <nz-input-group nzPrefixIcon="user">
+            <input
+              [formControl]="lastnameInput"
+              type="text"
+              nz-input
+              placeholder="Lastname"
+              autocomplete="on"
+            />
+            <ng-template #lastnameErrorTpl>
+              <ng-container *ngIf="lastnameInput.hasError('required')">
+                Please input your lastname !
+              </ng-container>
+            </ng-template>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item nz-row>
+        <nz-form-control>
+          <button nz-button nzType="primary">Register</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+</div>

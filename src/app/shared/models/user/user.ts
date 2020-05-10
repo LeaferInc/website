@@ -10,4 +10,5 @@ export interface User {
   biography?: string;
   location?: string;
   pictureId?: number;
+  roomId?: number;
 }

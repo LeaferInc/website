@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from './core/services/auth/auth.service';
 import { User } from './shared/models/user/user';
 import { UserAuth } from './shared/models/auth/auth';
+import { AppService } from './core/services/app/app.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,10 @@ import { UserAuth } from './shared/models/auth/auth';
 export class AppComponent implements OnInit {
   title = 'Leafer';
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    public appService: AppService,
+  ) {}
 
   ngOnInit() {
     const token = this.authService.getTokenFromLocalStorage();

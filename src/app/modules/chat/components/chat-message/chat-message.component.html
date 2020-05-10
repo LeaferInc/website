@@ -1,0 +1,13 @@
+<div nz-row class="chat-message">
+  <div *ngIf="leftIcon" nz-col nzFlex="50px" class="avatar-left">
+    <nz-avatar nzIcon="user" nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+  </div>
+  <div nz-col nzFlex="1 0 auto" [nzOffset]="leftIcon ? 0 : 1" class="message">
+    <div nz-col nzFlex="1 0 auto" [ngClass]="leftIcon ? null : 'text-right'">
+      {{ message.messageContent }}
+    </div>
+  </div>
+  <div *ngIf="!leftIcon" nz-col nzFlex="50px" class="avatar-right">
+    <nz-avatar nzIcon="user" nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+  </div>
+</div>
