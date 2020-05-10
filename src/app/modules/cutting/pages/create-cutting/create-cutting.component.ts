@@ -11,7 +11,6 @@ import { finalize } from 'rxjs/operators';
   styleUrls: ['./create-cutting.component.scss']
 })
 export class CreateCuttingComponent {
-
   public createCuttingForm = new FormGroup({
     nameInput: new FormControl('', Validators.required),
     descriptionInput: new FormControl('', Validators.required),

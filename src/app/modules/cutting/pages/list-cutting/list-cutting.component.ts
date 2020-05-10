@@ -30,13 +30,10 @@ export class ListCuttingComponent implements OnInit {
   }
 
   onSearch() {
-
     if(this.searchForm.invalid) {
       return;
     }
 
     alert(this.searchInput.value);
-
   }
-
 }

@@ -22,7 +22,6 @@ describe('EventCardComponent', () => {
     fixture = TestBed.createComponent(EventCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-
   });
 
   it('should create', () => {

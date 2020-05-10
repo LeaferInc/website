@@ -7,7 +7,6 @@ import { User } from 'src/app/shared/models/user/user';
 import { combineLatest, Observable } from 'rxjs';
 import { concatMap, tap } from 'rxjs/operators';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { RoomService } from 'src/app/core/services/room/room.service';
 import { ParticipantService } from 'src/app/core/services/participant/participant.service';
 import { MessageService } from 'src/app/core/services/message/message.service';
 import { NzModalService } from 'ng-zorro-antd/modal';
@@ -43,7 +42,6 @@ export class DetailsCuttingComponent implements OnInit {
     private router: Router,
     private cuttingService: CuttingService,
     private authService: AuthService,
-    private roomService: RoomService,
     private participantService: ParticipantService,
     private messageService: MessageService,
     private modal: NzModalService
@@ -61,7 +59,7 @@ export class DetailsCuttingComponent implements OnInit {
         })
       )
       .subscribe(
-        (res) => {
+        (res: Cutting) => {
           this.cutting = res;
           this.loading = false;
         },

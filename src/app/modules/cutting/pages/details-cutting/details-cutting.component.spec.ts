@@ -1,39 +1,62 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DetailsCuttingComponent } from './details-cutting.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { CuttingService } from 'src/app/core/services/cutting/cutting.service';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
-import { UserAuth } from 'src/app/shared/models/auth/auth';
-import { Cutting } from 'src/app/shared/models/cutting/cutting';
+import { MessageService } from 'src/app/core/services/message/message.service';
+import { ParticipantService } from 'src/app/core/services/participant/participant.service';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('DetailsCuttingComponent', () => {
   let component: DetailsCuttingComponent;
   let fixture: ComponentFixture<DetailsCuttingComponent>;
   let cuttingServiceMock = {
-    findOne: jest.fn()
+    findOne: jest.fn(),
   };
   let authServiceMock = {
-    getUserAuth: jest.fn()
+    getUserAuth: jest.fn(),
   };
+
+  const messageServiceMock = {
+    create: jest.fn(),
+  }
+
+  const participantServiceMock = {
+    createWithRoom: jest.fn(),
+  }
+
+  const nzModalServiceMock = {
+    confirm: jest.fn(),
+    closeAll: jest.fn(),
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DetailsCuttingComponent ],
+      imports: [ReactiveFormsModule, NzGridModule],
+      declarations: [DetailsCuttingComponent],
       providers: [
-        { provide: ActivatedRoute, useValue: of({params: {id: 1}}) },
+        { provide: ActivatedRoute, useValue: of({ params: { id: 1 } }) },
         { provide: CuttingService, useValue: cuttingServiceMock },
-        { provide: AuthService, useValue: authServiceMock }
-      ]
+        { provide: AuthService, useValue: authServiceMock },
+        { provide: MessageService, useValue: messageServiceMock },
+        { provide: ParticipantService, useValue: participantServiceMock },
+        { provide: Router, useValue: { navigate: jest.fn() } },
+        { provide: NzModalService, useValue: nzModalServiceMock },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DetailsCuttingComponent);
     component = fixture.componentInstance;
-    // fixture.detectChanges();
+    fixture.detectChanges();
   });
 
   it('should create', () => {
@@ -41,7 +64,7 @@ describe('DetailsCuttingComponent', () => {
   });
 
   // it('should initialized component with an user and a cutting', () => {
-    
+
   //   const userAuth: UserAuth = {
   //     user: {
   //       id: 0,
