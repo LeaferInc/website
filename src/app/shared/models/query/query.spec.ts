@@ -1,7 +1,7 @@
-import { Query } from './query';
+import { Pagination } from './query';
 
-describe('Query', () => {
+describe('Pagination', () => {
   it('should create an instance', () => {
-    expect(new Query()).toBeTruthy();
+    expect(new Pagination()).toBeTruthy();
   });
 });

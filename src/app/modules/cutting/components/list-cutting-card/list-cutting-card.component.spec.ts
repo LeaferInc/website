@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ListCuttingCardComponent } from './list-cutting-card.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Cutting } from 'src/app/shared/models/cutting/cutting';
+import { NzCardModule } from 'ng-zorro-antd/card';
 
 describe('ListCuttingCardComponent', () => {
   let component: ListCuttingCardComponent;
@@ -10,7 +11,7 @@ describe('ListCuttingCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule ],
+      imports: [ RouterTestingModule, NzCardModule ],
       declarations: [ ListCuttingCardComponent ]
     })
     .compileComponents();

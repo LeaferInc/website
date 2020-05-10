@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Cutting } from 'src/app/shared/models/cutting/cutting';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-cutting-card',

@@ -46,9 +46,6 @@ export class EventFormComponent implements OnInit {
       description: new FormControl('Un évènement comme un autre, il faut meubler pour remplir la textarea.', [
         Validators.required,
       ]),
-      // location: new FormControl(this.locationChoosed?.label, [Validators.required]),
-      // latitude: new FormControl(),
-      // longitude: new FormControl(),
       startDate: new FormControl(UtilsService.dateToJSONLocal(startDate).slice(0, 16), [Validators.required]),
       endDate: new FormControl(UtilsService.dateToJSONLocal(endDate).slice(0, 16), [Validators.required]),
       price: new FormControl(0, [Validators.required, Validators.min(0)]),
@@ -84,19 +81,6 @@ export class EventFormComponent implements OnInit {
       }, 2000);
     }
   }
-
-  /**
-   * Sets the coordinates of the chosen location in the form object
-   * @param location The Location choosed
-   */
-  // setFormLocation(location: Location): void {
-  //   this.locationChoosed = location;
-  //   this.eventForm.get('latitude').setValue(location.lat);
-  //   this.eventForm.get('longitude').setValue(location.long);
-  //   this.eventForm.get('location').setValue(location.label);
-  //   this.showDropdown = false;
-  //   this.locations = [];
-  // }
 
   /**
    * Submit the form to the server to add an Event.

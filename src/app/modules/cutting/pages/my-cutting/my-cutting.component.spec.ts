@@ -7,10 +7,12 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
 
 describe('MyCuttingComponent', () => {
+  const cuttings = [new Cutting(), new Cutting()];
+
   let component: MyCuttingComponent;
   let fixture: ComponentFixture<MyCuttingComponent>;
   let cuttingServiceMock = {
-    findAllByUser: jest.fn()
+    findAllByUser: jest.fn(() => of(cuttings)),
   };
 
   beforeEach(async(() => {
@@ -27,7 +29,7 @@ describe('MyCuttingComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MyCuttingComponent);
     component = fixture.componentInstance;
-    // fixture.detectChanges();
+    fixture.detectChanges();
   });
 
   it('should create', () => {
@@ -35,12 +37,6 @@ describe('MyCuttingComponent', () => {
   });
 
   it('should initialized component with cuttings', () => {
-    const cuttings = [new Cutting(), new Cutting()];
-
-    cuttingServiceMock.findAllByUser.mockReturnValue(of(cuttings));
-
-    fixture.detectChanges();
-    
     expect(component.loading).toBe(false);
     expect(component.myCuttings).toEqual(cuttings);
   });

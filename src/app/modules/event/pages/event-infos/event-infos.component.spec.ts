@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { EntryService } from 'src/app/core/services/entry/entry.service';
+import { NzGridModule } from 'ng-zorro-antd/grid';
 
 describe('EventInfosComponent', () => {
   let component: EventInfosComponent;
@@ -15,7 +16,7 @@ describe('EventInfosComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, NzGridModule,],
       declarations: [EventInfosComponent],
       providers: [
         EventService,

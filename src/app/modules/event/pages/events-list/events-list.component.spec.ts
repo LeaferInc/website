@@ -9,6 +9,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { EventPipe } from 'src/app/shared/pipes/event.pipe';
 import { FormsModule } from '@angular/forms';
+import { NzGridModule } from 'ng-zorro-antd/grid';
 
 describe('EventsListComponent', () => {
   let component: EventsListComponent;
@@ -19,7 +20,8 @@ describe('EventsListComponent', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        FormsModule
+        FormsModule,
+        NzGridModule,
       ],
       declarations: [EventsListComponent, EventCardComponent, EventPipe],
       providers: [

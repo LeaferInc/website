@@ -39,14 +39,4 @@ describe('EventFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should set location to the form', () => {
-    const location: Location = new Location('168, rue de la Myrtille', 48.2112, 4.96012);
-    component.setFormLocation(location);
-    expect(component.locationChoosed).toBe(location);
-    expect(component.locations).toHaveLength(0);
-    expect(component.eventForm.get('location').value).toBe('168, rue de la Myrtille');
-    expect(component.eventForm.get('latitude').value).toBe(48.2112);
-    expect(component.eventForm.get('longitude').value).toBe(4.96012);
-  });
 });
