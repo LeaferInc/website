@@ -3,6 +3,10 @@ import { LoginComponent } from './login.component';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -14,10 +18,11 @@ describe('LoginComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
-      imports: [ ReactiveFormsModule ],
+      imports: [ ReactiveFormsModule, NzFormModule, NzButtonModule, RouterTestingModule ],
       providers: [
         { provide: AuthService, useValue: authServiceMock }
-      ]
+      ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
 
@@ -42,4 +47,5 @@ describe('LoginComponent', () => {
 
     expect(authServiceMock.login).toHaveBeenCalledWith('username', 'password');
   });
+  
 });

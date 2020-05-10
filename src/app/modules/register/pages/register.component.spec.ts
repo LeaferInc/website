@@ -4,6 +4,9 @@ import { UserService } from 'src/app/core/services/user/user.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { User } from 'src/app/shared/models/user/user';
 import { of } from 'rxjs';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -15,10 +18,11 @@ describe('RegisterComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ RegisterComponent ],
-      imports: [ ReactiveFormsModule ],
+      imports: [ ReactiveFormsModule, NzFormModule, NzButtonModule ],
       providers: [
         { provide: UserService, useValue: userServiceMock }
-      ]
+      ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
   }));
@@ -77,5 +81,6 @@ describe('RegisterComponent', () => {
     component.onSubmit();
 
     expect(userServiceMock.create).toHaveBeenCalledTimes(0);
+
   });
 });
