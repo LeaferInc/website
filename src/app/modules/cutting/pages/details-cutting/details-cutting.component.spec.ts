@@ -11,6 +11,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { UserAuth } from 'src/app/shared/models/auth/auth';
 
 describe('DetailsCuttingComponent', () => {
   let component: DetailsCuttingComponent;
@@ -24,23 +25,24 @@ describe('DetailsCuttingComponent', () => {
 
   const messageServiceMock = {
     create: jest.fn(),
-  }
+  };
 
   const participantServiceMock = {
     createWithRoom: jest.fn(),
-  }
+  };
 
   const nzModalServiceMock = {
     confirm: jest.fn(),
     closeAll: jest.fn(),
-  }
+  };
+  console.error = jest.fn()
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, NzGridModule],
       declarations: [DetailsCuttingComponent],
       providers: [
-        { provide: ActivatedRoute, useValue: of({ params: { id: 1 } }) },
+        { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) }},
         { provide: CuttingService, useValue: cuttingServiceMock },
         { provide: AuthService, useValue: authServiceMock },
         { provide: MessageService, useValue: messageServiceMock },
@@ -49,17 +51,29 @@ describe('DetailsCuttingComponent', () => {
         { provide: NzModalService, useValue: nzModalServiceMock },
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DetailsCuttingComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // fixture.detectChanges();
   });
 
   it('should create', () => {
+    const userAuth: UserAuth = {
+      user: {
+        id: 0,
+        email: 'email@email.com',
+        username: 'username',
+      },
+      token: 'token',
+    };
+    authServiceMock.getUserAuth.mockReturnValue(of(userAuth));
+    // cuttingServiceMock.findOne.mockReturnValue(of());
+
+    fixture.detectChanges();
+
     expect(component).toBeTruthy();
   });
 

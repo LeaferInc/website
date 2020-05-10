@@ -4,8 +4,8 @@ import { CuttingService } from 'src/app/core/services/cutting/cutting.service';
 import { Cutting } from 'src/app/shared/models/cutting/cutting';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { User } from 'src/app/shared/models/user/user';
-import { combineLatest, Observable } from 'rxjs';
-import { concatMap, tap } from 'rxjs/operators';
+import { combineLatest, Observable, forkJoin } from 'rxjs';
+import { concatMap, tap, switchMap, map, switchAll } from 'rxjs/operators';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { ParticipantService } from 'src/app/core/services/participant/participant.service';
 import { MessageService } from 'src/app/core/services/message/message.service';
@@ -44,27 +44,26 @@ export class DetailsCuttingComponent implements OnInit {
     private authService: AuthService,
     private participantService: ParticipantService,
     private messageService: MessageService,
-    private modal: NzModalService
+    private modal: NzModalService,
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
 
-    combineLatest([this.activatedRoute.params, this.authService.getUserAuth()])
-      .pipe(
-        concatMap((res) => {
-          this.currentRoute = res[0];
-          this.currentUser = res[1].user;
-          return this.cuttingService.findOne(res[0].id);
-        })
-      )
-      .subscribe(
-        (res: Cutting) => {
-          this.cutting = res;
-          this.loading = false;
-        },
-        (err) => console.error(err)
-      );
+    this.activatedRoute.params.pipe(
+      tap(params => this.currentRoute = params.id),
+      switchMap(params => this.cuttingService.findOne(params.id)),
+    ).subscribe(
+      (res) => {
+        this.cutting = res;
+        this.loading = false;
+      },
+      (err) => console.error(err)
+    );
+
+    this.authService.getUserAuth().subscribe({
+      next: (userAuth) => this.currentUser = userAuth.user
+    });
   }
 
   onEdit() {

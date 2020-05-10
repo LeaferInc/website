@@ -9,7 +9,7 @@ import { ResultData } from 'src/app/shared/models/query/query';
 })
 export class CuttingService {
 
-  static readonly USER_URL = 'cutting';
+  static readonly USER_URL = 'cuttings';
 
   constructor(private http: HttpClient) { }
 
