@@ -1,3 +1,11 @@
+# [1.1.0](https://github.com/LeaferInc/website/compare/v1.0.0...v1.1.0) (2020-05-10)
+
+
+### Features
+
+* **all:** migrate bootstrap to ng-zorro ([c62de7b](https://github.com/LeaferInc/website/commit/c62de7b7e18296e7df5f805d9de18a19c6b34670))
+* added 404 page + Us userer can now join/unjoin an event ([b3a6670](https://github.com/LeaferInc/website/commit/b3a667085ab11f274561901b45d1e3d41205e3ea))
+
 # 1.0.0 (2020-04-23)
 
 
