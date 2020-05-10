@@ -21,7 +21,7 @@ describe('ChatMessageComponent', () => {
     fixture = TestBed.createComponent(ChatMessageComponent);
     component = fixture.componentInstance;
     component.message = {
-      message_content: '',
+      messageContent: '',
       createdAt: new Date(),
       enabled: true,
       id: 1,
