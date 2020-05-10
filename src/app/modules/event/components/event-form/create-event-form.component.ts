@@ -63,7 +63,7 @@ export class EventFormComponent implements OnInit {
       this.locationChoosed = null;
       this.showDropdown = true;
       clearTimeout(this.locationTimeout);
-      this.locationTimeout = setTimeout(() => {
+      this.locationTimeout = global.setTimeout(() => {
         this.utilsService.getLocations(address).subscribe(
           (locs: Location[]) => {
             this.showDropdown = true;
