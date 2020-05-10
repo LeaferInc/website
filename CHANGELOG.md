@@ -1,3 +1,11 @@
+## [1.1.1](https://github.com/LeaferInc/website/compare/v1.1.0...v1.1.1) (2020-05-10)
+
+
+### Bug Fixes
+
+* **environment:** add https to socketUrl ([05c4bda](https://github.com/LeaferInc/website/commit/05c4bda377070619ea312a32a6cb76bf384f5468))
+* **environment:** change api url ([6677a66](https://github.com/LeaferInc/website/commit/6677a6651c27d2e8406c30ae84af79c200d73804))
+
 # [1.1.0](https://github.com/LeaferInc/website/compare/v1.0.0...v1.1.0) (2020-05-10)
 
 
