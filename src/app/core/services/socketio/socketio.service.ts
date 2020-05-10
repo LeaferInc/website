@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.local';
-import * as io from 'socket.io-client';
+import io from 'socket.io-client';
 import { Observable, fromEvent, of } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 
