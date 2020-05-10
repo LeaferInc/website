@@ -73,12 +73,12 @@
         </ng-template>
       </ng-container>
       <ng-template #notOwner>
-        <button (click)="showModal()" nz-button nzType="default" nzBlock>Proposer un echange</button>
-        <nz-modal [(nzVisible)]="modalOpen" nzTitle="Message" (nzOnCancel)="handleCancel()" (nzOnOk)="onOffer()">
+        <button (click)="createModal(tplModal)" nz-button nzType="default" nzBlock>Proposer un echange</button>
+        <ng-template #tplModal>
           <form [formGroup]="offerForm">
             <textarea nz-input formControlName="offerInput" rows="3"></textarea>
           </form>
-        </nz-modal>
+        </ng-template>
         <button (click)="onSendMessage()" nz-button nzType="primary" nzBlock>Envoyer un message</button>
       </ng-template>
     </div>

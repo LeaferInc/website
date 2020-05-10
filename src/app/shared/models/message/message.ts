@@ -2,7 +2,7 @@ import { User } from '../user/user';
 import { Room } from '../room/room';
 
 export class CreateMessage {
-  message_content: string;
+  messageContent: string;
   roomId: number;
 }
 
@@ -10,7 +10,7 @@ export class Message {
   id: number;
   createdAt: Date;
   enabled;
-  message_content: string;
+  messageContent: string;
   room: Room;
   user: User;
 }

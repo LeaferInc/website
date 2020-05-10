@@ -10,7 +10,7 @@ import { ResultData } from 'src/app/shared/models/query/query';
 })
 export class MyCuttingComponent implements OnInit {
 
-  public myCuttings: ResultData<Cutting>;
+  public myCuttings: ResultData<Cutting> = { items: [], count: 0 };
   // public current_page = 1;
   // public page_size = 6;
   // public items_count = 200;

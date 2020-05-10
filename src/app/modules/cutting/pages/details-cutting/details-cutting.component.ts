@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { CuttingService } from 'src/app/core/services/cutting/cutting.service';
 import { Cutting } from 'src/app/shared/models/cutting/cutting';
@@ -9,19 +9,20 @@ import { concatMap, tap, switchMap, map, switchAll } from 'rxjs/operators';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { ParticipantService } from 'src/app/core/services/participant/participant.service';
 import { MessageService } from 'src/app/core/services/message/message.service';
-import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalService, NzModalRef } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-details-cutting',
   templateUrl: './details-cutting.component.html',
   styleUrls: ['./details-cutting.component.scss'],
 })
-export class DetailsCuttingComponent implements OnInit {
+export class DetailsCuttingComponent implements OnInit, OnDestroy {
   public cutting: Cutting;
   public loading: boolean = true;
   public currentUser: User;
   public currentRoute: Params;
   public isOnEditMode: boolean = false;
+  public tplModal: NzModalRef;
 
   public updateCuttingForm = new FormGroup({
     nameInput: new FormControl('', [Validators.required]),
@@ -34,8 +35,6 @@ export class DetailsCuttingComponent implements OnInit {
   });
 
   public submitted = false;
-
-  public modalOpen = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -53,17 +52,19 @@ export class DetailsCuttingComponent implements OnInit {
     this.activatedRoute.params.pipe(
       tap(params => this.currentRoute = params.id),
       switchMap(params => this.cuttingService.findOne(params.id)),
+      tap(cutting => this.cutting = cutting),
+      switchMap(() => this.authService.getUserAuth())
     ).subscribe(
-      (res) => {
-        this.cutting = res;
+      (userAuth) => {
+        this.currentUser = userAuth.user
         this.loading = false;
       },
       (err) => console.error(err)
     );
+  }
 
-    this.authService.getUserAuth().subscribe({
-      next: (userAuth) => this.currentUser = userAuth.user
-    });
+  ngOnDestroy(): void {
+    this.modal.closeAll();
   }
 
   onEdit() {
@@ -122,10 +123,8 @@ export class DetailsCuttingComponent implements OnInit {
     const messageValue = this.offerForm.get('offerInput').value;
 
     this.participantService.createWithRoom(this.cutting.ownerId).subscribe((res: any) => {
-      console.log('Yo', res);
-      this.messageService.create({ message_content: messageValue, roomId: res.room.id }).subscribe((res) => {
-        console.log('Ha', res);
-        this.modal.closeAll();
+      this.messageService.create({ messageContent: messageValue, roomId: res.room.id }).subscribe((res) => {
+        this.tplModal.destroy();
         this.router.navigate(['chat', res.room.id]);
       });
     });
@@ -135,11 +134,11 @@ export class DetailsCuttingComponent implements OnInit {
     alert('onSendMessage');
   }
 
-  showModal(): void {
-    this.modalOpen = true;
-  }
-
-  handleCancel(): void {
-    this.modalOpen = false;
+  createModal(tplContent: TemplateRef<{}>) {
+    this.tplModal = this.modal.create({
+      nzTitle: 'Message',
+      nzContent: tplContent,
+      nzOnOk: () => this.onOffer()
+    });
   }
 }

@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 
 describe('EventFormComponent', () => {
   let component: EventFormComponent;
@@ -24,6 +25,7 @@ describe('EventFormComponent', () => {
         NzGridModule,
         NzInputModule,
         NzAutocompleteModule,
+        NzInputNumberModule
       ],
       declarations: [EventFormComponent],
       providers: [
@@ -46,3 +48,4 @@ describe('EventFormComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

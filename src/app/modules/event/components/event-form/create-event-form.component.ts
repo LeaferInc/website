@@ -1,7 +1,7 @@
 /**
  * @author ddaninthe
  */
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { EventService } from 'src/app/core/services/event/event.service';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
@@ -9,6 +9,8 @@ import { Event } from 'src/app/shared/models/event/event.model';
 import { Location } from 'src/app/shared/models/location/location.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-event-form',
@@ -20,11 +22,11 @@ export class EventFormComponent implements OnInit {
   sending: boolean = false; // True when the form has been sent to server
 
   locationChoosed: Location = null; // The Location the user has selected
+  locationChoosedSubject  = new Subject<string>();
   locationTimeout: NodeJS.Timeout; // Delay to search for addresses after user's input
   locations: Location[] = []; // The found addresses
   
   minDate: Date = new Date(); // Minimum choosable Date
-  showDropdown: boolean = false; // True when the dropdown should be shown
 
   @Output() created = new EventEmitter<Event>();
 
@@ -51,35 +53,14 @@ export class EventFormComponent implements OnInit {
       price: new FormControl(0, [Validators.required, Validators.min(0)]),
       maxPeople: new FormControl(10, [Validators.required, Validators.min(1)]),
     });
-  }
 
-  /**
-   * Search potential locations matching with the user's input
-   * @param address The address to search for
-   */
-  getLocations(address: string): void {
-    // Don't search if address is empty or if value has been set by `setFormLocation()`
-    if (address && (!this.locationChoosed || address !== this.locationChoosed.label)) {
-      this.locationChoosed = null;
-      this.showDropdown = true;
-      clearTimeout(this.locationTimeout);
-      this.locationTimeout = global.setTimeout(() => {
-        this.utilsService.getLocations(address).subscribe(
-          (locs: Location[]) => {
-            this.showDropdown = true;
-            this.locations = locs;
-
-            if (!locs.length) {
-              this.showDropdown = false;
-              this.locationChoosed = null;
-            }
-          },
-          (err: Error) => {
-            console.log(err);
-          }
-        );
-      }, 2000);
-    }
+    this.locationChoosedSubject.pipe(
+      debounceTime(1500),
+      distinctUntilChanged(),
+      switchMap((addr) => this.utilsService.getLocations(addr))
+    ).subscribe({
+      next: (locations) => this.locations = locations
+    });
   }
 
   /**

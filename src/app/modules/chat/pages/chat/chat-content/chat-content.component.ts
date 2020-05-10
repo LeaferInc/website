@@ -55,7 +55,7 @@ export class ChatContentComponent implements OnInit {
 
     let message = new CreateMessage();
     message.roomId = Number(this.roomId);
-    message.message_content = this.messageInput.value;
+    message.messageContent = this.messageInput.value;
 
     this.messageForm.reset();
 
