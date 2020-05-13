@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AuthService } from './core/services/auth/auth.service';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
 
 describe('AppComponent', () => {
   const authServiceMock = {
@@ -12,7 +13,8 @@ describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        NzMenuModule
       ],
       providers: [ 
         { provide: AuthService, useValue: authServiceMock } 
