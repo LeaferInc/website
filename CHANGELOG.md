@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/LeaferInc/website/compare/v1.1.1...v1.1.2) (2020-05-11)
+
+
+### Bug Fixes
+
+* **socket:** fix socketio port. Now http and socketio have the same port ([1d91aa5](https://github.com/LeaferInc/website/commit/1d91aa50cb6ba089fa335c5f397ca03937c0aaf8))
+
 ## [1.1.1](https://github.com/LeaferInc/website/compare/v1.1.0...v1.1.1) (2020-05-10)
 
 
