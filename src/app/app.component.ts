@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   title = 'Leafer';
 
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     public appService: AppService,
   ) {}
 
