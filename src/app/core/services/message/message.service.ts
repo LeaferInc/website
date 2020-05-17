@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Message, CreateMessage } from 'src/app/shared/models/message/message';
+import { Message, CreateMessage, CreateDiscussion } from 'src/app/shared/models/message/message';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -14,6 +14,10 @@ export class MessageService {
 
   create(message: CreateMessage): Observable<Message> {
     return this.http.post<Message>(MessageService.MESSAGE_URL, message);
+  }
+
+  createDiscussion(message: CreateDiscussion): Observable<Message> {
+    return this.http.post<Message>(`${MessageService.MESSAGE_URL}/createDiscussion`, message);
   }
 
   findConversation(roomId: number): Observable<Message[]> {

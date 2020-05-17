@@ -12,11 +12,4 @@ export class ParticipantService {
 
   constructor(private http: HttpClient) { }
 
-  create(participant: Participant): Observable<Participant> {
-    return this.http.post<Participant>(ParticipantService.PARTICIPANT_URL, participant);
-  }
-
-  createWithRoom(...usersId): Observable<unknown> {
-    return this.http.post<unknown>(`${ParticipantService.PARTICIPANT_URL}/withRoom`, usersId);
-  }
 }
