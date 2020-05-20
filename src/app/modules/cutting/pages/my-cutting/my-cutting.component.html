@@ -13,10 +13,15 @@
   </div>
 </div>
 
-<ng-container *ngIf="myCuttings.items">
-  <ng-container *ngFor="let cutting of myCuttings?.items">
+<ng-container *ngIf="myCuttings?.items">
+  <ng-container *ngIf="myCuttings?.items?.length !== 0">
     <div nz-row class="cutting-list">
-      <app-my-cutting-card nz-col [nzSpan]="4" [cutting]="cutting"></app-my-cutting-card>
+      <ng-container *ngFor="let cutting of myCuttings?.items">
+          <app-my-cutting-card nz-col [nzSpan]="4" [cutting]="cutting"></app-my-cutting-card>
+      </ng-container>
+    </div>
+    <div nz-row nzJustify="center">
+      <nz-pagination [nzPageIndex]="pageIndex" [nzTotal]="myCuttings?.count" (nzPageIndexChange)="onPageIndexChange($event)"></nz-pagination>
     </div>
   </ng-container>
 

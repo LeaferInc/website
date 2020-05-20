@@ -17,6 +17,7 @@ import { SearchOutline } from '@ant-design/icons-angular/icons';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 @NgModule({
   declarations: [
     CreateCuttingComponent,
@@ -37,7 +38,8 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     NzIconModule.forChild([SearchOutline]),
     NzCardModule,
     NzTypographyModule,
-    NzModalModule
+    NzModalModule,
+    NzPaginationModule
   ],
 })
 export class CuttingModule {}

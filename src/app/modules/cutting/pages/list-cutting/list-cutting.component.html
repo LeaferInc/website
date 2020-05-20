@@ -13,14 +13,21 @@
   </div>
 </div>
 
-<ng-container *ngFor="let cutting of cuttings?.items">
-  <div nz-row class="cutting-list">
-    <app-list-cutting-card nz-col [nzSpan]="4" [cutting]="cutting"></app-list-cutting-card>
-  </div>
-</ng-container>
-
-<ng-container *ngIf="cuttings?.items?.length === 0">
-  <div nz-row nzJustify="center" class="no-cutting">
-    <p>No cutting found</p>
-  </div>
+<ng-container *ngIf="cuttings?.items">
+  <ng-container *ngIf="cuttings?.items?.length !== 0">
+    <div nz-row class="cutting-list">
+      <ng-container *ngFor="let cutting of cuttings?.items">
+          <app-list-cutting-card nz-col [nzSpan]="4" [cutting]="cutting"></app-list-cutting-card>
+      </ng-container>
+    </div>
+    <div nz-row nzJustify="center">
+      <nz-pagination [nzPageIndex]="pageIndex" [nzTotal]="cuttings?.count" (nzPageIndexChange)="onPageIndexChange($event)"></nz-pagination>
+    </div>
+  </ng-container>
+  
+  <ng-container *ngIf="cuttings?.items?.length === 0">
+    <div nz-row nzJustify="center" class="no-cutting">
+      <p>No cutting found</p>
+    </div>
+  </ng-container>
 </ng-container>
