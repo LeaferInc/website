@@ -3,11 +3,11 @@
     <h1>Create Cuttings</h1>
   </div>
   <div nz-col nzOffset="10" nzSpan="4">
-    <form nz-form [formGroup]="createCuttingForm" class="create-cutting-form" (ngSubmit)="onSubmit()">
+    <form nz-form nzLayout="vertical" [formGroup]="createCuttingForm" class="create-cutting-form" (ngSubmit)="onSubmit()">
       <nz-form-item>
-        <nz-form-label [nzSpan]="24" nzFor="name" nzRequired>Name</nz-form-label>
-        <nz-form-control [nzSpan]="24" [nzErrorTip]="nameErrorTpl">
-          <input formControlName="nameInput" type="text" name="name" nz-input placeholder="name" />
+        <nz-form-label nzFor="name" nzRequired>Name</nz-form-label>
+        <nz-form-control [nzErrorTip]="nameErrorTpl">
+          <input formControlName="nameInput" type="text" id="name" nz-input placeholder="name" />
           <ng-template #nameErrorTpl>
             <ng-container *ngIf="createCuttingForm.get('nameInput').hasError('required')">
               Please input a cutting name !
@@ -17,9 +17,9 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSpan]="24" nzFor="description" nzRequired>Description</nz-form-label>
-        <nz-form-control [nzSpan]="24" [nzErrorTip]="descriptionErrorTpl">
-          <textarea rows="3" nz-input formControlName="descriptionInput" name="description" nz-input></textarea>
+        <nz-form-label nzFor="description" nzRequired>Description</nz-form-label>
+        <nz-form-control [nzErrorTip]="descriptionErrorTpl">
+          <textarea rows="3" nz-input formControlName="descriptionInput" id="description" nz-input></textarea>
           <ng-template #descriptionErrorTpl>
             <ng-container *ngIf="createCuttingForm.get('descriptionInput').hasError('required')">
               Please input a cutting description !
@@ -29,9 +29,9 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSpan]="24" nzFor="tradeWith">Trade with</nz-form-label>
-        <nz-form-control [nzSpan]="24" [nzErrorTip]="tradeWithErrorTpl">
-          <input formControlName="tradeWithInput" type="text" name="tradeWith" nz-input />
+        <nz-form-label nzFor="tradeWith">Trade with</nz-form-label>
+        <nz-form-control [nzErrorTip]="tradeWithErrorTpl">
+          <input formControlName="tradeWithInput" type="text" id="tradeWith" nz-input />
           <ng-template #tradeWithErrorTpl>
             <ng-container *ngIf="createCuttingForm.get('tradeWithInput').hasError('required')">
               Please input a trade with !

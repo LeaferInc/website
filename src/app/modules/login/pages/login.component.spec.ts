@@ -7,6 +7,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -20,12 +21,11 @@ describe('LoginComponent', () => {
       declarations: [ LoginComponent ],
       imports: [ ReactiveFormsModule, NzFormModule, NzButtonModule, RouterTestingModule ],
       providers: [
-        { provide: AuthService, useValue: authServiceMock }
+        { provide: AuthService, useValue: authServiceMock },
       ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
-
   }));
 
   beforeEach(() => {

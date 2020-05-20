@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID, ErrorHandler } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +21,7 @@ import { UserOutline, LockOutline } from '@ant-design/icons-angular/icons';
 import localeFr from '@angular/common/locales/fr';
 import localeFrExtra from '@angular/common/locales/extra/fr';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
+import { GlobalErrorHandler } from './core/services/error-handler/global-error.handler';
 
 const icons: IconDefinition[] = [UserOutline, LockOutline];
 
@@ -48,7 +49,8 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ApiUrlInterceptor, multi: true },
     { provide: NZ_I18N, useValue: fr_FR },
-    { provide: LOCALE_ID, useValue: 'fr-FR' }
+    { provide: LOCALE_ID, useValue: 'fr-FR' },
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
   ],
   bootstrap: [AppComponent]
 })

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 import { AuthenticateGuard } from './core/guards/authenticate/authenticate.guard';
+import { NotAuthenticateGuard } from './core/guards/not-authenticate/not-authenticate.guard';
 
 const routes: Routes = [
   { path: '', loadChildren: () => import('src/app/modules/home/home.module').then((m) => m.HomeModule) },
@@ -11,10 +12,12 @@ const routes: Routes = [
     loadChildren: () => import('src/app/modules/event/event.module').then((m) => m.EventModule) },
   {
     path: 'login',
+    canActivate: [ NotAuthenticateGuard ],
     loadChildren: () => import('src/app/modules/login/login.module').then((m) => m.LoginModule),
   },
   {
     path: 'register',
+    canActivate: [ NotAuthenticateGuard ],
     loadChildren: () => import('src/app/modules/register/register.module').then((m) => m.RegisterModule),
   },
   {

@@ -7,20 +7,25 @@ import { of } from 'rxjs';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { Router } from '@angular/router';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
-  let userServiceMock = {
+  const userServiceMock = {
     create: jest.fn()
   };
+  const routerMock = {
+    navigate: jest.fn()
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ RegisterComponent ],
       imports: [ ReactiveFormsModule, NzFormModule, NzButtonModule ],
       providers: [
-        { provide: UserService, useValue: userServiceMock }
+        { provide: UserService, useValue: userServiceMock },
+        { provide: Router, useValue: routerMock}
       ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })

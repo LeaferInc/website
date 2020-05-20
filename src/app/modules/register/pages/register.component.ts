@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormControl, Validators, FormGroup, ValidatorFn, AbstractControl } from '@angular/forms';
 import { UserService } from 'src/app/core/services/user/user.service';
 import { User } from 'src/app/shared/models/user/user';
+import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -39,8 +41,12 @@ export class RegisterComponent {
   );
 
   public submitted: boolean = false;
+  public registerIsLoading = false;
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private router: Router,
+  ) {}
 
   static MatchPassword(control: AbstractControl) {
     return control.get('passwordInput').value === control.get('passwordConfirmInput').value
@@ -49,6 +55,7 @@ export class RegisterComponent {
   }
 
   onSubmit() {
+    this.registerIsLoading = true;
     this.submitted = true;
 
     for (const i in this.registerForm.controls) {
@@ -78,6 +85,11 @@ export class RegisterComponent {
 
     this.userService
       .create(user, this.passwordInput.value)
-      .subscribe();
+      .pipe(
+        finalize(() => this.registerIsLoading = false)
+      )
+      .subscribe({
+        next: () => this.router.navigate(['login']),
+      });
   }
 }
