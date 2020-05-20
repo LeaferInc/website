@@ -26,7 +26,7 @@
       <nz-form-item>
         <nz-form-label nzFor="email" nzRequired>Email</nz-form-label>
         <nz-form-control [nzErrorTip]="emailErrorTpl">
-          <input [formControl]="emailInput" type="text" nz-input name="email" placeholder="Email" autocomplete="on" />
+          <input [formControl]="emailInput" type="text" nz-input id="email" placeholder="Email" autocomplete="on" />
           <ng-template #emailErrorTpl>
             <ng-container *ngIf="emailInput.hasError('required')">
               Please input your email !
