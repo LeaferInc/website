@@ -6,6 +6,11 @@ export class CreateMessage {
   roomId: number;
 }
 
+export class CreateDiscussion {
+  messageContent: string;
+  receiverId: number;
+}
+
 export class Message {
   id: number;
   createdAt: Date;

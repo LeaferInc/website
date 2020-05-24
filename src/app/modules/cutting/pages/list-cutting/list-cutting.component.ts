@@ -3,6 +3,8 @@ import { Cutting } from 'src/app/shared/models/cutting/cutting';
 import { CuttingService } from 'src/app/core/services/cutting/cutting.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ResultData } from 'src/app/shared/models/query/query';
+import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list-cutting',
@@ -17,15 +19,26 @@ export class ListCuttingComponent implements OnInit {
   public searchInput = new FormControl('');
   public searchForm = new FormGroup({});
 
-  constructor(private cuttingService: CuttingService) { }
+  public pageIndex: number;
+  public pageSize = 12;
+
+  constructor(
+    private cuttingService: CuttingService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
-    this.loading = true;
-    this.cuttingService
-      .findAllExchange()
-      .subscribe((cuttings: ResultData<Cutting>) => {
-        this.cuttings = cuttings;
-        this.loading = false;
+    this.activatedRoute.queryParams
+      .pipe(
+        switchMap((params) => {
+          this.pageIndex = params.page || 1;
+          this.loading = true;
+          return this.cuttingService.findAllExchange(((this.pageIndex - 1) * this.pageSize) || 0, this.pageSize)
+        }),
+        finalize(() => this.loading = false)
+      ).subscribe({
+        next: (cuttings: ResultData<Cutting>) => this.cuttings = cuttings
       });
   }
 
@@ -35,5 +48,9 @@ export class ListCuttingComponent implements OnInit {
     }
 
     alert(this.searchInput.value);
+  }
+
+  onPageIndexChange(newIndex: number) {
+    this.router.navigate(['cutting/exchange'], { queryParams: { page: newIndex } })
   }
 }

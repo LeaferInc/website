@@ -11,7 +11,7 @@ import { User } from 'src/app/shared/models/user/user';
 export class AuthService {
 
   static readonly AUTH_URL = 'auth';
-  private userAuth: BehaviorSubject<UserAuth> = new BehaviorSubject<UserAuth>({} as UserAuth);
+  private userAuth: BehaviorSubject<UserAuth> = new BehaviorSubject<UserAuth>(null);
 
   constructor(
     private http: HttpClient,
@@ -51,6 +51,16 @@ export class AuthService {
 
   setUserAuth(userAuth: UserAuth): void {
     this.userAuth.next(userAuth);
+  }
+
+  isLogged(): Observable<boolean> {
+    return new Observable((obs) => {
+      this.userAuth.subscribe({
+        next: (userAuth) => {
+          userAuth ? obs.next(true) : obs.next(false);
+        }
+      });
+    });
   }
   
 }

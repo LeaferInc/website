@@ -20,7 +20,18 @@ export class SocketioService {
       this.authService
       .getUserAuth()
       .subscribe(userAuth => {
-        this.socket = io(`${environment.socketUrl}/chat`, { query: `userId=${userAuth.user.id}` });
+        this.socket = io(
+          `${environment.socketUrl}/chat`,
+          {
+            transportOptions: {
+              polling: {
+                extraHeaders: {
+                  Authorization: `Bearer ${userAuth.token}`
+                }
+              }
+            },
+          }
+        );
         observer.next(this.socket);
         observer.complete();
       })

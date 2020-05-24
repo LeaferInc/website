@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { UserAuth } from 'src/app/shared/models/auth/auth';
+import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -18,9 +20,16 @@ export class LoginComponent {
     passwordInput: this.passwordInput
   });
 
-  constructor(private authService: AuthService) { }
+  public loginIsLoading = false;
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) { }
 
   onSubmit() {
+
+    this.loginIsLoading = true;
 
     for (const key in this.loginForm.controls) {
       this.loginForm.controls[key].markAsDirty();
@@ -35,9 +44,11 @@ export class LoginComponent {
     const passwordValue = this.passwordInput.value;
 
     this.authService.login(String(usernameValue), passwordValue)
-      .subscribe(
-        (res: UserAuth) => console.log(res),
-        err => console.error(err)
+      .pipe(
+        finalize(() => this.loginIsLoading = false)
       )
+      .subscribe({
+        next: () => this.router.navigate(['']),
+      });
   }
 }

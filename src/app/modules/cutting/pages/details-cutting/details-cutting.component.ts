@@ -1,15 +1,15 @@
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { CuttingService } from 'src/app/core/services/cutting/cutting.service';
 import { Cutting } from 'src/app/shared/models/cutting/cutting';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { User } from 'src/app/shared/models/user/user';
-import { combineLatest, Observable, forkJoin } from 'rxjs';
-import { concatMap, tap, switchMap, map, switchAll } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { tap, switchMap } from 'rxjs/operators';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { ParticipantService } from 'src/app/core/services/participant/participant.service';
 import { MessageService } from 'src/app/core/services/message/message.service';
 import { NzModalService, NzModalRef } from 'ng-zorro-antd/modal';
+import { CreateDiscussion } from 'src/app/shared/models/message/message';
 
 @Component({
   selector: 'app-details-cutting',
@@ -41,7 +41,6 @@ export class DetailsCuttingComponent implements OnInit, OnDestroy {
     private router: Router,
     private cuttingService: CuttingService,
     private authService: AuthService,
-    private participantService: ParticipantService,
     private messageService: MessageService,
     private modal: NzModalService,
   ) {}
@@ -120,14 +119,17 @@ export class DetailsCuttingComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const messageValue = this.offerForm.get('offerInput').value;
+    const message: CreateDiscussion = {
+      messageContent: this.offerForm.get('offerInput').value,
+      receiverId: this.cutting.ownerId
+    }
 
-    this.participantService.createWithRoom(this.cutting.ownerId).subscribe((res: any) => {
-      this.messageService.create({ messageContent: messageValue, roomId: res.room.id }).subscribe((res) => {
+    this.messageService.createDiscussion(message).subscribe({
+      next: (message) => {
         this.tplModal.destroy();
-        this.router.navigate(['chat', res.room.id]);
-      });
-    });
+        this.router.navigate(['chat', message.room.id]);
+      }
+    })
   }
 
   onSendMessage() {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, OnDestroy } from '@angular/core';
 import { Message, CreateMessage } from 'src/app/shared/models/message/message';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { User } from 'src/app/shared/models/user/user';
@@ -36,6 +36,9 @@ export class ChatContentComponent implements OnInit {
 
     this.activatedRoute.params.subscribe((routes) => {
       if (routes.roomId) {
+        if(this.roomId) {
+          this.socketService.emit('leaveRoom', this.roomId).subscribe(message => console.log('[Client]', message));
+        }
         this.roomId = routes.roomId;
         this.socketService.emit('joinRoom', Number(routes.roomId)).subscribe();
         this.messageService.findConversation(routes.roomId).subscribe((messages) => (this.messages = messages));
@@ -59,6 +62,6 @@ export class ChatContentComponent implements OnInit {
 
     this.messageForm.reset();
 
-    this.socketService.emit('messageClientToServer', message).subscribe((message: any) => console.log('[ACK]', message));
+    this.messageService.create(message).subscribe((message: Message) => console.log('[MESSAGE]', message));
   }
 }

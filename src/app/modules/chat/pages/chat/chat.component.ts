@@ -47,11 +47,11 @@ export class ChatComponent implements OnInit, OnDestroy {
       });
 
       this.socketService.on('roomJoined').subscribe((message) => {
-        console.log(message);
+        console.log('[Client]', message);
       });
 
       this.socketService.on('roomLeft').subscribe((message) => {
-        console.log(message);
+        console.log('[Client]', message);
       });
     });
   }

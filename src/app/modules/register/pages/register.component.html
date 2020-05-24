@@ -1,130 +1,125 @@
-
 <div nz-row>
   <div nz-col nzOffset="10" nzSpan="4">
     <h1>Register</h1>
   </div>
   <div nz-col nzOffset="10" nzSpan="4">
-    <form nz-form [formGroup]="registerForm" class="register-form" (ngSubmit)="onSubmit()">
+    <form nz-form nzLayout="vertical" [formGroup]="registerForm" class="register-form" (ngSubmit)="onSubmit()">
       <nz-form-item>
+        <nz-form-label nzFor="username" nzRequired>Username</nz-form-label>
         <nz-form-control [nzErrorTip]="usernameErrorTpl">
-          <nz-input-group nzPrefixIcon="user">
-            <input
-              [formControl]="usernameInput"
-              type="text"
-              nz-input
-              placeholder="Username"
-              autocomplete="on"
-            />
-            <ng-template #usernameErrorTpl>
-              <ng-container *ngIf="usernameInput.hasError('required')">
-                Please input your username !
-              </ng-container>
-            </ng-template>
-          </nz-input-group>
+          <input
+            [formControl]="usernameInput"
+            type="text"
+            nz-input
+            id="username"
+            placeholder="Username"
+            autocomplete="on"
+          />
+          <ng-template #usernameErrorTpl>
+            <ng-container *ngIf="usernameInput.hasError('required')">
+              Please input your username !
+            </ng-container>
+          </ng-template>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
+        <nz-form-label nzFor="email" nzRequired>Email</nz-form-label>
         <nz-form-control [nzErrorTip]="emailErrorTpl">
-          <nz-input-group nzPrefixIcon="user">
-            <input
-              [formControl]="emailInput"
-              type="text"
-              nz-input
-              placeholder="Email"
-              autocomplete="on"
-            />
-            <ng-template #emailErrorTpl>
-              <ng-container *ngIf="emailInput.hasError('required')">
-                Please input your email !
-              </ng-container>
-            </ng-template>
-          </nz-input-group>
+          <input [formControl]="emailInput" type="text" nz-input id="email" placeholder="Email" autocomplete="on" />
+          <ng-template #emailErrorTpl>
+            <ng-container *ngIf="emailInput.hasError('required')">
+              Please input your email !
+            </ng-container>
+            <ng-container *ngIf="emailInput.hasError('email')">
+              Email not valid
+            </ng-container>
+          </ng-template>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
+        <nz-form-label nzFor="password" nzRequired>Password</nz-form-label>
         <nz-form-control [nzErrorTip]="passwordErrorTpl">
-          <nz-input-group nzPrefixIcon="user">
-            <input
-              [formControl]="passwordInput"
-              type="password"
-              nz-input
-              placeholder="Password"
-              autocomplete="on"
-            />
-            <ng-template #passwordErrorTpl>
-              <ng-container *ngIf="passwordInput.hasError('required')">
-                Please input your password !
-              </ng-container>
-            </ng-template>
-          </nz-input-group>
+          <input
+            [formControl]="passwordInput"
+            type="password"
+            nz-input
+            id="password"
+            placeholder="Password"
+            autocomplete="on"
+          />
+          <ng-template #passwordErrorTpl>
+            <ng-container *ngIf="passwordInput.hasError('required')">
+              Please input your password !
+            </ng-container>
+          </ng-template>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
+        <nz-form-label nzFor="confirmPassword" nzRequired>Confirm password</nz-form-label>
         <nz-form-control [nzErrorTip]="confirmPasswordErrorTpl">
-          <nz-input-group nzPrefixIcon="user">
-            <input
-              [formControl]="passwordConfirmInput"
-              type="password"
-              nz-input
-              placeholder="Confirm password"
-              autocomplete="on"
-            />
-            <ng-template #confirmPasswordErrorTpl>
-              <ng-container *ngIf="passwordConfirmInput.hasError('required')">
-                Please input your confirm password !
-              </ng-container>
-              <ng-container *ngIf="passwordConfirmInput.hasError('missmatch')">
-                Password doesn't match
-              </ng-container>
-            </ng-template>
-          </nz-input-group>
+          <input
+            [formControl]="passwordConfirmInput"
+            type="password"
+            nz-input
+            id="confirmPassword"
+            placeholder="Confirm password"
+            autocomplete="on"
+          />
+          <ng-template #confirmPasswordErrorTpl>
+            <ng-container *ngIf="passwordConfirmInput.hasError('required')">
+              Please input your confirm password !
+            </ng-container>
+            <ng-container *ngIf="passwordConfirmInput.hasError('missmatch')">
+              Password doesn't match
+            </ng-container>
+          </ng-template>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
+        <nz-form-label nzFor="firstname">Firstname</nz-form-label>
         <nz-form-control [nzErrorTip]="firstnameErrorTpl">
-          <nz-input-group nzPrefixIcon="user">
-            <input
-              [formControl]="firstnameInput"
-              type="text"
-              nz-input
-              placeholder="Firstname"
-              autocomplete="on"
-            />
-            <ng-template #firstnameErrorTpl>
-              <ng-container *ngIf="firstnameInput.hasError('required')">
-                Please input your firstname !
-              </ng-container>
-            </ng-template>
-          </nz-input-group>
+          <input
+            [formControl]="firstnameInput"
+            type="text"
+            nz-input
+            id="firstname"
+            placeholder="Firstname"
+            autocomplete="on"
+          />
+          <ng-template #firstnameErrorTpl>
+            <ng-container *ngIf="firstnameInput.hasError('required')">
+              Please input your firstname !
+            </ng-container>
+          </ng-template>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
+        <nz-form-label nzFor="lastname">Lastname</nz-form-label>
         <nz-form-control [nzErrorTip]="lastnameErrorTpl">
-          <nz-input-group nzPrefixIcon="user">
-            <input
-              [formControl]="lastnameInput"
-              type="text"
-              nz-input
-              placeholder="Lastname"
-              autocomplete="on"
-            />
-            <ng-template #lastnameErrorTpl>
-              <ng-container *ngIf="lastnameInput.hasError('required')">
-                Please input your lastname !
-              </ng-container>
-            </ng-template>
-          </nz-input-group>
+          <input
+            [formControl]="lastnameInput"
+            type="text"
+            nz-input
+            id="lastname"
+            placeholder="Lastname"
+            autocomplete="on"
+          />
+          <ng-template #lastnameErrorTpl>
+            <ng-container *ngIf="lastnameInput.hasError('required')">
+              Please input your lastname !
+            </ng-container>
+          </ng-template>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item nz-row>
         <nz-form-control>
-          <button nz-button nzType="primary">Register</button>
+          <button id="registerBtn" nz-button nzType="primary" [nzLoading]="registerIsLoading">Register</button>
         </nz-form-control>
       </nz-form-item>
     </form>

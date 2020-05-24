@@ -12,7 +12,4 @@ export class RoomService {
 
   constructor(private http: HttpClient) { }
   
-  create(): Observable<Room> {
-    return this.http.post<Room>(RoomService.ROOM_URL, {});
-  }
 }
