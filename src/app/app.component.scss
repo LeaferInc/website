@@ -1,18 +1,9 @@
-.btn-float {
-	position: absolute;
-	width: 60px;
-	height: 60px;
-	bottom: 40px;
-	right: 40px;
-	background-color: #0C9;
-	color: #FFF;
-	border-radius: 50px;
-  text-align: center;
-  font-size: 30px;
-	box-shadow: 2px 2px 3px #999;
-}
+@import 'src/assets/styles/_variables.scss';
 
 nz-header {
+  position: fixed;
+  width: 100%;
+  z-index: 2020;
   justify-content: space-between;
 }
 
@@ -33,9 +24,9 @@ nz-header, .left-nav {
 
 
 nz-content {
+  margin-top: $nav-height;
   overflow-y: auto;
-  flex-direction: column;
-  padding: 30px;
+  padding: 24px 24px 0 24px;
 }
 
 nz-footer {
@@ -47,8 +38,8 @@ nz-footer {
   padding: 24px;
 }
 
-nz-layout {
-  height: 100%;
+.min-full-height {
+  min-height: 100%;
 }
 
 .full-height {

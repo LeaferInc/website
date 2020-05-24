@@ -1,4 +1,4 @@
-<nz-layout>
+<nz-layout [ngClass]="(appService.currentFullHeight | async) ? 'full-height' : 'min-full-height'">
   <nz-header>
     <div class="left-nav">
       <div class="logo"></div>
