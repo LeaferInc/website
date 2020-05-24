@@ -1,3 +1,11 @@
+## [1.1.3](https://github.com/LeaferInc/website/compare/v1.1.2...v1.1.3) (2020-05-24)
+
+
+### Bug Fixes
+
+* **chat:** fix chat display ([847d861](https://github.com/LeaferInc/website/commit/847d861ee005358b442373d5ae02059de04e7780))
+* **register:** change name to id ([f948725](https://github.com/LeaferInc/website/commit/f948725b8245fd5f540b7d1c3002e88274c68ff8))
+
 ## [1.1.2](https://github.com/LeaferInc/website/compare/v1.1.1...v1.1.2) (2020-05-11)
 
 
