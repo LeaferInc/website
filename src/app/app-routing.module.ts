@@ -30,6 +30,11 @@ const routes: Routes = [
     canActivate: [ AuthenticateGuard ],
     loadChildren: () => import('src/app/modules/chat/chat.module').then((m) => m.ChatModule),
   },
+  {
+    path: 'plant',
+    canActivate: [ AuthenticateGuard ],
+    loadChildren: () => import('src/app/modules/plant/plant.module').then(m => m.PlantModule),
+  },
   { path: '**', component: PageNotFoundComponent },
 ];
 

@@ -13,7 +13,12 @@
             <li nz-menu-item [routerLink]="['']">Mes favoris</li>
           </ul>
         </li>
-        <li nz-menu-item [nzMatchRouter]="true">Fiches d'entretien</li>
+        <li nz-submenu nzTitle="Fiches d'entretien">
+          <ul>
+            <li nz-menu-item routerLink="/plant/create" [nzMatchRouter]="true">Créer</li>
+            <li nz-menu-item routerLink="/plant/list" [nzMatchRouter]="true">Liste</li>
+          </ul>
+        </li>
         <li nz-submenu nzTitle="Evenements">
           <ul>
             <li nz-menu-item routerLink="/events/create" [nzMatchRouter]="true">Créer</li>
