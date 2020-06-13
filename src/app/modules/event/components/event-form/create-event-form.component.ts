@@ -1,7 +1,7 @@
 /**
  * @author ddaninthe
  */
-import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { EventService } from 'src/app/core/services/event/event.service';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
@@ -10,7 +10,7 @@ import { Location } from 'src/app/shared/models/location/location.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-event-form',

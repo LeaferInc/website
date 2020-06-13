@@ -6,6 +6,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Event } from 'src/app/shared/models/event/event.model';
 import { HttpClient } from '@angular/common/http';
+import { SearchEvent } from 'src/app/shared/models/event/searchEvent.model';
+
 
 @Injectable()
 export class EventService {
@@ -47,5 +49,12 @@ export class EventService {
    */
   addEvent(event: Event): Observable<Event> {
     return this.http.post<Event>(EventService.BASE_URL, event);
+  }
+
+  /**
+   * Search for events with criteria
+   */
+  searchEvents(search: SearchEvent): Observable<Event[]> {
+    return this.http.get<Event[]>(EventService.BASE_URL + `search?${search.toUrlParams()}`);
   }
 }

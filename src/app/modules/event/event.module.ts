@@ -10,9 +10,12 @@ import { CreateEventComponent } from './pages/create-event/create-event.componen
 import { EventFormComponent } from './components/event-form/create-event-form.component';
 import { EventInfosComponent } from './pages/event-infos/event-infos.component';
 import { EventCardComponent } from './components/event-card/event-card.component';
+import { EventsSearchComponent } from './pages/events-search/events-search.component';
 import { EventsListComponent } from './pages/events-list/events-list.component';
+
 import { EventService } from 'src/app/core/services/event/event.service';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
+
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -35,6 +38,7 @@ import { SearchOutline } from '@ant-design/icons-angular/icons';
     EventInfosComponent,
     EventCardComponent,
     EventsListComponent,
+    EventsSearchComponent,
     EventPipe,
   ],
   imports: [

@@ -2,24 +2,24 @@
 
 <div nz-row style="flex-direction: column;">
   <div nz-col [nzSpan]="8" [nzOffset]="8">
-    <h1>Create event</h1>
+    <h1>Créer un événement</h1>
   </div>
   <div nz-col [nzSpan]="8" [nzOffset]="8">
     <form nz-form novalidate [formGroup]="eventForm" (ngSubmit)="submit()">
       <nz-form-item>
-        <nz-form-label [nzSpan]="24" nzFor="name">Name</nz-form-label>
+        <nz-form-label [nzSpan]="24" nzFor="name">Nom&nbsp;:</nz-form-label>
         <nz-form-control [nzSpan]="24" [nzErrorTip]="nameErrorTpl">
           <input formControlName="name" type="text" name="name" nz-input placeholder="name" />
           <ng-template #nameErrorTpl>
             <ng-container *ngIf="eventForm.get('name').hasError('required')">
-              Please input your name !
+              Veuillez entrer un nom
             </ng-container>
           </ng-template>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSpan]="24" nzFor="description">Description</nz-form-label>
+        <nz-form-label [nzSpan]="24" nzFor="description">Description&nbsp;:</nz-form-label>
         <nz-form-control [nzSpan]="24" [nzErrorTip]="descriptionErrorTpl">
           <textarea
             rows="3"
@@ -31,14 +31,14 @@
           ></textarea>
           <ng-template #descriptionErrorTpl>
             <ng-container *ngIf="eventForm.get('description').hasError('required')">
-              Please input a description !
+              Veuillez entrer une description
             </ng-container>
           </ng-template>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSpan]="24" nzFor="location">Location</nz-form-label>
+        <nz-form-label [nzSpan]="24" nzFor="location">Lieu&nbsp;:</nz-form-label>
         <nz-form-control [nzSpan]="24" [nzErrorTip]="locationErrorTpl">
           <!-- <input nz-input formControlName="location" placeholder="input here" (input)="getLocations($event.target?.value)" [nzAutocomplete]="auto" /> -->
           <!-- <nz-autocomplete [nzDataSource]="locations" nzBackfill #auto></nz-autocomplete> -->
@@ -58,14 +58,14 @@
 
           <ng-template #locationErrorTpl>
             <ng-container *ngIf="eventForm.get('location').hasError('required')">
-              Please input a location !
+              Veuillez sélectionner un lieu
             </ng-container>
           </ng-template>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSpan]="24" nzFor="startDate">Start Date</nz-form-label>
+        <nz-form-label [nzSpan]="24" nzFor="startDate">Début&nbsp;:</nz-form-label>
         <nz-form-control [nzSpan]="24" [nzErrorTip]="startDateErrorTpl">
           <input
             formControlName="startDate"
@@ -76,14 +76,14 @@
           />
           <ng-template #startDateErrorTpl>
             <ng-container *ngIf="eventForm.get('startDate').hasError('required')">
-              Please input a start date !
+              Veuillez entrer une date de début
             </ng-container>
           </ng-template>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSpan]="24" nzFor="endDate">End Date</nz-form-label>
+        <nz-form-label [nzSpan]="24" nzFor="endDate">Fin&nbsp;:</nz-form-label>
         <nz-form-control [nzSpan]="24" [nzErrorTip]="endDateErrorTpl">
           <input
             formControlName="endDate"
@@ -94,7 +94,7 @@
           />
           <ng-template #endDateErrorTpl>
             <ng-container *ngIf="eventForm.get('endDate').hasError('required')">
-              Please input an end date !
+              Veuillez entrer une date de fin
             </ng-container>
           </ng-template>
         </nz-form-control>
@@ -105,33 +105,33 @@
           <nz-range-picker></nz-range-picker>
           <ng-template #endDateErrorTpl>
             <ng-container *ngIf="eventForm.get('endDate').hasError('required')">
-              Please input a date !
+              Please input a date
             </ng-container>
           </ng-template>
         </nz-form-control>
       </nz-form-item> -->
 
       <nz-form-item>
-        <nz-form-label [nzSpan]="24" nzFor="price">Price</nz-form-label>
+        <nz-form-label [nzSpan]="24" nzFor="price">Prix&nbsp;:</nz-form-label>
         <nz-form-control [nzSpan]="24" [nzErrorTip]="priceErrorTpl">
           <!-- <input formControlName="price" type="number" name="price" nz-input placeholder="Price" /> -->
           <nz-input-number formControlName="price" [nzMin]="0" [nzStep]="1"></nz-input-number>
           <ng-template #priceErrorTpl>
             <ng-container *ngIf="eventForm.get('price').hasError('required')">
-              Please input a price !
+              Veuillez entrer un prix
             </ng-container>
           </ng-template>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSpan]="24" nzFor="maxPeople">Max people</nz-form-label>
+        <nz-form-label [nzSpan]="24" nzFor="maxPeople">Capacité&nbsp;:</nz-form-label>
         <nz-form-control [nzSpan]="24" [nzErrorTip]="maxPeopleErrorTpl">
           <!-- <input formControlName="maxPeople" type="number" name="maxPeople" nz-input /> -->
           <nz-input-number formControlName="maxPeople" [nzMin]="1" [nzStep]="1"></nz-input-number>
           <ng-template #maxPeopleErrorTpl>
             <ng-container *ngIf="eventForm.get('maxPeople').hasError('required')">
-              Please input a max people !
+              Veuillez entrer une capacité maximale
             </ng-container>
           </ng-template>
         </nz-form-control>

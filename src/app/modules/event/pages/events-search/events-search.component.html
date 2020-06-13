@@ -1,0 +1,29 @@
+<button nz-button nzType="primary" (click)="searchClosest()">Proches de moi</button>
+
+<form nz-form novalidate [nzLayout]="'inline'" [formGroup]="dateForm" (ngSubmit)="searchDate()">
+	<nz-form-item>
+		<nz-form-label nzFor="startDate">Début</nz-form-label>
+		<nz-form-control [nzErrorTip]="startDateErrorTpl">
+			<input formControlName="startDate" type="datetime-local" name="startDate" nz-input placeholder="jj-mm-aaaa hh:mm" />
+			<ng-template #startDateErrorTpl>
+				<ng-container *ngIf="dateForm.get('startDate').hasError('required')">
+					Veuillez entrer une date
+				</ng-container>
+			</ng-template>
+		</nz-form-control>
+	</nz-form-item>
+	<nz-form-item>
+		<nz-form-control>
+			<button nz-button nzType="primary">Rechercher</button>
+		</nz-form-control>
+	</nz-form-item>
+</form>
+
+<div nz-row *ngIf="searched">
+	<div nz-col [nzSpan]="6" *ngFor="let event of searchedEvents" class="card">
+		<app-event-card [event]="event"></app-event-card>
+	</div>
+	<div nz-col *ngIf="searchedEvents.length === 0" class="event-not-found">
+		Aucun résultat.
+	</div>
+</div>
