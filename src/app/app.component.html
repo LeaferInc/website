@@ -17,8 +17,13 @@
         <li nz-submenu nzTitle="Événements">
           <ul>
             <li nz-menu-item routerLink="/events" [nzMatchRouter]="true" [nzMatchRouterExact]="true">Liste</li>
-            <li nz-menu-item routerLink="/events/search" [nzMatchRouter]="true">Rechercher</li>
             <li nz-menu-item routerLink="/events/create" [nzMatchRouter]="true">Créer</li>
+            <li nz-menu-group nzTitle="Recherche">
+              <ul>
+                <li nz-menu-item routerLink="/events/search/closest" [nzMatchRouter]="true">Proches de moi</li>
+                <li nz-menu-item routerLink="/events/search/date" [nzMatchRouter]="true">Par date</li>
+              </ul>
+            </li>
           </ul>
         </li>
       </ul>
