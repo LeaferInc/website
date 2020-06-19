@@ -1,11 +1,11 @@
 <div nz-row>
   <div nz-col nzOffset="10" nzSpan="4">
-    <h1>Register</h1>
+    <h1>Créer un compte</h1>
   </div>
   <div nz-col nzOffset="10" nzSpan="4">
     <form nz-form nzLayout="vertical" [formGroup]="registerForm" class="register-form" (ngSubmit)="onSubmit()">
       <nz-form-item>
-        <nz-form-label nzFor="username" nzRequired>Username</nz-form-label>
+        <nz-form-label nzFor="username" nzRequired>Nom d'utilisateur</nz-form-label>
         <nz-form-control [nzErrorTip]="usernameErrorTpl">
           <input
             [formControl]="usernameInput"
@@ -17,7 +17,7 @@
           />
           <ng-template #usernameErrorTpl>
             <ng-container *ngIf="usernameInput.hasError('required')">
-              Please input your username !
+              Veuillez saisir un nom d'utilisateur !
             </ng-container>
           </ng-template>
         </nz-form-control>
@@ -29,17 +29,17 @@
           <input [formControl]="emailInput" type="text" nz-input id="email" placeholder="Email" autocomplete="on" />
           <ng-template #emailErrorTpl>
             <ng-container *ngIf="emailInput.hasError('required')">
-              Please input your email !
+              Veuillez saisir un email !
             </ng-container>
             <ng-container *ngIf="emailInput.hasError('email')">
-              Email not valid
+              Email invalide
             </ng-container>
           </ng-template>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label nzFor="password" nzRequired>Password</nz-form-label>
+        <nz-form-label nzFor="password" nzRequired>Mot de passe</nz-form-label>
         <nz-form-control [nzErrorTip]="passwordErrorTpl">
           <input
             [formControl]="passwordInput"
@@ -51,14 +51,14 @@
           />
           <ng-template #passwordErrorTpl>
             <ng-container *ngIf="passwordInput.hasError('required')">
-              Please input your password !
+              Veuillez saisir un mot de passe !
             </ng-container>
           </ng-template>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label nzFor="confirmPassword" nzRequired>Confirm password</nz-form-label>
+        <nz-form-label nzFor="confirmPassword" nzRequired>Confirmer le mot de passe</nz-form-label>
         <nz-form-control [nzErrorTip]="confirmPasswordErrorTpl">
           <input
             [formControl]="passwordConfirmInput"
@@ -70,17 +70,17 @@
           />
           <ng-template #confirmPasswordErrorTpl>
             <ng-container *ngIf="passwordConfirmInput.hasError('required')">
-              Please input your confirm password !
+              Veuillez saisir un mot de passe !
             </ng-container>
             <ng-container *ngIf="passwordConfirmInput.hasError('missmatch')">
-              Password doesn't match
+              Les mots de passe sont différents
             </ng-container>
           </ng-template>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label nzFor="firstname">Firstname</nz-form-label>
+        <nz-form-label nzFor="firstname">Prénom</nz-form-label>
         <nz-form-control [nzErrorTip]="firstnameErrorTpl">
           <input
             [formControl]="firstnameInput"
@@ -92,14 +92,14 @@
           />
           <ng-template #firstnameErrorTpl>
             <ng-container *ngIf="firstnameInput.hasError('required')">
-              Please input your firstname !
+              Veuillez saisir un prénom !
             </ng-container>
           </ng-template>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label nzFor="lastname">Lastname</nz-form-label>
+        <nz-form-label nzFor="lastname">Nom</nz-form-label>
         <nz-form-control [nzErrorTip]="lastnameErrorTpl">
           <input
             [formControl]="lastnameInput"
@@ -111,7 +111,7 @@
           />
           <ng-template #lastnameErrorTpl>
             <ng-container *ngIf="lastnameInput.hasError('required')">
-              Please input your lastname !
+              Veuillez saisir un nom !
             </ng-container>
           </ng-template>
         </nz-form-control>
@@ -119,7 +119,7 @@
 
       <nz-form-item nz-row>
         <nz-form-control>
-          <button id="registerBtn" nz-button nzType="primary" [nzLoading]="registerIsLoading">Register</button>
+          <button id="registerBtn" nz-button nzType="primary" [nzLoading]="registerIsLoading">S'enregistrer</button>
         </nz-form-control>
       </nz-form-item>
     </form>

@@ -12,3 +12,14 @@ export interface User {
   pictureId?: number;
   roomId?: number;
 }
+
+/**
+ * Used for User edition
+ */
+export interface UserEdit {
+  firstname?: string;
+  lastname?: string;
+  birthdate?: Date;
+  biography?: string;
+  location?: string;
+}
