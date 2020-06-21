@@ -27,6 +27,20 @@ export class UtilsService {
   }
 
   /**
+   * Get navigator's current location
+   */
+  getCurrentLocation(): Promise<Location> {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition((pos: Position) => {
+        return resolve(new Location('Current place', pos.coords.latitude, pos.coords.longitude));
+      }),
+        (err: PositionError) => {
+          return reject(err);
+        };
+    });
+  }
+
+  /**
    * Return a localized JSON Date
    * @param date the {@link Date} to convert
    */

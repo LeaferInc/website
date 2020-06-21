@@ -7,7 +7,7 @@
         <li nz-submenu nzTitle="Boutures">
           <ul>
             <li nz-menu-item [routerLink]="['cutting', 'create']" [nzMatchRouter]="true">Publier une bouture</li>
-            <li nz-menu-item [routerLink]="['cutting', 'exchange']" [nzMatchRouter]="true">Echange</li>
+            <li nz-menu-item [routerLink]="['cutting', 'exchange']" [nzMatchRouter]="true">Échanges</li>
             <li nz-menu-item [routerLink]="['cutting', 'inventory']" [nzMatchRouter]="true">Inventaire</li>
             <li nz-menu-item [routerLink]="['chat']" [nzMatchRouter]="true">Mes messages</li>
             <li nz-menu-item [routerLink]="['']">Mes favoris</li>
@@ -21,8 +21,14 @@
         </li>
         <li nz-submenu nzTitle="Evenements">
           <ul>
-            <li nz-menu-item routerLink="/events/create" [nzMatchRouter]="true">Créer</li>
             <li nz-menu-item routerLink="/events" [nzMatchRouter]="true" [nzMatchRouterExact]="true">Liste</li>
+            <li nz-menu-item routerLink="/events/create" [nzMatchRouter]="true">Créer</li>
+            <li nz-menu-group nzTitle="Recherche">
+              <ul>
+                <li nz-menu-item routerLink="/events/search/closest" [nzMatchRouter]="true">Proches de moi</li>
+                <li nz-menu-item routerLink="/events/search/date" [nzMatchRouter]="true">Par date</li>
+              </ul>
+            </li>
           </ul>
         </li>
       </ul>
@@ -30,11 +36,11 @@
 
     <div class="right-nav">
       <ul *ngIf="authService.isLogged() | async" nz-menu [nzSelectable]="false" nzTheme="dark" nzMode="horizontal">
-        <li nz-submenu nzTitle="Account" nzIcon="user">
+        <li nz-submenu nzTitle="Mon compte" nzIcon="user">
           <ul>
             <li nz-menu-group nzTitle="Mes plantes">
               <ul>
-                <li nz-menu-item [nzMatchRouter]="true">Capteur d'humidités</li>
+                <li nz-menu-item [nzMatchRouter]="true">Capteur d'humidité</li>
                 <li nz-menu-item [nzMatchRouter]="true">Quelles plantes pour chez moi ?</li>
               </ul>
             </li>
@@ -43,7 +49,7 @@
                 <li nz-menu-item [nzMatchRouter]="true">Paramètres</li>
                 <li nz-menu-item [nzMatchRouter]="true">Notifications</li>
                 <li nz-menu-item [nzMatchRouter]="true">Confidentialité</li>
-                <li nz-menu-item [nzMatchRouter]="true">A propos</li>
+                <li nz-menu-item [nzMatchRouter]="true">À propos</li>
                 <li nz-menu-divider></li>
                 <li nz-menu-item>Se deconnecter</li>
               </ul>

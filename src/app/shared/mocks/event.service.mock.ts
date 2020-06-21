@@ -20,4 +20,8 @@ export class MockEventService extends EventService {
   getIncomingEvents(): Observable<Event[]> {
     return of(MockEventService.events);
   }
+
+  searchEvents(): Observable<Event[]> {
+    return of(MockEventService.events);
+  }
 }

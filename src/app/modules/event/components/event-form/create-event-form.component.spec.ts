@@ -11,6 +11,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { MockEventService } from 'src/app/shared/mocks/event.service.mock';
 
 describe('EventFormComponent', () => {
   let component: EventFormComponent;
@@ -25,11 +26,11 @@ describe('EventFormComponent', () => {
         NzGridModule,
         NzInputModule,
         NzAutocompleteModule,
-        NzInputNumberModule
+        NzInputNumberModule,
       ],
       declarations: [EventFormComponent],
       providers: [
-        EventService,
+        { provide: EventService, useClass: MockEventService },
         UtilsService,
         { provide: Router, useValue: { navigate: jest.fn() } },
       ],
