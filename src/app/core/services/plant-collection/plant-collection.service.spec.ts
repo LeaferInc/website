@@ -1,16 +1,16 @@
 import { TestBed } from '@angular/core/testing';
-import { PlantService } from './plant.service';
+import { PlantCollectionService } from './plant-collection.service';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 
-describe('PlantService', () => {
-  let service: PlantService;
+describe('PlantCollectionService', () => {
+  let service: PlantCollectionService;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
     });
-    service = TestBed.inject(PlantService);
+    service = TestBed.inject(PlantCollectionService);
     httpMock = TestBed.inject(HttpTestingController);
   });
 

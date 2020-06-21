@@ -1,4 +1,8 @@
-<div nz-row nzGutter="16">
+<div nz-row nzJustify="center" *ngIf="!plantLoading && !plant">
+  <nz-empty></nz-empty>
+</div>
+
+<div nz-row nzGutter="16" *ngIf="!plantLoading && plant">
   <div nz-col nzSpan="12">
     <nz-affix nzOffsetTop="88">
       <img src="https://www.bagherra.eu/wp-content/uploads/2016/11/orionthemes-placeholder-image-1.png" style="height: 80%; width: 100%; object-fit: cover;"/>
@@ -7,53 +11,53 @@
 
   <div nz-col nzSpan="12">
     <div nz-row>
-      <h1 nz-typography>NOM DE LA PLANTE</h1>
+      <h1 nz-typography>{{ plant?.name }}</h1>
     </div>
 
     <div nz-row>
-      <h2 nz-typography>Facile d'entretien</h2>
+      <h2 nz-typography>{{ plant?.difficulty }} d'entretien</h2>
     </div>
 
     <div nz-row>
-      <h4 nz-typography>environ 12 cm</h4>
+      <h4 nz-typography>Environ {{ plant?.height }} cm</h4>
     </div>
 
-    <div nz-row>
+    <div nz-row *ngIf="plant?.wateringFrequencySpringToSummerNumber || plant?.wateringFrequencyAutumnToWinterNumber">
+      <div nz-col nzSpan="24" *ngIf="plant?.wateringFrequencySpringToSummerNumber">
+        Arroser tous les {{ plant?.wateringFrequencySpringToSummerNumber }} {{ plant?.wateringFrequencySpringToSummer }} au printemps - été
+      </div>
+      <div nz-typography nz-col nzSpan="24" *ngIf="plant?.wateringFrequencyAutumnToWinterNumber">
+        Arroser tous les {{ plant?.wateringFrequencyAutumnToWinterNumber }} {{ plant?.wateringFrequencyAutumnToWinter }} au printemps - été
+      </div>
+    </div>
+
+    <div nz-row *ngIf="plant?.exposure">
       <p>
-        Arroser tous les jours au printemps - été
-        Arroser une fois par semaine en automne - hiver
+        {{ plant.exposure }}
       </p>
     </div>
 
-    <div nz-row>
+    <div nz-row *ngIf="plant?.humidity">
       <p>
-        Vaporiser tous les jours au printemps - été
-        Vaporiser une fois par semaine en automne - hiver
+        {{ plant.humidity }}
       </p>
     </div>
 
-    <div nz-row>
+    <div nz-row *ngIf="plant?.potting">
       <p>
-        Exposition à la lumière, sans soleil direct
+        {{ plant.potting }}
       </p>
     </div>
 
-    <div nz-row>
-      <p>
-        Taux d'humidité compris entre 40% et 60%
-      </p>
-    </div>
-
-    <div nz-row>
-      <p>
-        Rempotage au printemps, dans un mélange sable / terreau
-      </p>
-    </div>
-
-    <div nz-row>
+    <div nz-row *ngIf="plant?.toxicity">
       <p>
         Toxique pour les animaux de compagnie
       </p>
+    </div>
+
+    <div nz-row>
+      <button *ngIf="!plantCollection" nz-button nzType="primary" (click)="onAddPlantInCollection()">Ajouter à ma collection</button>
+      <button *ngIf="plantCollection" nz-button nzType="danger" (click)="onDeletePlantInCollection()">Supprimer de ma colleciton</button>
     </div>
     
   </div>

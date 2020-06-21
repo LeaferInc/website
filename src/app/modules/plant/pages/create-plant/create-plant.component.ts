@@ -58,8 +58,8 @@ export class CreatePlantComponent implements OnInit {
     plant.name = this.createPlantForm.get('plantName').value;
     plant.height = this.createPlantForm.get('height').value;
     plant.difficulty = this.createPlantForm.get('difficulty').value;
-    plant.wateringFrequencySpringToSummerNumber = this.createPlantForm.get('wateringFrequencySpringToSummerNumber').value;
-    plant.wateringFrequencyAutumnToWinterNumber = this.createPlantForm.get('wateringFrequencyAutumnToWinterNumber').value;
+    plant.wateringFrequencySpringToSummerNumber = this.createPlantForm.get('wateringFrequencySpringToSummerNumber').value || null;
+    plant.wateringFrequencyAutumnToWinterNumber = this.createPlantForm.get('wateringFrequencyAutumnToWinterNumber').value || null;
     if(plant.wateringFrequencySpringToSummerNumber) {
       plant.wateringFrequencySpringToSummer = this.createPlantForm.get('wateringFrequencySpringToSummer').value;
     }

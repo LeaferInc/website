@@ -15,9 +15,14 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { PlantCardComponent } from './components/plant-card/plant-card.component';
+import { NzCardModule } from 'ng-zorro-antd/card';
 
 @NgModule({
-  declarations: [CreatePlantComponent, DetailsPlantComponent, ListPlantComponent],
+  declarations: [CreatePlantComponent, DetailsPlantComponent, ListPlantComponent, PlantCardComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -31,6 +36,10 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     NzAffixModule,
     NzInputNumberModule,
     NzButtonModule,
+    NzEmptyModule,
+    NzSpinModule,
+    NzPaginationModule,
+    NzCardModule,
   ]
 })
 export class PlantModule { }
