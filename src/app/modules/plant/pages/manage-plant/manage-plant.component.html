@@ -1,0 +1,33 @@
+<div nz-row>
+  <h2 nz-col nzOffset="8" nzSpan="8">Mes Fiches de plante</h2>
+</div>
+
+<div nz-row>
+  <div nz-col nzOffset="8" nzSpan="8">
+    <nz-input-group [nzSuffix]="suffixIconSearch">
+      <input type="text" nz-input placeholder="input search text" />
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+      <i nz-icon nzType="search"></i>
+    </ng-template>
+  </div>
+</div>
+
+<ng-container *ngIf="plants?.items">
+  <ng-container *ngIf="plants?.items?.length !== 0">
+    <div nz-row [nzGutter]="[16, 16]" class="plant-list">
+      <ng-container *ngFor="let plant of plants?.items">
+          <app-plant-card nz-col [nzSpan]="4" [plant]="plant"></app-plant-card>
+      </ng-container>
+    </div>
+    <div nz-row nzJustify="center" class="pagination">
+      <nz-pagination [nzPageIndex]="pageIndex" [nzPageSize]="12" [nzTotal]="plants?.count" (nzPageIndexChange)="onPageIndexChange($event)"></nz-pagination>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="plants?.items?.length === 0">
+    <div nz-row nzJustify="center" class="no-plant">
+      <p>No plant found</p>
+    </div>
+  </ng-container>
+</ng-container>

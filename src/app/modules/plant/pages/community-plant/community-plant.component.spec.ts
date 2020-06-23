@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListPlantComponent } from './list-plant.component';
+import { CommunityPlantComponent } from './community-plant.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PlantService } from 'src/app/core/services/plant/plant.service';
 import { ActivatedRoute } from '@angular/router';
@@ -8,9 +8,9 @@ import { of } from 'rxjs';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 
-describe('ListPlantComponent', () => {
-  let component: ListPlantComponent;
-  let fixture: ComponentFixture<ListPlantComponent>;
+describe('CommunityPlantComponent', () => {
+  let component: CommunityPlantComponent;
+  let fixture: ComponentFixture<CommunityPlantComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -18,7 +18,7 @@ describe('ListPlantComponent', () => {
         RouterTestingModule,
         NzGridModule
       ],
-      declarations: [ ListPlantComponent ],
+      declarations: [ CommunityPlantComponent ],
       providers: [
         { provide: PlantService, useValue: {} },
         { provide: ActivatedRoute, useValue: {queryParams: of({ page: 1 })} }
@@ -29,7 +29,7 @@ describe('ListPlantComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListPlantComponent);
+    fixture = TestBed.createComponent(CommunityPlantComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

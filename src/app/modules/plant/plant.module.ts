@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { PlantRoutingModule } from './plant-routing.module';
 import { CreatePlantComponent } from './pages/create-plant/create-plant.component';
 import { DetailsPlantComponent } from './pages/details-plant/details-plant.component';
-import { ListPlantComponent } from './pages/list-plant/list-plant.component';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -20,9 +19,19 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { PlantCardComponent } from './components/plant-card/plant-card.component';
 import { NzCardModule } from 'ng-zorro-antd/card';
+import { CommunityPlantComponent } from './pages/community-plant/community-plant.component';
+import { ManagePlantComponent } from './pages/manage-plant/manage-plant.component';
+import { MyGardenComponent } from './pages/my-garden/my-garden.component';
 
 @NgModule({
-  declarations: [CreatePlantComponent, DetailsPlantComponent, ListPlantComponent, PlantCardComponent],
+  declarations: [
+    CreatePlantComponent,
+    DetailsPlantComponent,
+    PlantCardComponent,
+    CommunityPlantComponent,
+    ManagePlantComponent,
+    MyGardenComponent,
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -40,6 +49,6 @@ import { NzCardModule } from 'ng-zorro-antd/card';
     NzSpinModule,
     NzPaginationModule,
     NzCardModule,
-  ]
+  ],
 })
-export class PlantModule { }
+export class PlantModule {}
