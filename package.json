@@ -26,6 +26,7 @@
     "@ant-design/icons-angular": "^9.0.1",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "date-fns": "^2.13.0",
+    "date-fns-tz": "^1.0.10",
     "express": "^4.17.1",
     "ng-zorro-antd": "^9.1.0",
     "path": "^0.12.7",
