@@ -3,6 +3,9 @@ import { AuthService } from './core/services/auth/auth.service';
 import { User } from './shared/models/user/user';
 import { UserAuth } from './shared/models/auth/auth';
 import { AppService } from './core/services/app/app.service';
+import { NotificationService } from './core/services/notification/notification.service';
+import { switchMap, filter } from 'rxjs/operators';
+import { Notification } from './shared/models/notification/notification';
 
 @Component({
   selector: 'app-root',
@@ -11,10 +14,14 @@ import { AppService } from './core/services/app/app.service';
 })
 export class AppComponent implements OnInit {
   title = 'Leafer';
+  dateNotif = new Date();
+
+  public notificationsUser: Notification[] = [];
 
   constructor(
     public authService: AuthService,
     public appService: AppService,
+    public notificationService: NotificationService,
   ) {}
 
   ngOnInit() {
@@ -31,5 +38,13 @@ export class AppComponent implements OnInit {
           this.authService.setUserAuth(userAuth);
         });
     }
+
+    this.authService.isLogged().pipe(
+      filter((isLogged) => isLogged === true),
+      switchMap(() => this.notificationService.findNotificationByUser())
+    ).subscribe((notification) => {
+      this.notificationsUser = notification.items;
+    });
+
   }
 }

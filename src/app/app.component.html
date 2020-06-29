@@ -17,7 +17,7 @@
           <ul>
             <li nz-menu-item routerLink="/plant/create" [nzMatchRouter]="true">Créer</li>
             <li nz-menu-item routerLink="/plant/community" [nzMatchRouter]="true">Communauté</li>
-            <li nz-menu-item routerLink="/plant/garden" [nzMatchRouter]="true">Mon jardin</li> <!-- A faire -->
+            <li nz-menu-item routerLink="/plant/garden" [nzMatchRouter]="true">Mon jardin</li>
             <li nz-menu-item routerLink="/plant/manage" [nzMatchRouter]="true">Gestion</li>
           </ul>
         </li>
@@ -38,6 +38,26 @@
 
     <div class="right-nav">
       <ul *ngIf="authService.isLogged() | async" nz-menu [nzSelectable]="false" nzTheme="dark" nzMode="horizontal">
+        <li nz-menu-item>
+          <a nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomRight" nzTrigger="click">
+            <i nz-icon nzType="bell" nzTheme="outline"></i>
+          </a>
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu nzSelectable>
+              <li id="notification-header">
+                <h3>Notifications</h3>
+              </li>
+              <li nz-menu-divider></li>
+              <div style="max-height: 500px; overflow-y: auto;">
+                <ng-container *ngFor="let notification of notificationsUser">
+                  <li nz-menu-item>
+                    <app-notification-item [content]="notification.content" [date]="notification.createdAt"></app-notification-item>
+                  </li>
+                </ng-container>
+              </div>
+            </ul>
+          </nz-dropdown-menu>
+        </li>
         <li nz-submenu nzTitle="Mon compte" nzIcon="user">
           <ul>
             <li nz-menu-group nzTitle="Mes plantes">
