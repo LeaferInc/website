@@ -94,7 +94,9 @@ export class EventFormComponent implements OnInit {
         (err: HttpErrorResponse) => {
           console.log(err);
         },
-        () => (this.sending = false)
+        () =>  {
+          this.sending = false;
+        }
       );
     }
   }

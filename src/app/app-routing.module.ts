@@ -6,29 +6,35 @@ import { NotAuthenticateGuard } from './core/guards/not-authenticate/not-authent
 
 const routes: Routes = [
   { path: '', loadChildren: () => import('src/app/modules/home/home.module').then((m) => m.HomeModule) },
-  { 
+  {
+    path: 'chat',
+    canActivate: [AuthenticateGuard],
+    loadChildren: () => import('src/app/modules/chat/chat.module').then((m) => m.ChatModule),
+  },
+  {
+    path: 'cutting',
+    canActivate: [AuthenticateGuard],
+    loadChildren: () => import('src/app/modules/cutting/cutting.module').then((m) => m.CuttingModule),
+  },
+  {
     path: 'events',
-    canActivate: [ AuthenticateGuard ],
-    loadChildren: () => import('src/app/modules/event/event.module').then((m) => m.EventModule) },
+    canActivate: [AuthenticateGuard],
+    loadChildren: () => import('src/app/modules/event/event.module').then((m) => m.EventModule)
+  },
   {
     path: 'login',
-    canActivate: [ NotAuthenticateGuard ],
+    canActivate: [NotAuthenticateGuard],
     loadChildren: () => import('src/app/modules/login/login.module').then((m) => m.LoginModule),
   },
   {
     path: 'register',
-    canActivate: [ NotAuthenticateGuard ],
+    canActivate: [NotAuthenticateGuard],
     loadChildren: () => import('src/app/modules/register/register.module').then((m) => m.RegisterModule),
   },
   {
-    path: 'cutting',
-    canActivate: [ AuthenticateGuard ],
-    loadChildren: () => import('src/app/modules/cutting/cutting.module').then((m) => m.CuttingModule),
-  },
-  {
-    path: 'chat',
-    canActivate: [ AuthenticateGuard ],
-    loadChildren: () => import('src/app/modules/chat/chat.module').then((m) => m.ChatModule),
+    path: 'users',
+    canActivate: [AuthenticateGuard],
+    loadChildren: () => import('src/app/modules/user/user.module').then((m) => m.UserModule),
   },
   {
     path: 'plant',
@@ -42,4 +48,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

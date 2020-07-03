@@ -1,0 +1,84 @@
+<div nz-row>
+    <div nz-col nzOffset="10" nzSpan="6">
+      <h1>Modification du profil</h1>
+    </div>
+    <div nz-col nzOffset="8" nzSpan="8">
+      <form nz-form nzLayout="vertical" [formGroup]="userForm" class="register-form" (ngSubmit)="submit()">  
+        <nz-form-item>
+          <nz-form-label nzFor="firstname">Prénom&nbsp;:</nz-form-label>
+          <nz-form-control>
+            <input
+              formControlName="firstname"
+              type="text"
+              nz-input
+              id="firstname"
+              placeholder="John"
+              autocomplete="on"
+            />
+          </nz-form-control>
+        </nz-form-item>
+  
+        <nz-form-item>
+          <nz-form-label nzFor="lastname">Nom&nbsp;:</nz-form-label>
+          <nz-form-control>
+            <input
+              formControlName="lastname"
+              type="text"
+              nz-input
+              id="lastname"
+              placeholder="Doe"
+              autocomplete="on"
+            />
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label nzFor="biography">Bio&nbsp;:</nz-form-label>
+            <nz-form-control>
+          <textarea
+            rows="3"
+            nz-input
+            formControlName="biography"
+            name="biography"
+            nz-input
+            placeholder="Quelque chose sur vous"
+          ></textarea>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label nzFor="location">Lieu&nbsp;:</nz-form-label>
+            <nz-form-control>
+              <input
+                formControlName="location"
+                type="text"
+                nz-input
+                id="location"
+                placeholder="ex: Paris"
+                autocomplete="on"
+              />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label nzFor="birthdate">Date de naissance&nbsp;:</nz-form-label>
+            <nz-form-control nzSpan="8">
+              <input
+                formControlName="birthdate"
+                type="date"
+                name="birthdate"
+                nz-input
+                nzLocale="fr"
+              />
+            </nz-form-control>
+          </nz-form-item>
+    
+        <nz-form-item nz-row>
+          <nz-form-control>
+            <button id="registerBtn" nz-button nzType="primary" [disabled]="submitted">Modifier</button>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </div>
+  </div>
+  

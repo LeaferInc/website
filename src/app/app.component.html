@@ -38,8 +38,10 @@
 
     <div class="right-nav">
       <ul *ngIf="authService.isLogged() | async" nz-menu [nzSelectable]="false" nzTheme="dark" nzMode="horizontal">
+        <li nz-menu-item [nzMatchRouter]="true"><i class="fas fa-bell"></i></li>
         <li nz-submenu nzTitle="Mon compte" nzIcon="user">
           <ul>
+            <li nz-menu-item routerLink="/users/me" [nzMatchRouter]="true">Profil</li>
             <li nz-menu-group nzTitle="Mes plantes">
               <ul>
                 <li nz-menu-item [nzMatchRouter]="true">Capteur d'humidité</li>
@@ -49,11 +51,10 @@
             <li nz-menu-group nzTitle="Généralités">
               <ul>
                 <li nz-menu-item [nzMatchRouter]="true">Paramètres</li>
-                <li nz-menu-item [nzMatchRouter]="true">Notifications</li>
                 <li nz-menu-item [nzMatchRouter]="true">Confidentialité</li>
                 <li nz-menu-item [nzMatchRouter]="true">À propos</li>
                 <li nz-menu-divider></li>
-                <li nz-menu-item>Se deconnecter</li>
+                <li nz-menu-item (click)="logout()">Se déconnecter</li>
               </ul>
             </li>
           </ul>
