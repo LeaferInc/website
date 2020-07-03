@@ -17,7 +17,7 @@
   <ng-container *ngIf="cuttings?.items?.length !== 0">
     <div nz-row class="cutting-list">
       <ng-container *ngFor="let cutting of cuttings?.items">
-          <app-list-cutting-card nz-col [nzSpan]="4" [cutting]="cutting"></app-list-cutting-card>
+          <app-list-cutting-card nz-col [nzSpan]="4" [cutting]="cutting" (cuttingDeleted)="cuttingDeleted($event)"></app-list-cutting-card>
       </ng-container>
     </div>
     <div nz-row nzJustify="center">

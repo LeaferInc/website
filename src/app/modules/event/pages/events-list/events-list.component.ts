@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/core/services/event/event.service';
 import { Event } from '../../../../shared/models/event/event.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ResultData } from 'src/app/shared/models/query/query';
 
 @Component({
   selector: 'app-events-list',
@@ -11,7 +12,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class EventsListComponent implements OnInit {
   incomingEvents: Array<Event> = []; // List of incoming events
   joinedEvents: Array<Event> = []; // List of events joined
-  interestedEvent: Array<Event> = []; // List of favorited events
+  interestedEvent: ResultData<Event> = {
+    count: 0,
+    items: []
+  }; // List of favorited events
   filter: string; // Event filter
 
   constructor(private eventService: EventService) { }
@@ -41,8 +45,8 @@ export class EventsListComponent implements OnInit {
     );
 
     // TODO: change
-    this.eventService.getEvents().subscribe(
-      (events: Event[]) => {
+    this.eventService.getEvents(0, 500).subscribe(
+      (events: ResultData<Event>) => {
         this.interestedEvent = events;
         console.log(events);
       },

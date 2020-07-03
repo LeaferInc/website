@@ -1,6 +1,12 @@
-<nz-card [routerLink]="['/plant', plant.id]" nzHoverable [nzCover]="coverTemplate">
+<nz-card [routerLink]="['/plant', plant.id]" nzHoverable [nzCover]="coverTemplate" (contextmenu)="contextMenu($event, menu)">
   <nz-card-meta [nzTitle]="plant.name"></nz-card-meta>
 </nz-card>
 <ng-template #coverTemplate>
   <img alt="photo test" src="https://www.bagherra.eu/wp-content/uploads/2016/11/orionthemes-placeholder-image-1.png" />
 </ng-template>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item (click)="deletePlant()">Supprimer</li>
+  </ul>
+</nz-dropdown-menu>

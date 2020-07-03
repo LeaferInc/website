@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from 'src/app/shared/models/user/user';
 import { Observable } from 'rxjs';
+import { ResultData } from 'src/app/shared/models/query/query';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +19,18 @@ export class UserService {
 
   getTalkTo(): Observable<User[]> {
     return this.http.get<User[]>(`${UserService.USER_URL}/talkto`);
+  }
+
+  getAll(skip?: number, take?: number): Observable<ResultData<User>> {
+    return this.http.get<ResultData<User>>(`${UserService.USER_URL}/all`, {
+      params: {
+        skip: String(skip),
+        take: String(take)
+      }
+    });
+  }
+
+  delete(id: number): Observable<unknown> {
+    return this.http.delete(`${UserService.USER_URL}/${id}`);
   }
 }

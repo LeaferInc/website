@@ -21,6 +21,15 @@ export class PlantService {
     return this.http.get<Plant>(`${PlantService.PLANT_URL}/one?criteria=${id}`);
   }
 
+  public findAll(skip?: number, take?: number): Observable<ResultData<Plant>> {
+    return this.http.get<ResultData<Plant>>(`${PlantService.PLANT_URL}/all`, {
+      params: {
+        skip: String(skip),
+        take: String(take)
+      }
+    });
+  };
+
   public findAllByUser(skip?: number, take?: number): Observable<ResultData<Plant>> {
     return this.http.get<ResultData<Plant>>(`${PlantService.PLANT_URL}/my`, {
       params: {
@@ -46,5 +55,9 @@ export class PlantService {
         take: String(take)
       }
     });
+  }
+
+  delete(id: number): Observable<unknown> {
+    return this.http.delete(`${PlantService.PLANT_URL}/${id}`);
   }
 }

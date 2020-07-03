@@ -1,0 +1,57 @@
+<nz-table 
+  #nzTable
+  [nzData]="plants.items"
+  [nzTotal]="plants.count"
+  [nzPageSize]="pageSize"
+  [nzPageIndex]="pageIndex"
+  [nzFrontPagination]="false"
+  (nzQueryParams)="onQueryParamsChange($event)"
+>
+  <thead>
+    <tr>
+      <th nzWidth="60px"></th>
+      <th>Nom</th>
+      <th>Creation</th>
+      <th>Hauteur</th>
+      <th>Difficulté</th>
+      <th>Proprietaire</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let data of nzTable.data">
+      <tr>
+        <td
+          [nzExpand]="expandSet.has(data.id)"
+          (nzExpandChange)="onExpandChange(data.id, $event)"
+          [nzShowExpand]="data.exposure || data.humidity || data.potting"
+        ></td>
+        <td>{{data.name}}</td>
+        <td>{{data.createdAt}}</td>
+        <td>{{data.height}}</td>
+        <td>{{data.difficulty}}</td>
+        <td>{{data.owner?.username}}</td>
+        <td>
+          <a
+            nz-popconfirm
+            nzPopconfirmTitle="Etes vous sure de supprimer cette plante ?"
+            (nzOnConfirm)="deletePlant(data.id)"
+          >Delete</a>
+        </td>
+      </tr>
+
+      <tr [nzExpand]="expandSet.has(data.id)">
+        <p *ngIf="data.exposure" nz-typography nzEllipsis nzExpandable [nzEllipsisRows]="2">
+          Exposition : {{ data.exposure }}
+        </p>
+        <p *ngIf="data.humidity" nz-typography nzEllipsis nzExpandable [nzEllipsisRows]="2">
+          Humidité :  {{ data.humidity }}
+        </p>
+        <p *ngIf="data.potting" nz-typography nzEllipsis nzExpandable [nzEllipsisRows]="2">
+          Rempotage : {{ data.potting }}
+        </p>
+        {{ data.biography }}
+      </tr>
+    </ng-container>
+  </tbody>
+</nz-table>

@@ -53,4 +53,12 @@ export class ListCuttingComponent implements OnInit {
   onPageIndexChange(newIndex: number) {
     this.router.navigate(['cutting/exchange'], { queryParams: { page: newIndex } })
   }
+
+  cuttingDeleted(id: number) {
+    this.cuttingService
+      .findAllExchange(((this.pageIndex - 1) * this.pageSize) || 0, this.pageSize)
+      .subscribe({
+        next: (cuttings: ResultData<Cutting>) => this.cuttings = cuttings
+      });
+  }
 }

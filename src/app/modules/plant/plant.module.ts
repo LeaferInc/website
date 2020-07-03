@@ -22,6 +22,7 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { CommunityPlantComponent } from './pages/community-plant/community-plant.component';
 import { ManagePlantComponent } from './pages/manage-plant/manage-plant.component';
 import { MyGardenComponent } from './pages/my-garden/my-garden.component';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { MyGardenComponent } from './pages/my-garden/my-garden.component';
     NzSpinModule,
     NzPaginationModule,
     NzCardModule,
+    NzDropDownModule,
   ],
 })
 export class PlantModule {}

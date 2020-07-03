@@ -1,4 +1,4 @@
-<nz-card [routerLink]="['/cutting', cutting.id]" nzHoverable [nzCover]="coverTemplate">
+<nz-card [routerLink]="['/cutting', cutting.id]" nzHoverable [nzCover]="coverTemplate" (contextmenu)="contextMenu($event, menu)">
   <nz-card-meta [nzTitle]="cutting.name" [nzDescription]="descriptionTemplate"></nz-card-meta>
 </nz-card>
 <ng-template #coverTemplate>
@@ -9,3 +9,9 @@
     {{ cutting.description }}
   </p>
 </ng-template>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item (click)="deleteCutting()">Supprimer</li>
+  </ul>
+</nz-dropdown-menu>

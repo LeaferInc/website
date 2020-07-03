@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 import { AuthenticateGuard } from './core/guards/authenticate/authenticate.guard';
 import { NotAuthenticateGuard } from './core/guards/not-authenticate/not-authenticate.guard';
+import { AdminGuard } from './core/guards/admin/admin.guard';
 
 const routes: Routes = [
   { path: '', loadChildren: () => import('src/app/modules/home/home.module').then((m) => m.HomeModule) },
@@ -34,6 +35,11 @@ const routes: Routes = [
     path: 'plant',
     canActivate: [ AuthenticateGuard ],
     loadChildren: () => import('src/app/modules/plant/plant.module').then(m => m.PlantModule),
+  },
+  {
+    path: 'admin',
+    canActivate: [ AuthenticateGuard, AdminGuard ],
+    loadChildren: () => import('src/app/modules/admin/admin.module').then(m => m.AdminModule),
   },
   { path: '**', component: PageNotFoundComponent },
 ];
