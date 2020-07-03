@@ -36,6 +36,11 @@ const routes: Routes = [
     canActivate: [AuthenticateGuard],
     loadChildren: () => import('src/app/modules/user/user.module').then((m) => m.UserModule),
   },
+  {
+    path: 'plant',
+    canActivate: [ AuthenticateGuard ],
+    loadChildren: () => import('src/app/modules/plant/plant.module').then(m => m.PlantModule),
+  },
   { path: '**', component: PageNotFoundComponent },
 ];
 

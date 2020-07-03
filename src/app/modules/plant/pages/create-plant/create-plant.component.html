@@ -1,0 +1,160 @@
+<div nz-row>
+  <div nz-col nzOffset="7" nzSpan="10">
+    <h1 style="text-align: center;">Create Plants</h1>
+  </div>
+
+  <div nz-col nzOffset="7" nzSpan="10">
+    <form nz-form nzLayout="vertical" [formGroup]="createPlantForm" (ngSubmit)="onSubmit()">
+      <nz-form-item>
+        <nz-form-label nzFor="plantName" nzRequired>
+          <h4>Nom de la plante</h4>
+        </nz-form-label>
+        <nz-form-control >
+          <input formControlName="plantName" nz-input placeholder="Plant name" id="plantName" />
+        </nz-form-control>
+      </nz-form-item>
+      
+      <div nz-row nzGutter="16">
+        <div nz-col nzFlex="0 1 auto">
+          <nz-form-item>
+            <nz-form-label nzRequired>
+              <h4>Taille</h4>
+            </nz-form-label>
+            <nz-form-control>
+              <nz-input-number 
+                formControlName="height"
+                [nzMin]="1"
+                [nzFormatter]="formatterCentimeter"
+                [nzParser]="parserCentimeter"
+              ></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzFlex="1 0 auto">
+          <nz-form-item>
+            <nz-form-label nzFor="difficulty" nzRequired>
+              <h4>Facilité d'entretien</h4>
+            </nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="difficulty">
+                <nz-option nzValue="easy" nzLabel="Facile"></nz-option>
+                <nz-option nzValue="medium" nzLabel="Moyen"></nz-option>
+                <nz-option nzValue="hard" nzLabel="Difficile"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      
+      <div nz-row>
+        <h4>Fréquence d'arrosage</h4>
+      </div>
+
+      <div nz-row nzGutter="12">
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label>Printemps - été</nz-form-label>
+            <div nz-row nzGutter="6" nzAlign="middle">
+              <div nz-col nzFlex="0 1 auto" id="extended-label">
+                Tous les
+              </div>
+              <div nz-col nzFlex="0 1 auto">
+                <nz-form-control>
+                  <nz-input-number
+                    formControlName="wateringFrequencySpringToSummerNumber" 
+                    [nzMin]="1"
+                  ></nz-input-number>
+                </nz-form-control>
+              </div>
+              <div nz-col nzFlex="1 0 auto">
+                <nz-form-control>
+                  <nz-select formControlName="wateringFrequencySpringToSummer">
+                    <nz-option nzValue="hour" nzLabel="Hour"></nz-option>
+                    <nz-option nzValue="day" nzLabel="Day"></nz-option>
+                    <nz-option nzValue="week" nzLabel="Week"></nz-option>
+                    <nz-option nzValue="month" nzLabel="Month"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </div>
+            </div>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label>Automne - hiver</nz-form-label>
+            <div nz-row nzGutter="6" nzAlign="middle">
+              <div nz-col nzFlex="0 1 auto" id="extended-label">
+                Tous les
+              </div>
+              <div nz-col nzFlex="0 1 auto">
+                <nz-form-control>
+                  <nz-input-number
+                    formControlName="wateringFrequencyAutumnToWinterNumber"
+                    [nzMin]="1"
+                  ></nz-input-number>
+                </nz-form-control>
+              </div>
+              <div nz-col nzFlex="1 0 auto">
+                <nz-form-control>
+                  <nz-select formControlName="wateringFrequencyAutumnToWinter">
+                    <nz-option nzValue="hour" nzLabel="Hour"></nz-option>
+                    <nz-option nzValue="day" nzLabel="Day"></nz-option>
+                    <nz-option nzValue="week" nzLabel="Week"></nz-option>
+                    <nz-option nzValue="month" nzLabel="Month"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </div>
+            </div>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <nz-form-item>
+        <nz-form-label nzFor="exposure">
+          <h4>Exposition</h4>
+        </nz-form-label>
+        <nz-form-control>
+          <input formControlName="exposure" nz-input placeholder="Exposition" id="exposure" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzFor="humidity">
+          <h4>Taux d'humidité de la pièce</h4>
+        </nz-form-label>
+        <nz-form-control>
+          <input formControlName="humidity" nz-input placeholder="Exposition" id="humidity" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzFor="potting">
+          <h4>Rempotage</h4>
+        </nz-form-label>
+        <nz-form-control>
+          <input formControlName="potting" nz-input placeholder="Rempotage" id="potting"/>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label>
+          <h4>Toxicité</h4>
+        </nz-form-label>
+        <nz-form-control>
+          <nz-radio-group formControlName="toxicity">
+            <label nz-radio [nzValue]="true">Oui</label>
+            <label nz-radio [nzValue]="false">Non</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button nzType="primary" [nzLoading]="btnLoading">Créer</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+</div>

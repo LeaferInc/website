@@ -1,3 +1,11 @@
+# [1.2.0](https://github.com/LeaferInc/website/compare/v1.1.3...v1.2.0) (2020-06-26)
+
+
+### Features
+
+* **event search:** add event search ([9948f19](https://github.com/LeaferInc/website/commit/9948f1908eacb02e0a793346f1f581948c2d8d74))
+* **plant:** add plants ([de052ce](https://github.com/LeaferInc/website/commit/de052ced1ac776fc1a02630ff1b34acc53c8bb24))
+
 ## [1.1.3](https://github.com/LeaferInc/website/compare/v1.1.2...v1.1.3) (2020-05-24)
 
 
