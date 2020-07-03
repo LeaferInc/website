@@ -3,6 +3,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PlantCardComponent } from './plant-card.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Plant } from 'src/app/shared/models/plant/plant';
+import { NzDropDownModule, NzContextMenuService } from 'ng-zorro-antd/dropdown';
+import { PlantService } from 'src/app/core/services/plant/plant.service';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 describe('PlantCardComponent', () => {
   let component: PlantCardComponent;
@@ -11,6 +14,12 @@ describe('PlantCardComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ PlantCardComponent ],
+      providers: [
+        { provide: NzContextMenuService , useValue: {} },
+        { provide: PlantService , useValue: {} },
+        { provide: AuthService , useValue: {} }
+      ],
+      imports: [ NzDropDownModule ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();

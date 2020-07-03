@@ -1,3 +1,8 @@
+export enum Role {
+  USER,
+  ADMIN
+}
+
 export interface User {
   id?: number;
   createdAt?: Date;
@@ -11,6 +16,7 @@ export interface User {
   location?: string;
   pictureId?: number;
   roomId?: number;
+  role?: Role;
 }
 
 /**

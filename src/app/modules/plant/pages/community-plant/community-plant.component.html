@@ -17,7 +17,7 @@
   <ng-container *ngIf="plants?.items?.length !== 0">
     <div nz-row [nzGutter]="[16, 16]" class="plant-list">
       <ng-container *ngFor="let plant of plants?.items">
-          <app-plant-card nz-col [nzSpan]="4" [plant]="plant"></app-plant-card>
+          <app-plant-card nz-col [nzSpan]="4" [plant]="plant" (plantDeleted)="plantDeleted($event)"></app-plant-card>
       </ng-container>
     </div>
     <div nz-row nzJustify="center" class="pagination">

@@ -39,6 +39,15 @@ export class CuttingService {
     });
   }
 
+  findAll(skip?: number, take?: number): Observable<ResultData<Cutting>> {
+    return this.http.get<ResultData<Cutting>>(`${CuttingService.USER_URL}/all`, {
+      params: {
+        skip: String(skip),
+        take: String(take)
+      }
+    });
+  }
+
   edit(cutting: Cutting): Observable<Cutting> {
     return this.http.put<Cutting>(CuttingService.USER_URL, cutting);
   }

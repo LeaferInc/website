@@ -39,10 +39,10 @@
         <h2>Ca m'interesse</h2>
       </div>
       <div nz-row>
-        <div nz-col [nzSpan]="6" *ngFor="let event of interestedEvent | eventFilter: filter" class="card">
+        <div nz-col [nzSpan]="6" *ngFor="let event of interestedEvent.items | eventFilter: filter" class="card">
           <app-event-card [event]="event"></app-event-card>
         </div>
-        <div nz-col *ngIf="interestedEvent.length === 0" class="event-not-found">
+        <div nz-col *ngIf="interestedEvent.items.length === 0" class="event-not-found">
           Aucun évènement trouvé
         </div>
       </div>

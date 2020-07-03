@@ -1,6 +1,7 @@
 import { Event } from '../models/event/event.model';
 import { EventService } from '../../core/services/event/event.service';
 import { of, Observable } from 'rxjs';
+import { ResultData } from '../models/query/query';
 
 export class MockEventService extends EventService {
   public static events: Event[] = [
@@ -9,8 +10,11 @@ export class MockEventService extends EventService {
       new Event("Test name 2", "Test description 2",
       "19 of another street", new Date(2020, 5, 3, 23), new Date(2020, 5, 4, 4), 0, 10, 45.43, 2.12, true, 2)];
 
-  getEvents(): Observable<Event[]> {
-    return of(MockEventService.events);
+  getEvents(skip?: number, take?: number): Observable<ResultData<Event>> {
+    const resultData = new ResultData<Event>();
+    resultData.items = MockEventService.events;
+    resultData.count = 2
+    return of(resultData);
   }
 
   getJoinedEvents(): Observable<Event[]> {

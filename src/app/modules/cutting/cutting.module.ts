@@ -18,6 +18,7 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 @NgModule({
   declarations: [
     CreateCuttingComponent,
@@ -39,7 +40,8 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
     NzCardModule,
     NzTypographyModule,
     NzModalModule,
-    NzPaginationModule
+    NzPaginationModule,
+    NzDropDownModule,
   ],
 })
 export class CuttingModule {}

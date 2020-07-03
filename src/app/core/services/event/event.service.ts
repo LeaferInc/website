@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { Event } from 'src/app/shared/models/event/event.model';
 import { HttpClient } from '@angular/common/http';
 import { SearchEvent } from 'src/app/shared/models/event/searchEvent.model';
+import { ResultData } from 'src/app/shared/models/query/query';
 
 
 @Injectable()
@@ -18,8 +19,13 @@ export class EventService {
   /**
    * Get all Events from the server 
    */
-  getEvents(): Observable<Event[]> {
-    return this.http.get<Event[]>(EventService.BASE_URL);
+  getEvents(skip?: number, take?: number): Observable<ResultData<Event>> {
+    return this.http.get<ResultData<Event>>(EventService.BASE_URL, {
+      params: {
+        skip: String(skip),
+        take: String(take)
+      }
+    });
   }
 
   /**
@@ -57,4 +63,8 @@ export class EventService {
   searchEvents(search: SearchEvent): Observable<Event[]> {
     return this.http.get<Event[]>(EventService.BASE_URL + `search?${search.toUrlParams()}`);
   }
+
+  // delete(): Observable<unknown> {
+  //   return this.http.delete(``);
+  // }
 }

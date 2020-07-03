@@ -1,0 +1,50 @@
+<nz-table 
+  #nzTable
+  [nzData]="events.items"
+  [nzTotal]="events.count"
+  [nzPageSize]="pageSize"
+  [nzPageIndex]="pageIndex"
+  [nzFrontPagination]="false"
+  (nzQueryParams)="onQueryParamsChange($event)"
+>
+  <thead>
+    <tr>
+      <th nzWidth="60px"></th>
+      <th>Nom</th>
+      <th>Location</th>
+      <th>Debut</th>
+      <th>Fin</th>
+      <th>Prix</th>
+      <th>Maximum</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let data of nzTable.data">
+      <tr>
+        <td
+          [nzExpand]="expandSet.has(data.id)"
+          (nzExpandChange)="onExpandChange(data.id, $event)"
+          [nzShowExpand]="data.description"
+        ></td>
+        <td>{{data.name}}</td>
+        <td>{{data.location }}</td>
+        <td>{{data.startDate}}</td>
+        <td>{{data.endDate}}</td>
+        <td>{{data.price}}</td>
+        <td>{{data.maxPeople}}</td>
+        <td>
+          <a
+            nz-popconfirm
+            nzPopconfirmTitle="Etes vous sure de supprimer cette bouture ?"
+            (nzOnConfirm)="deleteEvent(data.id)"
+          >Delete</a>
+        </td>
+      </tr>
+
+      <tr [nzExpand]="expandSet.has(data.id)">
+        {{ data.description }}
+      </tr>
+    </ng-container>
+  </tbody>
+</nz-table>

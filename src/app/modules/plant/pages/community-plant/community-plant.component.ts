@@ -53,7 +53,14 @@ export class CommunityPlantComponent implements OnInit {
   }
 
   onPageIndexChange(newIndex: number) {
-    this.router.navigate(['plant/list'], { queryParams: { page: newIndex } })
+    this.router.navigate(['plant/community'], { queryParams: { page: newIndex } })
   }
 
+  plantDeleted(id: number) {
+    this.plantService
+      .findAllExceptOwner(((this.pageIndex - 1) * this.pageSize) || 0, this.pageSize)
+      .subscribe({
+        next: (plants: ResultData<Plant>) => this.plants = plants
+      });
+  }
 }
