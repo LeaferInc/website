@@ -5,7 +5,7 @@
 <div nz-row>
   <div nz-col nzOffset="8" nzSpan="8">
     <nz-input-group [nzSuffix]="suffixIconSearch">
-      <input type="text" nz-input placeholder="input search text" />
+      <input type="text" nz-input placeholder="Recherche" />
     </nz-input-group>
     <ng-template #suffixIconSearch>
       <i nz-icon nzType="search"></i>
@@ -27,7 +27,7 @@
 
   <ng-container *ngIf="myCuttings?.items.length === 0">
     <div nz-row nzJustify="center" class="no-cutting">
-      <p>No cutting found</p>
+      <p class="not-found">Aucune bouture trouvée</p>
     </div>
   </ng-container>
 </ng-container>

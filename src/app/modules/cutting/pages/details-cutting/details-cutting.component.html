@@ -1,7 +1,8 @@
 <ng-container *ngIf="!loading">
   <div nz-row>
-    <div nz-col [nzSpan]="16" [nzOffset]="4">
-      <img src="/assets/photo_test.jpg" style="height: 450px; width: 100%; object-fit: cover;" />
+    <div nz-col [nzSpan]="12" [nzOffset]="8" class="picture">
+      <img *ngIf="cutting.picture" alt="Image de la bouture" [src]="'data:image/jpg;base64,' + cutting.picture" />
+      <img *ngIf="!cutting.picture" alt="Image de la bouture" src="assets/images/cutting.png" />
     </div>
   </div>
 
@@ -20,12 +21,12 @@
       <ng-template #displayForm>
         <form nz-form novalidate [formGroup]="updateCuttingForm" (ngSubmit)="onConfirmEdit()" id="editForm" #editForm="ngForm">
           <nz-form-item>
-            <nz-form-label [nzSpan]="24" nzFor="name" nzRequired>Name</nz-form-label>
+            <nz-form-label [nzSpan]="24" nzFor="name" nzRequired>Nom</nz-form-label>
             <nz-form-control [nzSpan]="24" [nzErrorTip]="nameErrorTpl">
-              <input formControlName="nameInput" type="text" name="name" nz-input placeholder="name" />
+              <input formControlName="nameInput" type="text" name="name" nz-input placeholder="Nom" />
               <ng-template #nameErrorTpl>
                 <ng-container *ngIf="updateCuttingForm.get('nameInput').hasError('required')">
-                  Please input a cutting name !
+                  Veuillez entrer un nom de bouture
                 </ng-container>
               </ng-template>
             </nz-form-control>
@@ -37,19 +38,19 @@
               <textarea rows="3" nz-input formControlName="descriptionInput" name="description" nz-input></textarea>
               <ng-template #descriptionErrorTpl>
                 <ng-container *ngIf="updateCuttingForm.get('descriptionInput').hasError('required')">
-                  Please input a cutting description !
+                  Veuillez entrer une description de bouture
                 </ng-container>
               </ng-template>
             </nz-form-control>
           </nz-form-item>
 
           <nz-form-item>
-            <nz-form-label [nzSpan]="24" nzFor="tradeWith">Trade with</nz-form-label>
+            <nz-form-label [nzSpan]="24" nzFor="tradeWith">Échange avec</nz-form-label>
             <nz-form-control [nzSpan]="24" [nzErrorTip]="tradeWithErrorTpl">
               <input formControlName="tradeWithInput" type="text" name="tradeWith" nz-input />
               <ng-template #tradeWithErrorTpl>
                 <ng-container *ngIf="updateCuttingForm.get('tradeWithInput').hasError('required')">
-                  Please input a trade with !
+                  Veuillez entrer un échangeur
                 </ng-container>
               </ng-template>
             </nz-form-control>

@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { MockUserService } from 'src/app/shared/mocks/user.service.mock';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
@@ -23,7 +24,7 @@ describe('ProfileComponent', () => {
       declarations: [ ProfileComponent ],
       providers: [
         { provide : AuthService, useClass: MockAuthService },
-        UserService,
+        { provide: UserService, useClass: MockUserService },
         { provide: Router, useValue: { navigate: jest.fn() } },
       ]
     })

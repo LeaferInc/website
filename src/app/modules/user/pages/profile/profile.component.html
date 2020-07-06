@@ -1,6 +1,10 @@
 <div nz-col [nzSpan]="16" [nzOffset]="4" *ngIf="user">
 	<div nz-row>
-		<h3>Mon Profil</h3>
+		<h2>Mon Profil</h2>
+	</div>
+	<div nz-row class="avatar">
+		<img *ngIf="user.picture" [src]="'data:image/jpg;base64,' + user.picture" alt="Avatar de l'utilisateur" />
+		<img *ngIf="!user.picture" src="assets/images/user.png" alt="Avatar de l'utilisateur" />
 	</div>
 	<div nz-row>
 		<p>Pseudo&nbsp;:&nbsp;{{user.username}}</p>
@@ -29,7 +33,7 @@
 			<i class="fas fa-edit"></i>Modifier
 		</button>
 	</div>
-	<br/>
+	<br />
 	<div nz-row>
 		<button nz-button nzDanger (click)="isModalVisible = true">
 			<i class="fas fa-bin"></i>Supprimer le compte
@@ -37,6 +41,6 @@
 
 		<nz-modal [(nzVisible)]="isModalVisible" nzTitle="The first Modal" (nzOnCancel)="isModalVisible = false" (nzOnOk)="deleteAccount()">
 			<p>Voulez-vous vraiment supprimer votre compte ? Cette action est irréversible.</p>
-		  </nz-modal>
+		</nz-modal>
 	</div>
 </div>

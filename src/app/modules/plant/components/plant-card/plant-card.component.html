@@ -2,7 +2,8 @@
   <nz-card-meta [nzTitle]="plant.name"></nz-card-meta>
 </nz-card>
 <ng-template #coverTemplate>
-  <img alt="photo test" src="https://www.bagherra.eu/wp-content/uploads/2016/11/orionthemes-placeholder-image-1.png" />
+  <img *ngIf="plant.picture" alt="Image de la plante" [src]="'data:image/jpg;base64,' + plant.picture" />
+  <img *ngIf="!plant.picture" alt="Image de la plante" src="assets/images/plant.png" />
 </ng-template>
 
 <nz-dropdown-menu #menu="nzDropdownMenu">

@@ -19,8 +19,8 @@ export class EventService {
   /**
    * Get all Events from the server 
    */
-  getEvents(skip?: number, take?: number): Observable<ResultData<Event>> {
-    return this.http.get<ResultData<Event>>(EventService.BASE_URL, {
+  getEvents(skip?: number, take?: number): Observable<Event[]> {
+    return this.http.get<Event[]>(EventService.BASE_URL, {
       params: {
         skip: String(skip),
         take: String(take)

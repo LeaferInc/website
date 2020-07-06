@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { UserService } from 'src/app/core/services/user/user.service';
 import { User, UserEdit } from 'src/app/shared/models/user/user';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { UserAuth } from 'src/app/shared/models/auth/auth';
+import { UploadFile } from 'ng-zorro-antd/upload';
 
 @Component({
   selector: 'app-user-edit',
@@ -17,8 +18,9 @@ export class UserEditComponent implements OnInit {
   userAuth: UserAuth; // The current user
   userForm: FormGroup;
   submitted: boolean = false; // True if the form has been submitted
+  newAvatar: UploadFile;
 
-  constructor(private authService: AuthService, private userService: UserService, private router: Router) { }
+  constructor(private authService: AuthService, public userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.authService.getUserAuth().subscribe(
@@ -54,7 +56,6 @@ export class UserEditComponent implements OnInit {
 
     // Keep only changed fields
     for (let k in changes) {
-      console.log(k, changes[k], this.userAuth.user[k], typeof(changes[k]));
       if (!changes[k] || changes[k] === this.userAuth.user[k]) {
         delete changes[k];
       }

@@ -22,6 +22,13 @@ export class UserService {
   }
 
   /**
+   * Gets the current user's profile
+   */
+  getProfile(): Observable<User> {
+    return this.http.get<User>(`${UserService.USER_URL}/me`);
+  }
+
+  /**
    * Updates current user
    */
   updateProfile(changes: UserEdit): Observable<User> {

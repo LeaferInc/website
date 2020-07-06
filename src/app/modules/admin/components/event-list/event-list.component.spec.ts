@@ -12,10 +12,7 @@ describe('EventListComponent', () => {
   let fixture: ComponentFixture<EventListComponent>;
   const eventServiceMock = {
     getEvents: jest.fn(() => {
-      const resultData = new ResultData<Event>();
-      resultData.items = [];
-      resultData.count = 0;
-      return of(resultData);
+      return of([]);
     })
   }
 

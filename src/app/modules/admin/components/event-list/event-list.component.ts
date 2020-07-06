@@ -12,19 +12,14 @@ import { Event } from 'src/app/shared/models/event/event.model';
 })
 export class EventListComponent implements OnInit {
 
-  public events: ResultData<Event> = {
-    count: 0,
-    items: []
-  };
+  public events: Event[] = [];
 
   public expandSet = new Set<number>();
 
   public pageIndex = 1;
   public pageSize = 8;
 
-  constructor(
-    private eventService: EventService,
-  ) { }
+  constructor(private eventService: EventService) { }
 
   ngOnInit(): void {
     this.loadDataFromServer(this.pageIndex, this.pageSize);

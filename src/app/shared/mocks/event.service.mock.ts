@@ -10,11 +10,8 @@ export class MockEventService extends EventService {
       new Event("Test name 2", "Test description 2",
       "19 of another street", new Date(2020, 5, 3, 23), new Date(2020, 5, 4, 4), 0, 10, 45.43, 2.12, true, 2)];
 
-  getEvents(skip?: number, take?: number): Observable<ResultData<Event>> {
-    const resultData = new ResultData<Event>();
-    resultData.items = MockEventService.events;
-    resultData.count = 2
-    return of(resultData);
+  getEvents(skip?: number, take?: number): Observable<Event[]> {
+    return of(MockEventService.events);
   }
 
   getJoinedEvents(): Observable<Event[]> {

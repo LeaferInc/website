@@ -22,11 +22,11 @@ export class ProfileComponent implements OnInit {
   constructor(private authService: AuthService, private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
-    this.authService.getUserAuth().subscribe(
-      (userAuth: UserAuth) => {
-        this.user = userAuth.user;
+    this.userService.getProfile().subscribe(
+      (user: User) => {
+        this.user = user;
       },
-      (err) => {
+      (err: HttpErrorResponse) => {
         console.log(err);
       }
     );

@@ -1,11 +1,11 @@
 <div nz-row>
   <div nz-col nz-row [nzSpan]="12" id="left-content">
-    <div nz-row><h2>A venir</h2></div>
+    <div nz-row><h2>À venir</h2></div>
     <div nz-row>
       <div nz-col [nzSpan]="6" *ngFor="let event of incomingEvents | eventFilter: filter" class="card">
         <app-event-card [event]="event"></app-event-card>
       </div>
-      <div nz-col *ngIf="incomingEvents.length === 0" class="event-not-found">
+      <div nz-col *ngIf="incomingEvents.length === 0" class="not-found">
         Aucun évènement trouvé
       </div>
     </div>
@@ -14,7 +14,7 @@
   <div nz-col [nzSpan]="12" nz-row id="right-content">
     <div nz-row>
       <nz-input-group [nzSuffix]="suffixIconSearch">
-        <input [(ngModel)]="filter" type="text" nz-input placeholder="input search text" />
+        <input [(ngModel)]="filter" type="text" nz-input placeholder="Recherche" />
       </nz-input-group>
       <ng-template #suffixIconSearch>
         <i nz-icon nzType="search"></i>
@@ -28,7 +28,7 @@
         <div nz-col [nzSpan]="6" *ngFor="let event of joinedEvents | eventFilter: filter" class="card">
           <app-event-card [event]="event"></app-event-card>
         </div>
-        <div nz-col *ngIf="joinedEvents.length === 0" class="event-not-found">
+        <div nz-col *ngIf="joinedEvents.length === 0" class="not-found">
           Aucun évènement trouvé
         </div>
       </div>
@@ -36,13 +36,13 @@
 
     <div nz-col>
       <div nz-row>
-        <h2>Ca m'interesse</h2>
+        <h2>Ça m'interesse</h2>
       </div>
       <div nz-row>
-        <div nz-col [nzSpan]="6" *ngFor="let event of interestedEvent.items | eventFilter: filter" class="card">
+        <div nz-col [nzSpan]="6" *ngFor="let event of interestedEvents | eventFilter: filter" class="card">
           <app-event-card [event]="event"></app-event-card>
         </div>
-        <div nz-col *ngIf="interestedEvent.items.length === 0" class="event-not-found">
+        <div nz-col *ngIf="interestedEvents.length === 0" class="not-found">
           Aucun évènement trouvé
         </div>
       </div>

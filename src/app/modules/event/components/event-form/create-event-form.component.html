@@ -2,14 +2,14 @@
 
 <div nz-row style="flex-direction: column;">
   <div nz-col [nzSpan]="8" [nzOffset]="8">
-    <h1>Créer un événement</h1>
+    <h1>Créer un évènement</h1>
   </div>
   <div nz-col [nzSpan]="8" [nzOffset]="8">
     <form nz-form novalidate [formGroup]="eventForm" (ngSubmit)="submit()">
       <nz-form-item>
         <nz-form-label [nzSpan]="24" nzFor="name">Nom&nbsp;:</nz-form-label>
         <nz-form-control [nzSpan]="24" [nzErrorTip]="nameErrorTpl">
-          <input formControlName="name" type="text" name="name" nz-input placeholder="name" />
+          <input formControlName="name" type="text" name="name" nz-input placeholder="Nom" />
           <ng-template #nameErrorTpl>
             <ng-container *ngIf="eventForm.get('name').hasError('required')">
               Veuillez entrer un nom
@@ -114,7 +114,7 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="24" nzFor="price">Prix&nbsp;:</nz-form-label>
         <nz-form-control [nzSpan]="24" [nzErrorTip]="priceErrorTpl">
-          <!-- <input formControlName="price" type="number" name="price" nz-input placeholder="Price" /> -->
+          <!-- <input formControlName="price" type="number" name="price" nz-input placeholder="Prix" /> -->
           <nz-input-number formControlName="price" [nzMin]="0" [nzStep]="1"></nz-input-number>
           <ng-template #priceErrorTpl>
             <ng-container *ngIf="eventForm.get('price').hasError('required')">

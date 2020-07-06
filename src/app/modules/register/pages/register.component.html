@@ -12,12 +12,12 @@
             type="text"
             nz-input
             id="username"
-            placeholder="Username"
+            placeholder="Nom d'utilisateur"
             autocomplete="on"
           />
           <ng-template #usernameErrorTpl>
             <ng-container *ngIf="usernameInput.hasError('required')">
-              Veuillez saisir un nom d'utilisateur !
+              Veuillez saisir un nom d'utilisateur
             </ng-container>
           </ng-template>
         </nz-form-control>
@@ -29,7 +29,7 @@
           <input [formControl]="emailInput" type="text" nz-input id="email" placeholder="Email" autocomplete="on" />
           <ng-template #emailErrorTpl>
             <ng-container *ngIf="emailInput.hasError('required')">
-              Veuillez saisir un email !
+              Veuillez saisir un email
             </ng-container>
             <ng-container *ngIf="emailInput.hasError('email')">
               Email invalide
@@ -46,12 +46,12 @@
             type="password"
             nz-input
             id="password"
-            placeholder="Password"
+            placeholder="Mot de passe"
             autocomplete="on"
           />
           <ng-template #passwordErrorTpl>
             <ng-container *ngIf="passwordInput.hasError('required')">
-              Veuillez saisir un mot de passe !
+              Veuillez saisir un mot de passe
             </ng-container>
           </ng-template>
         </nz-form-control>
@@ -65,12 +65,12 @@
             type="password"
             nz-input
             id="confirmPassword"
-            placeholder="Confirm password"
+            placeholder="Confirmation du mot de passe"
             autocomplete="on"
           />
           <ng-template #confirmPasswordErrorTpl>
             <ng-container *ngIf="passwordConfirmInput.hasError('required')">
-              Veuillez saisir un mot de passe !
+              Veuillez saisir un mot de passe
             </ng-container>
             <ng-container *ngIf="passwordConfirmInput.hasError('missmatch')">
               Les mots de passe sont différents
@@ -87,12 +87,12 @@
             type="text"
             nz-input
             id="firstname"
-            placeholder="Firstname"
+            placeholder="Prénom"
             autocomplete="on"
           />
           <ng-template #firstnameErrorTpl>
             <ng-container *ngIf="firstnameInput.hasError('required')">
-              Veuillez saisir un prénom !
+              Veuillez saisir un prénom
             </ng-container>
           </ng-template>
         </nz-form-control>
@@ -106,12 +106,12 @@
             type="text"
             nz-input
             id="lastname"
-            placeholder="Lastname"
+            placeholder="Nom"
             autocomplete="on"
           />
           <ng-template #lastnameErrorTpl>
             <ng-container *ngIf="lastnameInput.hasError('required')">
-              Veuillez saisir un nom !
+              Veuillez saisir un nom
             </ng-container>
           </ng-template>
         </nz-form-control>
