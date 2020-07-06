@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChatComponent } from './chat.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/core/services/user/user.service';
-import { SocketioService } from 'src/app/core/services/socketio/socketio.service';
+import { ChatSocketService } from 'src/app/core/services/chat-socket/chat-socket.service';
 import { AppService } from 'src/app/core/services/app/app.service';
 import { of } from 'rxjs';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -17,7 +17,7 @@ describe('ChatComponent', () => {
   const userServiceMock = {
     getTalkTo: jest.fn()
   };
-  const socketioServiceMock = {
+  const chatSocketServiceMock = {
     init: jest.fn(),
     on: jest.fn(),
     disconnect: jest.fn()
@@ -36,7 +36,7 @@ describe('ChatComponent', () => {
       providers: [
         { provide: ActivatedRoute, useValue: { params: of(params) } },
         { provide: UserService, useValue: userServiceMock },
-        { provide: SocketioService, useValue: socketioServiceMock },
+        { provide: ChatSocketService, useValue: chatSocketServiceMock },
         { provide: AppService, useValue: appServiceMock },
         { provide: Router, useValue: routerMock }
       ],
@@ -57,7 +57,7 @@ describe('ChatComponent', () => {
       username: 'username'
     }
     userServiceMock.getTalkTo.mockReturnValue(of([user, user]))
-    socketioServiceMock.init.mockReturnValue(of());
+    chatSocketServiceMock.init.mockReturnValue(of());
     // socketioServiceMock.on.mockReturnValue('message');
 
     fixture.detectChanges();

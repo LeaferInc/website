@@ -2,7 +2,7 @@ import { Component, OnInit, Input, AfterViewInit, OnDestroy } from '@angular/cor
 import { Message, CreateMessage } from 'src/app/shared/models/message/message';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { User } from 'src/app/shared/models/user/user';
-import { SocketioService } from 'src/app/core/services/socketio/socketio.service';
+import { ChatSocketService } from 'src/app/core/services/chat-socket/chat-socket.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MessageService } from 'src/app/core/services/message/message.service';
@@ -28,7 +28,7 @@ export class ChatContentComponent implements OnInit {
     public activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private messageService: MessageService,
-    private socketService: SocketioService
+    private chatSocketService: ChatSocketService
   ) {}
 
   ngOnInit(): void {
@@ -37,15 +37,15 @@ export class ChatContentComponent implements OnInit {
     this.activatedRoute.params.subscribe((routes) => {
       if (routes.roomId) {
         if(this.roomId) {
-          this.socketService.emit('leaveRoom', this.roomId).subscribe(message => console.log('[Client]', message));
+          this.chatSocketService.emit('leaveRoom', this.roomId).subscribe(message => console.log('[Client]', message));
         }
         this.roomId = routes.roomId;
-        this.socketService.emit('joinRoom', Number(routes.roomId)).subscribe();
+        this.chatSocketService.emit('joinRoom', Number(routes.roomId)).subscribe();
         this.messageService.findConversation(routes.roomId).subscribe((messages) => (this.messages = messages));
       }
     });
 
-    this.socketService.on('messageServerToClient').subscribe((message: Message) => {
+    this.chatSocketService.on('messageServerToClient').subscribe((message: Message) => {
       console.log('[Client]', message);
       this.messages.push(message);
     });

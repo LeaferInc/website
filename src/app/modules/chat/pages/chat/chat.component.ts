@@ -5,7 +5,7 @@ import { User } from 'src/app/shared/models/user/user';
 import { Message, CreateMessage } from 'src/app/shared/models/message/message';
 import { MessageService } from 'src/app/core/services/message/message.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import { SocketioService } from 'src/app/core/services/socketio/socketio.service';
+import { ChatSocketService } from 'src/app/core/services/chat-socket/chat-socket.service';
 import { AppService } from 'src/app/core/services/app/app.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   constructor(
     public activatedRoute: ActivatedRoute,
     private userService: UserService,
-    private socketService: SocketioService,
+    private chatSocketService: ChatSocketService,
     private appService: AppService,
     private router: Router
   ) {
@@ -37,20 +37,20 @@ export class ChatComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.socketService.init().subscribe(() => {
-      this.socketService.on('init').subscribe((message) => {
+    this.chatSocketService.init().subscribe(() => {
+      this.chatSocketService.on('init').subscribe((message) => {
         console.log('[Client]', message);
       });
 
-      this.socketService.on('disconnect').subscribe((message) => {
+      this.chatSocketService.on('disconnect').subscribe((message) => {
         console.log('[Client]', message);
       });
 
-      this.socketService.on('roomJoined').subscribe((message) => {
+      this.chatSocketService.on('roomJoined').subscribe((message) => {
         console.log('[Client]', message);
       });
 
-      this.socketService.on('roomLeft').subscribe((message) => {
+      this.chatSocketService.on('roomLeft').subscribe((message) => {
         console.log('[Client]', message);
       });
     });
@@ -58,7 +58,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.appService.setFullHeigh(false);
-    this.socketService.disconnect();
+    this.chatSocketService.disconnect();
   }
 
   onCuttingClicked(ev: Event) {

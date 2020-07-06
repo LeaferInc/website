@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NotificationItemComponent } from './notification-item.component';
+import { Notification } from '../../models/notification/notification';
 
 describe('NotificationItemComponent', () => {
   let component: NotificationItemComponent;
@@ -16,7 +17,10 @@ describe('NotificationItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(NotificationItemComponent);
     component = fixture.componentInstance;
-    component.date = new Date();
+    const notification = new Notification();
+    notification.content = "Notification Content";
+    notification.createdAt = new Date();
+    component.notification = notification;
     fixture.detectChanges();
   });
 

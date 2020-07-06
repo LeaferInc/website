@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
+import { Observable, fromEvent } from 'rxjs';
 import { environment } from 'src/environments/environment.local';
 import io from 'socket.io-client';
-import { Observable, fromEvent, of } from 'rxjs';
-import { AuthService } from '../auth/auth.service';
+import { filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SocketioService {
+export class NotificationSocketService {
 
   private socket: SocketIOClient.Socket;
 
@@ -19,9 +20,12 @@ export class SocketioService {
     return new Observable((observer) => {
       this.authService
       .getUserAuth()
+      .pipe(
+        filter((userAuth) => userAuth ? true : false)
+      )
       .subscribe(userAuth => {
         this.socket = io(
-          `${environment.socketUrl}/chat`,
+          `${environment.socketUrl}/notification`,
           {
             transportOptions: {
               polling: {

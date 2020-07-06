@@ -24,6 +24,7 @@ import { PageNotFoundComponent } from './shared/components/page-not-found/page-n
 import { GlobalErrorHandler } from './core/services/error-handler/global-error.handler';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NotificationItemModule } from './shared/components/notification-item/notification-item.module';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 
 const icons: IconDefinition[] = [UserOutline, LockOutline, BellOutline];
 
@@ -47,6 +48,7 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
     NzIconModule.forRoot(icons),
     NzDropDownModule,
     NotificationItemModule,
+    NzBadgeModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HeadersInterceptor, multi: true },

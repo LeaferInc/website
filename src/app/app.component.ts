@@ -6,6 +6,7 @@ import { AppService } from './core/services/app/app.service';
 import { NotificationService } from './core/services/notification/notification.service';
 import { switchMap, filter } from 'rxjs/operators';
 import { Notification } from './shared/models/notification/notification';
+import { NotificationSocketService } from './core/services/notification-socket/notification-socket.service';
 
 @Component({
   selector: 'app-root',
@@ -18,10 +19,13 @@ export class AppComponent implements OnInit {
 
   public notificationsUser: Notification[] = [];
 
+  public newNotificationCount: number = 0;
+
   constructor(
     public authService: AuthService,
     public appService: AppService,
     public notificationService: NotificationService,
+    public notificationSocketService: NotificationSocketService,
   ) {}
 
   ngOnInit() {
@@ -46,5 +50,27 @@ export class AppComponent implements OnInit {
       this.notificationsUser = notification.items;
     });
 
+    this.notificationSocketService.init().subscribe({
+      next: (socket) => {
+        this.notificationSocketService.on('init').subscribe((message) => {
+          console.log('[Client Notification]', message);
+        });
+
+        this.notificationSocketService.on('disconnect').subscribe((message) => {
+          console.log('[Client Notification]', message);
+        });
+
+        this.notificationSocketService.on('onNotification').subscribe((notification: Notification) => {
+          console.log('[Client Notification]', notification);
+          this.newNotificationCount++;
+          this.notificationsUser.push(notification);
+        });
+      }
+    });
+
+  }
+
+  onNotificationClick() {
+    this.newNotificationCount = 0;
   }
 }
