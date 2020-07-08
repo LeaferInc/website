@@ -12,6 +12,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { MockEventService } from 'src/app/shared/mocks/event.service.mock';
+import { ImagePickerModule } from 'src/app/shared/components/image-picker/image-picker.module';
 
 describe('EventFormComponent', () => {
   let component: EventFormComponent;
@@ -27,6 +28,7 @@ describe('EventFormComponent', () => {
         NzInputModule,
         NzAutocompleteModule,
         NzInputNumberModule,
+        ImagePickerModule,
       ],
       declarations: [EventFormComponent],
       providers: [

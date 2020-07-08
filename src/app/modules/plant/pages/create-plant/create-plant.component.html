@@ -3,6 +3,10 @@
     <h1 style="text-align: center;">Ajout d'une plante</h1>
   </div>
 
+  <div nz-col nzOffset="7" nzSpan="10" class="upload">
+    <app-image-picker label="Image de la plante" required="true" (picked)="newImage = $event"></app-image-picker>
+  </div>
+
   <div nz-col nzOffset="7" nzSpan="10">
     <form nz-form nzLayout="vertical" [formGroup]="createPlantForm" (ngSubmit)="onSubmit()">
       <nz-form-item>

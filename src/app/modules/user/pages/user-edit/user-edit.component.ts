@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { UserAuth } from 'src/app/shared/models/auth/auth';
 import { UploadFile } from 'ng-zorro-antd/upload';
+import { UtilsService } from 'src/app/core/services/utils/utils.service';
 
 @Component({
   selector: 'app-user-edit',
@@ -18,7 +19,9 @@ export class UserEditComponent implements OnInit {
   userAuth: UserAuth; // The current user
   userForm: FormGroup;
   submitted: boolean = false; // True if the form has been submitted
-  newAvatar: UploadFile;
+  newAvatar: UploadFile; // The selected avatar image file
+
+  //sub: Subscription; // Get user observable subscription
 
   constructor(private authService: AuthService, public userService: UserService, private router: Router) { }
 
@@ -46,19 +49,29 @@ export class UserEditComponent implements OnInit {
    * Submit the form to the server to update a user.
    * Only submit changed field
    */
-  submit(): void {
+  async submit(): Promise<void> {
     const changes: UserEdit = this.userForm.value;
-
-    // Parse date
-    if (this.userForm.get('birthdate').value) {
-      changes.birthdate = new Date(this.userForm.get('birthdate').value);
-    }
 
     // Keep only changed fields
     for (let k in changes) {
       if (!changes[k] || changes[k] === this.userAuth.user[k]) {
         delete changes[k];
       }
+    }
+
+    // Handle date
+    if (this.userForm.get('birthdate').value) {
+      const birth = new Date(this.userForm.get('birthdate').value); // Parse input field
+      if (this.userAuth.user.birthdate.getTime() !== birth.getTime()) {
+        changes.birthdate = birth;
+      } else {
+        delete changes.birthdate;
+      }
+    }
+
+    // Handle avatar
+    if (this.newAvatar) {
+      changes.picture = await UtilsService.toBase64(this.newAvatar);
     }
 
     if (Object.keys(changes).length === 0) {

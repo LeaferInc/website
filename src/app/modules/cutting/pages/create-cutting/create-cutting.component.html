@@ -2,6 +2,11 @@
   <div nz-col nzOffset="10" nzSpan="4">
     <h1>Créer un bouture</h1>
   </div>
+
+  <div nz-col nzOffset="10" nzSpan="4">
+    <app-image-picker label="Image" required="true" (picked)="newImage = $event"></app-image-picker>
+  </div>
+
   <div nz-col nzOffset="10" nzSpan="4">
     <form nz-form nzLayout="vertical" [formGroup]="createCuttingForm" class="create-cutting-form" (ngSubmit)="onSubmit()">
       <nz-form-item>
@@ -29,12 +34,12 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label nzFor="tradeWith">Échange avec</nz-form-label>
+        <nz-form-label nzFor="tradeWith">Échange contre</nz-form-label>
         <nz-form-control [nzErrorTip]="tradeWithErrorTpl">
           <input formControlName="tradeWithInput" type="text" id="tradeWith" nz-input />
           <ng-template #tradeWithErrorTpl>
             <ng-container *ngIf="createCuttingForm.get('tradeWithInput').hasError('required')">
-              Veuillez entrer un nom d'échangeur
+              Veuillez indiquer pour quoi vous l'échangeriez
             </ng-container>
           </ng-template>
         </nz-form-control>

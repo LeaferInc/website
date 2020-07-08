@@ -49,4 +49,17 @@ export class UtilsService {
     d.setMinutes(d.getMinutes() - date.getTimezoneOffset())
     return d.toJSON();
   }
+
+  /**
+   * Encodes an image to a base64 string
+   * @param file the file to encode
+   */
+  static toBase64(file): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result.toString().split("base64,")[1]);
+      reader.onerror = error => reject(error);
+    });
+  }
 }

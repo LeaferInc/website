@@ -1,13 +1,16 @@
-<!-- @author ddaninthe -->
-
 <div nz-row style="flex-direction: column;">
   <div nz-col [nzSpan]="8" [nzOffset]="8">
     <h1>Créer un évènement</h1>
   </div>
+
+  <div nz-col nzOffset="8" nzSpan="8">
+    <app-image-picker label="Image de l'évènement" required="true" (picked)="newImage = $event"></app-image-picker>
+  </div>
+
   <div nz-col [nzSpan]="8" [nzOffset]="8">
     <form nz-form novalidate [formGroup]="eventForm" (ngSubmit)="submit()">
       <nz-form-item>
-        <nz-form-label [nzSpan]="24" nzFor="name">Nom&nbsp;:</nz-form-label>
+        <nz-form-label [nzSpan]="24" nzFor="name" nzRequired>Nom&nbsp;:</nz-form-label>
         <nz-form-control [nzSpan]="24" [nzErrorTip]="nameErrorTpl">
           <input formControlName="name" type="text" name="name" nz-input placeholder="Nom" />
           <ng-template #nameErrorTpl>
@@ -19,7 +22,7 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSpan]="24" nzFor="description">Description&nbsp;:</nz-form-label>
+        <nz-form-label [nzSpan]="24" nzFor="description" nzRequired>Description&nbsp;:</nz-form-label>
         <nz-form-control [nzSpan]="24" [nzErrorTip]="descriptionErrorTpl">
           <textarea
             rows="3"
@@ -38,7 +41,7 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSpan]="24" nzFor="location">Lieu&nbsp;:</nz-form-label>
+        <nz-form-label [nzSpan]="24" nzFor="location" nzRequired>Lieu&nbsp;:</nz-form-label>
         <nz-form-control [nzSpan]="24" [nzErrorTip]="locationErrorTpl">
           <!-- <input nz-input formControlName="location" placeholder="input here" (input)="getLocations($event.target?.value)" [nzAutocomplete]="auto" /> -->
           <!-- <nz-autocomplete [nzDataSource]="locations" nzBackfill #auto></nz-autocomplete> -->
@@ -65,7 +68,7 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSpan]="24" nzFor="startDate">Début&nbsp;:</nz-form-label>
+        <nz-form-label [nzSpan]="24" nzFor="startDate" nzRequired>Début&nbsp;:</nz-form-label>
         <nz-form-control [nzSpan]="24" [nzErrorTip]="startDateErrorTpl">
           <input
             formControlName="startDate"
@@ -83,7 +86,7 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSpan]="24" nzFor="endDate">Fin&nbsp;:</nz-form-label>
+        <nz-form-label [nzSpan]="24" nzFor="endDate" nzRequired>Fin&nbsp;:</nz-form-label>
         <nz-form-control [nzSpan]="24" [nzErrorTip]="endDateErrorTpl">
           <input
             formControlName="endDate"
@@ -112,7 +115,7 @@
       </nz-form-item> -->
 
       <nz-form-item>
-        <nz-form-label [nzSpan]="24" nzFor="price">Prix&nbsp;:</nz-form-label>
+        <nz-form-label [nzSpan]="24" nzFor="price" nzRequired>Prix&nbsp;:</nz-form-label>
         <nz-form-control [nzSpan]="24" [nzErrorTip]="priceErrorTpl">
           <!-- <input formControlName="price" type="number" name="price" nz-input placeholder="Prix" /> -->
           <nz-input-number formControlName="price" [nzMin]="0" [nzStep]="1"></nz-input-number>
@@ -125,7 +128,7 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSpan]="24" nzFor="maxPeople">Capacité&nbsp;:</nz-form-label>
+        <nz-form-label [nzSpan]="24" nzFor="maxPeople" nzRequired>Capacité&nbsp;:</nz-form-label>
         <nz-form-control [nzSpan]="24" [nzErrorTip]="maxPeopleErrorTpl">
           <!-- <input formControlName="maxPeople" type="number" name="maxPeople" nz-input /> -->
           <nz-input-number formControlName="maxPeople" [nzMin]="1" [nzStep]="1"></nz-input-number>

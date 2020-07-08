@@ -19,6 +19,9 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { ImagePickerModule } from 'src/app/shared/components/image-picker/image-picker.module';
+import { NzMessageModule  } from 'ng-zorro-antd/message';
+
 @NgModule({
   declarations: [
     CreateCuttingComponent,
@@ -34,6 +37,7 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
     ReactiveFormsModule,
     NzFormModule,
     NzInputModule,
+    NzMessageModule,
     NzButtonModule,
     NzGridModule,
     NzIconModule.forChild([SearchOutline]),
@@ -42,6 +46,7 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
     NzModalModule,
     NzPaginationModule,
     NzDropDownModule,
+    ImagePickerModule,
   ],
 })
 export class CuttingModule {}

@@ -19,7 +19,7 @@
 		<p>Nom&nbsp;:&nbsp;{{user.lastname}}</p>
 	</div>
 	<div nz-row>
-		<p>Naissance&nbsp;:&nbsp;<span [class.undefined]="!user.birthdate">{{user.birthdate ? (user.birthdate | date:'EEE d MMM y à HH:mm') : 'Non renseigné'}}</span></p>
+		<p>Naissance&nbsp;:&nbsp;<span [class.undefined]="!user.birthdate">{{user.birthdate ? (user.birthdate | date:'d MMM y') : 'Non renseigné'}}</span></p>
 	</div>
 	<div nz-row>
 		<p>Lieu&nbsp;:&nbsp;<span [class.undefined]="!user.location">{{user.location ? user.location : 'Non renseigné'}}</span></p>
