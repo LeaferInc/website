@@ -6,6 +6,9 @@ import { Cutting } from 'src/app/shared/models/cutting/cutting';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { User } from 'src/app/shared/models/user/user';
+import { UserAuth } from 'src/app/shared/models/auth/auth';
 
 describe('MyCuttingComponent', () => {
   const cuttings = [new Cutting(), new Cutting()];
@@ -21,6 +24,20 @@ describe('MyCuttingComponent', () => {
   const activatedRouteMock = {
     queryParams: of()
   };
+  const authServiceMock = {
+    getUserAuth: jest.fn(() => {
+      const user: User = {
+        email: 'email',
+        username: 'username',
+        premium: false,
+      };
+      const userAuth: UserAuth = {
+        token: '',
+        user: user
+      };
+      return of(userAuth);
+    })
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -28,7 +45,8 @@ describe('MyCuttingComponent', () => {
       providers: [
         { provide: CuttingService, useValue: cuttingServiceMock },
         { provide: ActivatedRoute, useValue: activatedRouteMock },
-        { provide: Router, useValue: routerMock }
+        { provide: Router, useValue: routerMock },
+        { provide: AuthService, useValue: authServiceMock},
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })

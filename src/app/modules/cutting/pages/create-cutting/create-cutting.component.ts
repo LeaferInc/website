@@ -47,7 +47,6 @@ export class CreateCuttingComponent {
       )
       .subscribe(
         (cuttingNewlyCreated: Cutting) => this.router.navigate(['cutting', cuttingNewlyCreated.id]),
-        err => console.error(err)
       )
   }
 }
