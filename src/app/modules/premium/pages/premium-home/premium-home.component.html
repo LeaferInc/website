@@ -1,4 +1,4 @@
-<div nz-row *ngIf="!(authService.getUserAuth() | async).user.premium; else isPremium">
+<div nz-row *ngIf="!(authService.getUserAuth() | async)?.user?.premium; else isPremium">
   <div nz-col nzSpan="6" nzOffset="9">
     <p>Vous n'etes pas premium</p>
   </div>

@@ -1,21 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { PaymentService } from 'src/app/core/services/payment/payment.service';
 import { filter } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-premium-home',
   templateUrl: './premium-home.component.html',
   styleUrls: ['./premium-home.component.scss']
 })
-export class PremiumHomeComponent implements OnInit {
+export class PremiumHomeComponent implements OnInit, OnDestroy {
 
   private stripe: Stripe;
   private card: StripeCardElement;
   public loading = false;
   public isPremium = false;
+  public getUserAuthSub: Subscription;
 
   public orderForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -29,10 +31,10 @@ export class PremiumHomeComponent implements OnInit {
 
   async ngOnInit() {
 
-    this.authService
+    this.getUserAuthSub = this.authService
       .getUserAuth()
       .pipe(
-        filter((userAuth) => !userAuth.user.premium)
+        filter((userAuth) => userAuth && !userAuth?.user?.premium)
       ).subscribe({
         next: async (userAuth) => {
           this.stripe = await loadStripe('pk_test_51H2EBRFeBcGJPpInMpthBFElJzuhvjhH5v2XYG1iUVOt7eNWvgW74crpuJk9foes2htTYR4VFbbgwsH6aES5oMqa00xT85dK9d');
@@ -52,6 +54,10 @@ export class PremiumHomeComponent implements OnInit {
           });
         }
       });
+  }
+
+  ngOnDestroy() {
+    this.getUserAuthSub.unsubscribe();
   }
 
   onPay() {
