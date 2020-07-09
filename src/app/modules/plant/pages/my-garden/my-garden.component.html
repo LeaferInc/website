@@ -1,5 +1,12 @@
 <div nz-row>
-  <h2 nz-col nzOffset="8" nzSpan="8">Mon jardin</h2>
+  <h2 nz-col nzOffset="8" nzSpan="8">
+    Mon jardin
+  </h2>
+  <h5 nz-col>
+    {{ plants?.count }} / 
+    <ng-container *ngIf="(authService.getUserAuth() | async).user.premium; else plantLimit">illimité</ng-container>
+    <ng-template #plantLimit>3</ng-template>
+  </h5>
 </div>
 
 <div nz-row>

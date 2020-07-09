@@ -4,6 +4,7 @@ import { Plant } from 'src/app/shared/models/plant/plant';
 import { PlantService } from 'src/app/core/services/plant/plant.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-my-garden',
@@ -22,6 +23,7 @@ export class MyGardenComponent implements OnInit {
     private plantService: PlantService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    public authService: AuthService,
   ) { }
   
   ngOnInit(): void {

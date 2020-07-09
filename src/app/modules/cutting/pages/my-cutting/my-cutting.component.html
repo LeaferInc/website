@@ -1,5 +1,10 @@
 <div nz-row>
   <h2 nz-col nzOffset="8" nzSpan="8">Mes boutures à échanger</h2>
+  <h5 nz-col>
+    {{ myCuttings?.count }} / 
+    <ng-container *ngIf="(authService.getUserAuth() | async).user.premium; else cuttingLimit">illimité</ng-container>
+    <ng-template #cuttingLimit>3</ng-template>
+  </h5>
 </div>
 
 <div nz-row>

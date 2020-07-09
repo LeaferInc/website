@@ -1,0 +1,58 @@
+<div nz-row *ngIf="!(authService.getUserAuth() | async)?.user?.premium; else isPremium">
+  <div nz-col nzSpan="6" nzOffset="9">
+    <p>Vous n'etes pas premium</p>
+  </div>
+
+  <div nz-col nzSpan="6" nzOffset="9">
+    <p>Le premium coute 5€</p>
+  </div>
+
+  <div nz-col nzSpan="6" nzOffset="9">
+    <nz-spin [nzSpinning]="loading" nzTip="Loading...">
+      <form nz-form [formGroup]="orderForm" (ngSubmit)="onPay()">
+
+        <nz-form-item>
+          <nz-form-label nzFor="name" nzRequired>Name</nz-form-label>
+          <nz-form-control [nzErrorTip]="nameErrorTpl">
+            <input formControlName="name" type="text" id="name" nz-input placeholder="name" />
+            <ng-template #nameErrorTpl>
+              <ng-container *ngIf="orderForm.get('name').hasError('required')">
+                Please input a full name !
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label nzFor="billingAddress" nzRequired>Adresse de facturation</nz-form-label>
+          <nz-form-control [nzErrorTip]="billingAddressErrorTpl">
+            <input formControlName="address" type="text" id="address" nz-input placeholder="address" />
+            <ng-template #billingAddressErrorTpl>
+              <ng-container *ngIf="orderForm.get('address').hasError('required')">
+                Please input an address !
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+        <div id="card-element">
+          <!-- Elements will create input elements here -->
+        </div>
+
+        <!-- We'll put the error messages in this element -->
+        <div id="card-errors" role="alert"></div>
+
+        <button nz-button type="submit" [disabled]="loading">Pay</button>
+      </form>
+    </nz-spin>
+  </div>
+</div>
+
+<ng-template #isPremium>
+  <div nz-row>
+    <div nz-col nzSpan="6" nzOffset="9">
+      <p>Vous etes premium</p>
+      <p>Vous avez acces à toutes les fonctionnalités du site internet ainsi que de l'application</p>
+    </div>
+  </div>
+</ng-template>

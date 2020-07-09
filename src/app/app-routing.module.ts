@@ -47,6 +47,11 @@ const routes: Routes = [
     canActivate: [ AuthenticateGuard, AdminGuard ],
     loadChildren: () => import('src/app/modules/admin/admin.module').then(m => m.AdminModule),
   },
+  {
+    path: 'premium',
+    canActivate: [ AuthenticateGuard ],
+    loadChildren: () => import('src/app/modules/premium/premium.module').then(m => m.PremiumModule),
+  },
   { path: '**', component: PageNotFoundComponent },
 ];
 

@@ -17,6 +17,7 @@ export interface User {
   picture?: string;
   roomId?: number;
   role?: Role;
+  premium?: boolean;
 }
 
 /**
@@ -29,4 +30,8 @@ export interface UserEdit {
   biography?: string;
   location?: string;
   picture?: string;
+}
+
+export interface PaymentClientSecret {
+  clientSecret: string;
 }

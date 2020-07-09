@@ -58,6 +58,20 @@ export class AuthService {
     this.userAuth.next(userAuth);
   }
 
+  setUserPremium(premium: boolean): void {
+    const currentUserAuth = this.userAuth.value;
+
+    const currentUser = {...currentUserAuth.user, ...{ premium: true }};
+
+    const newUserAuth: UserAuth = {
+      token: currentUserAuth.token,
+      user: currentUser
+    };
+
+    const mergedUserAuth = { ...currentUserAuth, ...newUserAuth };
+    this.userAuth.next(mergedUserAuth);
+  }
+
   isLogged(): Observable<boolean> {
     return new Observable((obs) => {
       this.userAuth.subscribe({
