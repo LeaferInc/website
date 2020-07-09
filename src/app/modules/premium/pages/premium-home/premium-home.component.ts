@@ -90,8 +90,8 @@ export class PremiumHomeComponent implements OnInit {
           this.isPremium = true;
           this.authService.setUserPremium(true);
         }
+        this.loading = false
       },
-      complete: () => this.loading = false
     });
   }
 
