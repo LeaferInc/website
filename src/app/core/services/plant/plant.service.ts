@@ -9,7 +9,7 @@ import { ResultData } from 'src/app/shared/models/query/query';
 })
 export class PlantService {
 
-  static readonly PLANT_URL = 'plant';
+  static readonly PLANT_URL = 'plants';
 
   constructor(private http: HttpClient) { }
 

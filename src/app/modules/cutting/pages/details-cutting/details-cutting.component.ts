@@ -43,13 +43,13 @@ export class DetailsCuttingComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private messageService: MessageService,
     private modal: NzModalService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loading = true;
 
     this.activatedRoute.params.pipe(
-      tap(params => this.currentRoute = params.id),
+      tap(params => this.currentRoute = params),
       switchMap(params => this.cuttingService.findOne(params.id)),
       tap(cutting => this.cutting = cutting),
       switchMap(() => this.authService.getUserAuth())
@@ -121,7 +121,7 @@ export class DetailsCuttingComponent implements OnInit, OnDestroy {
 
     const message: CreateDiscussion = {
       messageContent: this.offerForm.get('offerInput').value,
-      receiverId: this.cutting.ownerId
+      receiverId: this.cutting.ownerId,
     }
 
     this.messageService.createDiscussion(message).subscribe({
@@ -129,7 +129,7 @@ export class DetailsCuttingComponent implements OnInit, OnDestroy {
         this.tplModal.destroy();
         this.router.navigate(['chat', message.room.id]);
       }
-    })
+    });
   }
 
   onSendMessage() {
@@ -140,7 +140,7 @@ export class DetailsCuttingComponent implements OnInit, OnDestroy {
     this.tplModal = this.modal.create({
       nzTitle: 'Message',
       nzContent: tplContent,
-      nzOnOk: () => this.onOffer()
+      nzOnOk: () => this.onOffer(),
     });
   }
 }

@@ -1,7 +1,16 @@
-<div nz-row>
+<div nz-row *ngIf="!userAuth" class="not-found">
+  Loading...
+</div>
+
+<div nz-row *ngIf="userAuth">
     <div nz-col nzOffset="10" nzSpan="6">
       <h1>Modification du profil</h1>
     </div>
+
+    <div nz-col nzOffset="8" nzSpan="8">
+      <app-image-picker label="Avatar" (picked)="newAvatar = $event"></app-image-picker>
+    </div>
+
     <div nz-col nzOffset="8" nzSpan="8">
       <form nz-form nzLayout="vertical" [formGroup]="userForm" class="register-form" (ngSubmit)="submit()">  
         <nz-form-item>

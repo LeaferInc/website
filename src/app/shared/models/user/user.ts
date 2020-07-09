@@ -14,7 +14,7 @@ export interface User {
   birthdate?: Date;
   biography?: string;
   location?: string;
-  pictureId?: number;
+  picture?: string;
   roomId?: number;
   role?: Role;
   premium?: boolean;
@@ -29,6 +29,7 @@ export interface UserEdit {
   birthdate?: Date;
   biography?: string;
   location?: string;
+  picture?: string;
 }
 
 export interface PaymentClientSecret {

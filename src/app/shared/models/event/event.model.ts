@@ -12,5 +12,6 @@ export class Event {
         public longitude: number,
         public joined: boolean = false,
         public id?: number,
+        public picture?: string,
         public organizer?: User) { }
 }

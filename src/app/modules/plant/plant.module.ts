@@ -23,6 +23,8 @@ import { CommunityPlantComponent } from './pages/community-plant/community-plant
 import { ManagePlantComponent } from './pages/manage-plant/manage-plant.component';
 import { MyGardenComponent } from './pages/my-garden/my-garden.component';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { ImagePickerModule } from 'src/app/shared/components/image-picker/image-picker.module';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 @NgModule({
   declarations: [
@@ -48,9 +50,11 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
     NzButtonModule,
     NzEmptyModule,
     NzSpinModule,
+    NzMessageModule,
     NzPaginationModule,
     NzCardModule,
     NzDropDownModule,
+    ImagePickerModule,
   ],
 })
 export class PlantModule {}

@@ -1,6 +1,10 @@
 <div nz-col [nzSpan]="16" [nzOffset]="4" *ngIf="user">
 	<div nz-row>
-		<h3>Mon Profil</h3>
+		<h2>Mon Profil</h2>
+	</div>
+	<div nz-row class="avatar">
+		<img *ngIf="user.picture" [src]="'data:image/jpg;base64,' + user.picture" alt="Avatar de l'utilisateur" />
+		<img *ngIf="!user.picture" src="assets/images/user.png" alt="Avatar de l'utilisateur" />
 	</div>
 	<div nz-row>
 		<p>Pseudo&nbsp;:&nbsp;{{user.username}}</p>
@@ -15,7 +19,7 @@
 		<p>Nom&nbsp;:&nbsp;{{user.lastname}}</p>
 	</div>
 	<div nz-row>
-		<p>Naissance&nbsp;:&nbsp;<span [class.undefined]="!user.birthdate">{{user.birthdate ? (user.birthdate | date:'EEE d MMM y à HH:mm') : 'Non renseigné'}}</span></p>
+		<p>Naissance&nbsp;:&nbsp;<span [class.undefined]="!user.birthdate">{{user.birthdate ? (user.birthdate | date:'d MMM y') : 'Non renseigné'}}</span></p>
 	</div>
 	<div nz-row>
 		<p>Lieu&nbsp;:&nbsp;<span [class.undefined]="!user.location">{{user.location ? user.location : 'Non renseigné'}}</span></p>
@@ -29,7 +33,7 @@
 			<i class="fas fa-edit"></i>Modifier
 		</button>
 	</div>
-	<br/>
+	<br />
 	<div nz-row>
 		<button nz-button nzDanger (click)="isModalVisible = true">
 			<i class="fas fa-bin"></i>Supprimer le compte
@@ -37,6 +41,6 @@
 
 		<nz-modal [(nzVisible)]="isModalVisible" nzTitle="The first Modal" (nzOnCancel)="isModalVisible = false" (nzOnOk)="deleteAccount()">
 			<p>Voulez-vous vraiment supprimer votre compte ? Cette action est irréversible.</p>
-		  </nz-modal>
+		</nz-modal>
 	</div>
 </div>

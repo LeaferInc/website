@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,6 +18,7 @@ import { SearchOutline } from '@ant-design/icons-angular/icons';
 import { UserService } from 'src/app/core/services/user/user.service';
 import { UserRoutingModule } from './user-routing.module';
 import { UserEditComponent } from './pages/user-edit/user-edit.component';
+import { ImagePickerModule } from 'src/app/shared/components/image-picker/image-picker.module';
 
 @NgModule({
   declarations: [
@@ -41,9 +42,8 @@ import { UserEditComponent } from './pages/user-edit/user-edit.component';
     NzTypographyModule,
     NzModalModule,
     NzIconModule.forChild([SearchOutline]),
+    ImagePickerModule,
   ],
-  providers: [
-    UserService,
-  ],
+  providers: [UserService],
 })
 export class UserModule { }

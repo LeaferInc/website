@@ -29,4 +29,5 @@ export class Plant {
   potting: string;
   toxicity: boolean;
   owner: User;
+  picture: string;
 }

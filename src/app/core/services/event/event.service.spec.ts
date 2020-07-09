@@ -33,10 +33,10 @@ describe('EventService', () => {
   });
 
   it('should return 2 events', async () => {
-    service.getEvents().subscribe((e: ResultData<Event>) => {
+    service.getEvents().subscribe((e: Event[]) => {
       expect(e).toBeTruthy();
       expect(e).toHaveLength(2);
-      expect(e).toBe({items: events, count: 2} as ResultData<Event>);
+      expect(e).toStrictEqual(events);
     });
     const req: TestRequest = httpMock.expectOne(`${EventService.BASE_URL}?skip=undefined&take=undefined`);
     req.flush(events);

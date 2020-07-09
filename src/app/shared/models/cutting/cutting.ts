@@ -9,5 +9,6 @@ export class Cutting {
   ownerId: number;
   views_count: number;
   tradeWith: string;
-  owner: User
+  owner: User;
+  picture: string;
 }

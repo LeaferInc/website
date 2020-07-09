@@ -10,6 +10,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { ImagePickerModule } from 'src/app/shared/components/image-picker/image-picker.module';
 
 describe('UserEditComponent', () => {
   let component: UserEditComponent;
@@ -24,6 +26,8 @@ describe('UserEditComponent', () => {
         NzGridModule,
         NzInputModule,
         NzAutocompleteModule,
+        NzUploadModule,
+        ImagePickerModule,
       ],
       declarations: [UserEditComponent],
       providers: [

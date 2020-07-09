@@ -4,8 +4,9 @@
 
 <div nz-row nzGutter="16" *ngIf="!plantLoading && plant">
   <div nz-col nzSpan="12">
-    <nz-affix nzOffsetTop="88">
-      <img src="https://www.bagherra.eu/wp-content/uploads/2016/11/orionthemes-placeholder-image-1.png" style="height: 80%; width: 100%; object-fit: cover;"/>
+    <nz-affix nzOffsetTop="88" class="picture">
+      <img *ngIf="plant.picture" alt="Image de la plante" [src]="'data:image/jpg;base64,' + plant.picture" />
+      <img *ngIf="!plant.picture" alt="Image de la plante" src="assets/images/plant.png" />
     </nz-affix>
   </div>
 
