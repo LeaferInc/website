@@ -17,6 +17,7 @@ export interface User {
   pictureId?: number;
   roomId?: number;
   role?: Role;
+  premium?: boolean;
 }
 
 /**
@@ -28,4 +29,8 @@ export interface UserEdit {
   birthdate?: Date;
   biography?: string;
   location?: string;
+}
+
+export interface PaymentClientSecret {
+  clientSecret: string;
 }

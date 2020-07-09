@@ -38,8 +38,9 @@
 
     <div class="right-nav">
       <ul *ngIf="authService.isLogged() | async" nz-menu [nzSelectable]="false" nzTheme="dark" nzMode="horizontal">
+        <li nz-menu-item [routerLink]="['premium']" [nzMatchRouter]="true">Premium</li>
         <li nz-menu-item [nzMatchRouter]="true"><i class="fas fa-bell"></i></li>
-        <li *ngIf="(authService.getUserAuth() | async).user.role === 1" nz-menu-item [routerLink]="['admin']">Moderation</li>
+        <li *ngIf="(authService.getUserAuth() | async).user.role === 1" nz-menu-item [routerLink]="['admin']" [nzMatchRouter]="true">Moderation</li>
         <li nz-submenu nzTitle="Mon compte" nzIcon="user">
           <ul>
             <li nz-menu-item routerLink="/users/me" [nzMatchRouter]="true">Profil</li>

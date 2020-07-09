@@ -4,6 +4,7 @@ import { Cutting } from 'src/app/shared/models/cutting/cutting';
 import { ResultData } from 'src/app/shared/models/query/query';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, finalize } from 'rxjs/operators';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-my-cutting',
@@ -22,6 +23,7 @@ export class MyCuttingComponent implements OnInit {
     private cuttingService: CuttingService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    public authService: AuthService,
   ) { }
 
   ngOnInit(): void {
