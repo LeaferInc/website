@@ -11,7 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class EventsListComponent implements OnInit {
   incomingEvents: Array<Event> = []; // List of incoming events
   joinedEvents: Array<Event> = []; // List of events joined
-  interestedEvents: Array<Event> = [] // List of favorited events
+  allEvents: Array<Event> = [] // List of all events
   filter: string; // Event filter
 
   constructor(private eventService: EventService) { }
@@ -40,15 +40,14 @@ export class EventsListComponent implements OnInit {
       }
     );
 
-    // TODO: change
+    // All events
     this.eventService.getEvents(0, 500).subscribe(
       (events: Event[]) => {
-        this.interestedEvents = events;
+        this.allEvents = events;
       },
       (err: HttpErrorResponse) => {
         console.log(err);
       }
     );
-
   }
 }

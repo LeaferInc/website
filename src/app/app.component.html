@@ -52,9 +52,7 @@
             </li>
             <li nz-menu-group nzTitle="Généralités">
               <ul>
-                <li nz-menu-item [nzMatchRouter]="true">Paramètres</li>
-                <li nz-menu-item [nzMatchRouter]="true">Confidentialité</li>
-                <li nz-menu-item [nzMatchRouter]="true">À propos</li>
+                <li nz-menu-item routerLink="/about">À propos</li>
                 <li nz-menu-divider></li>
                 <li nz-menu-item (click)="logout()">Se déconnecter</li>
               </ul>
@@ -66,6 +64,7 @@
       <ul *ngIf="!(authService.isLogged() | async)" nz-menu [nzSelectable]="false" nzTheme="dark" nzMode="horizontal">
         <li nz-menu-item routerLink="/login" [nzMatchRouter]="true">Se connecter</li>
         <li nz-menu-item routerLink="/register" [nzMatchRouter]="true">S'enregistrer</li>
+        <li nz-menu-item routerLink="/about"><i class="fas fa-question-circle"></i></li>
       </ul>
     </div>
   </nz-header>

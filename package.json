@@ -29,6 +29,7 @@
     "date-fns": "^2.13.0",
     "express": "^4.17.1",
     "ng-zorro-antd": "^9.1.0",
+    "ngx-markdown": "^10.0.0",
     "path": "^0.12.7",
     "rxjs": "~6.5.4",
     "socket.io-client": "^2.3.0",

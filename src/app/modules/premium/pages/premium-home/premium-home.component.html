@@ -1,10 +1,10 @@
 <div nz-row *ngIf="!(authService.getUserAuth() | async)?.user?.premium; else isPremium">
   <div nz-col nzSpan="6" nzOffset="9">
-    <p>Vous n'etes pas premium</p>
+    <p>Vous n'êtes pas premium</p>
   </div>
 
   <div nz-col nzSpan="6" nzOffset="9">
-    <p>Le premium coute 5€</p>
+    <p>Le premium coûte 5€</p>
   </div>
 
   <div nz-col nzSpan="6" nzOffset="9">
@@ -12,12 +12,12 @@
       <form nz-form [formGroup]="orderForm" (ngSubmit)="onPay()">
 
         <nz-form-item>
-          <nz-form-label nzFor="name" nzRequired>Name</nz-form-label>
+          <nz-form-label nzFor="name" nzRequired>Nom</nz-form-label>
           <nz-form-control [nzErrorTip]="nameErrorTpl">
-            <input formControlName="name" type="text" id="name" nz-input placeholder="name" />
+            <input formControlName="name" type="text" id="name" nz-input placeholder="Nom" />
             <ng-template #nameErrorTpl>
               <ng-container *ngIf="orderForm.get('name').hasError('required')">
-                Please input a full name !
+                Veuillez saisir un nom !
               </ng-container>
             </ng-template>
           </nz-form-control>
@@ -26,10 +26,10 @@
         <nz-form-item>
           <nz-form-label nzFor="billingAddress" nzRequired>Adresse de facturation</nz-form-label>
           <nz-form-control [nzErrorTip]="billingAddressErrorTpl">
-            <input formControlName="address" type="text" id="address" nz-input placeholder="address" />
+            <input formControlName="address" type="text" id="address" nz-input placeholder="Adresse" />
             <ng-template #billingAddressErrorTpl>
               <ng-container *ngIf="orderForm.get('address').hasError('required')">
-                Please input an address !
+                Veuillez renseigner une adresse !
               </ng-container>
             </ng-template>
           </nz-form-control>
@@ -42,7 +42,7 @@
         <!-- We'll put the error messages in this element -->
         <div id="card-errors" role="alert"></div>
 
-        <button nz-button type="submit" [disabled]="loading">Pay</button>
+        <button nz-button type="submit" [disabled]="loading">Payer</button>
       </form>
     </nz-spin>
   </div>
@@ -51,8 +51,8 @@
 <ng-template #isPremium>
   <div nz-row>
     <div nz-col nzSpan="6" nzOffset="9">
-      <p>Vous etes premium</p>
-      <p>Vous avez acces à toutes les fonctionnalités du site internet ainsi que de l'application</p>
+      <p>Vous êtes premium</p>
+      <p>Vous avez accès à toutes les fonctionnalités du site internet ainsi que de l'application</p>
     </div>
   </div>
 </ng-template>
