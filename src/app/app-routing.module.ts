@@ -6,7 +6,11 @@ import { NotAuthenticateGuard } from './core/guards/not-authenticate/not-authent
 import { AdminGuard } from './core/guards/admin/admin.guard';
 
 const routes: Routes = [
-  { path: '', loadChildren: () => import('src/app/modules/home/home.module').then((m) => m.HomeModule) },
+  { 
+    path: '',
+    canActivate: [AuthenticateGuard],
+    loadChildren: () => import('src/app/modules/home/home.module').then((m) => m.HomeModule)
+  },
   {
     path: 'chat',
     canActivate: [AuthenticateGuard],

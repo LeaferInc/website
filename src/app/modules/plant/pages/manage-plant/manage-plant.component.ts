@@ -41,7 +41,7 @@ export class ManagePlantComponent implements OnInit {
   }
 
   onPageIndexChange(newIndex: number) {
-    this.router.navigate(['plant/inventory'], { queryParams: { page: newIndex } })
+    this.router.navigate(['plant/manage'], { queryParams: { page: newIndex } })
   }
 
 }

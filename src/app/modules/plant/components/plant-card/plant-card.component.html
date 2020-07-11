@@ -2,8 +2,10 @@
   <nz-card-meta [nzTitle]="plant.name"></nz-card-meta>
 </nz-card>
 <ng-template #coverTemplate>
-  <img *ngIf="plant.picture" alt="Image de la plante" [src]="'data:image/jpg;base64,' + plant.picture" />
-  <img *ngIf="!plant.picture" alt="Image de la plante" src="assets/images/plant.png" />
+  <div class="card-image">
+    <img class="photo-card" *ngIf="plant.picture" alt="Image de la plante" [src]="'data:image/jpg;base64,' + plant.picture" />
+    <img class="photo-card" *ngIf="!plant.picture" alt="Image de la plante" src="assets/images/plant.jpg" />
+  </div>
 </ng-template>
 
 <nz-dropdown-menu #menu="nzDropdownMenu">

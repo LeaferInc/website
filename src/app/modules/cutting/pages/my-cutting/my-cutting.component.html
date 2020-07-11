@@ -26,7 +26,7 @@
       </ng-container>
     </div>
     <div nz-row nzJustify="center">
-      <nz-pagination [nzPageIndex]="pageIndex" [nzTotal]="myCuttings?.count" (nzPageIndexChange)="onPageIndexChange($event)"></nz-pagination>
+      <nz-pagination [nzPageIndex]="pageIndex" [nzTotal]="myCuttings?.count" [nzPageSize]="pageSize" (nzPageIndexChange)="onPageIndexChange($event)"></nz-pagination>
     </div>
   </ng-container>
 

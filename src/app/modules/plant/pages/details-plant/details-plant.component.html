@@ -5,8 +5,8 @@
 <div nz-row nzGutter="16" *ngIf="!plantLoading && plant">
   <div nz-col nzSpan="12">
     <nz-affix nzOffsetTop="88" class="picture">
-      <img *ngIf="plant.picture" alt="Image de la plante" [src]="'data:image/jpg;base64,' + plant.picture" />
-      <img *ngIf="!plant.picture" alt="Image de la plante" src="assets/images/plant.png" />
+      <img class="photo-left" *ngIf="plant.picture" alt="Image de la plante" [src]="'data:image/jpg;base64,' + plant.picture" />
+      <img class="photo-left" *ngIf="!plant.picture" alt="Image de la plante" src="assets/images/plant.jpg" />
     </nz-affix>
   </div>
 

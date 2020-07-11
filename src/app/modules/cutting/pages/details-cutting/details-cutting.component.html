@@ -1,8 +1,8 @@
 <ng-container *ngIf="!loading">
   <div nz-row>
-    <div nz-col [nzSpan]="12" [nzOffset]="8" class="picture">
+    <div nz-col [nzSpan]="8" [nzOffset]="8" class="picture">
       <img *ngIf="cutting.picture" alt="Image de la bouture" [src]="'data:image/jpg;base64,' + cutting.picture" />
-      <img *ngIf="!cutting.picture" alt="Image de la bouture" src="assets/images/cutting.png" />
+      <img *ngIf="!cutting.picture" alt="Image de la bouture" src="assets/images/cutting.jpg" />
     </div>
   </div>
 
@@ -61,7 +61,7 @@
   </div>
 
   <div nz-row id="buttons-section">
-    <div nz-col [nzSpan]="6" [nzOffset]="9">
+    <div nz-col [nzSpan]="8" [nzOffset]="8">
       <ng-container *ngIf="cutting.ownerId === currentUser.id; else notOwner">
         <ng-container *ngIf="isOnEditMode; else notEditMode">
           <button form="editForm" nz-button nzType="default" nzBlock>Valider</button>
