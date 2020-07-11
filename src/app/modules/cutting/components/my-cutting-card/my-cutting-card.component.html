@@ -2,8 +2,10 @@
   <nz-card-meta [nzTitle]="cutting.name" [nzDescription]="descriptionTemplate"></nz-card-meta>
 </nz-card>
 <ng-template #coverTemplate>
-  <img *ngIf="cutting.picture" alt="Image de la bouture" [src]="'data:image/jpg;base64,' + cutting.picture" />
-  <img *ngIf="!cutting.picture" alt="Image de la bouture" src="assets/images/cutting.png" />
+  <div class="card-image">
+    <img class="photo-card" *ngIf="cutting.picture" alt="Image de la bouture" [src]="'data:image/jpg;base64,' + cutting.picture" />
+    <img class="photo-card" *ngIf="!cutting.picture" alt="Image de la bouture" src="assets/images/cutting.jpg" />
+  </div>
 </ng-template>
 <ng-template #descriptionTemplate>
   <p nz-typography nzEllipsis>{{ cutting.description }}</p>

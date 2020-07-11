@@ -60,8 +60,7 @@ export class CreateCuttingComponent {
         finalize(() => this.btnLoading = false)
       )
       .subscribe(
-        (createdCutting: Cutting) => this.router.navigate(['cutting', createdCutting.id]),
-        err => console.error(err)
+        (createdCutting: Cutting) => this.router.navigate(['cutting', createdCutting.id])
       );
   }
 }

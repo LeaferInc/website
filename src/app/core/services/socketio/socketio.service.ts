@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.local';
 import io from 'socket.io-client';
-import { Observable, fromEvent, of } from 'rxjs';
+import { Observable, fromEvent, of, Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable({
@@ -10,6 +10,7 @@ import { AuthService } from '../auth/auth.service';
 export class SocketioService {
 
   private socket: SocketIOClient.Socket;
+  private sub: Subscription;
 
   constructor(
     private authService: AuthService
@@ -17,7 +18,7 @@ export class SocketioService {
 
   init(): Observable<SocketIOClient.Socket> {
     return new Observable((observer) => {
-      this.authService
+      this.sub = this.authService
       .getUserAuth()
       .subscribe(userAuth => {
         this.socket = io(
@@ -53,5 +54,6 @@ export class SocketioService {
 
   disconnect(): void {
     this.socket.disconnect();
+    if(this.sub) this.sub.unsubscribe();
   }
 }

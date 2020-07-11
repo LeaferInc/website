@@ -4,8 +4,8 @@ import { CuttingService } from 'src/app/core/services/cutting/cutting.service';
 import { Cutting } from 'src/app/shared/models/cutting/cutting';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { User } from 'src/app/shared/models/user/user';
-import { Observable } from 'rxjs';
-import { tap, switchMap } from 'rxjs/operators';
+import { Observable, Subscription, Subject } from 'rxjs';
+import { tap, switchMap, takeUntil } from 'rxjs/operators';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { MessageService } from 'src/app/core/services/message/message.service';
 import { NzModalService, NzModalRef } from 'ng-zorro-antd/modal';
@@ -36,6 +36,8 @@ export class DetailsCuttingComponent implements OnInit, OnDestroy {
 
   public submitted = false;
 
+  private destroy$: Subject<boolean> = new Subject<boolean>();
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -52,10 +54,11 @@ export class DetailsCuttingComponent implements OnInit, OnDestroy {
       tap(params => this.currentRoute = params),
       switchMap(params => this.cuttingService.findOne(params.id)),
       tap(cutting => this.cutting = cutting),
-      switchMap(() => this.authService.getUserAuth())
+      switchMap(() => this.authService.getUserAuth()),
+      takeUntil(this.destroy$),
     ).subscribe(
       (userAuth) => {
-        this.currentUser = userAuth.user
+        this.currentUser = userAuth?.user
         this.loading = false;
       },
       (err) => console.error(err)
@@ -64,6 +67,8 @@ export class DetailsCuttingComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.modal.closeAll();
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 
   onEdit() {
