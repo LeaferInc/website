@@ -4,25 +4,29 @@
 
 <div nz-row>
   <div nz-col nzOffset="8" nzSpan="8">
-    <nz-input-group [nzSuffix]="suffixIconSearch">
-      <input type="text" nz-input placeholder="Recherche" />
-    </nz-input-group>
-    <ng-template #suffixIconSearch>
-      <i nz-icon nzType="search"></i>
-    </ng-template>
+    <form nz-form [formGroup]="searchForm">
+      <nz-input-group [nzSuffix]="suffixIconSearch">
+        <input formControlName="searchInput" type="text" nz-input placeholder="Recherche" />
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+    </form>
   </div>
 </div>
 
 <ng-container *ngIf="cuttings?.items">
   <ng-container *ngIf="cuttings?.items?.length !== 0">
-    <div nz-row class="cutting-list">
-      <ng-container *ngFor="let cutting of cuttings?.items">
-          <app-list-cutting-card nz-col [nzSpan]="4" [cutting]="cutting" (cuttingDeleted)="cuttingDeleted($event)"></app-list-cutting-card>
-      </ng-container>
-    </div>
-    <div nz-row nzJustify="center">
-      <nz-pagination [nzPageIndex]="pageIndex" [nzPageSize]="pageSize" [nzTotal]="cuttings?.count" (nzPageIndexChange)="onPageIndexChange($event)"></nz-pagination>
-    </div>
+    <nz-spin [nzSpinning]="loading" nzTip="Loading...">
+      <div nz-row class="cutting-list">
+        <ng-container *ngFor="let cutting of cuttings?.items">
+            <app-list-cutting-card nz-col [nzSpan]="4" [cutting]="cutting" (cuttingDeleted)="cuttingDeleted($event)"></app-list-cutting-card>
+        </ng-container>
+      </div>
+      <div nz-row nzJustify="center">
+        <nz-pagination [nzPageIndex]="pageIndex" [nzPageSize]="pageSize" [nzTotal]="cuttings?.count" (nzPageIndexChange)="onPageIndexChange($event)"></nz-pagination>
+      </div>
+    </nz-spin>
   </ng-container>
   
   <ng-container *ngIf="cuttings?.items?.length === 0">

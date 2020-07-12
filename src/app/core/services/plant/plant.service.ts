@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Plant } from 'src/app/shared/models/plant/plant';
 import { Observable } from 'rxjs';
 import { ResultData } from 'src/app/shared/models/query/query';
@@ -30,12 +30,16 @@ export class PlantService {
     });
   };
 
-  public findAllByUser(skip?: number, take?: number): Observable<ResultData<Plant>> {
+  public findAllByUser(skip?: number, take?: number, search?: string): Observable<ResultData<Plant>> {
+    const params = {
+      skip: String(skip),
+      take: String(take)
+    };
+
+    if(search) Object.assign(params, { search: search });
+
     return this.http.get<ResultData<Plant>>(`${PlantService.PLANT_URL}/my`, {
-      params: {
-        skip: String(skip),
-        take: String(take)
-      }
+      params: params
     });
   };
 
@@ -48,12 +52,16 @@ export class PlantService {
     });
   };
 
-  public findAllExceptOwner(skip?: number, take?: number): Observable<ResultData<Plant>> {
+  public findAllExceptOwner(skip?: number, take?: number, search?: string): Observable<ResultData<Plant>> {
+    const params = {
+      skip: String(skip),
+      take: String(take),
+    };
+
+    if(search) Object.assign(params, { search: search });
+
     return this.http.get<ResultData<Plant>>(`${PlantService.PLANT_URL}/findAllExceptOwner`, {
-      params: {
-        skip: String(skip),
-        take: String(take)
-      }
+      params: params
     });
   }
 

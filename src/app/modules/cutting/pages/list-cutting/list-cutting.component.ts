@@ -1,26 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Cutting } from 'src/app/shared/models/cutting/cutting';
 import { CuttingService } from 'src/app/core/services/cutting/cutting.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ResultData } from 'src/app/shared/models/query/query';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, finalize } from 'rxjs/operators';
+import { switchMap, finalize, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-list-cutting',
   templateUrl: './list-cutting.component.html',
   styleUrls: ['./list-cutting.component.scss']
 })
-export class ListCuttingComponent implements OnInit {
+export class ListCuttingComponent implements OnInit, OnDestroy {
 
   public cuttings: ResultData<Cutting>;
   public loading: boolean = true;
 
-  public searchInput = new FormControl('');
-  public searchForm = new FormGroup({});
+  public searchForm = new FormGroup({
+    searchInput: new FormControl('')
+  });
 
   public pageIndex: number;
   public pageSize = 12;
+
+  private sub: Subscription;
 
   constructor(
     private cuttingService: CuttingService,
@@ -29,25 +33,38 @@ export class ListCuttingComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.queryParams
-      .pipe(
-        switchMap((params) => {
+    this.activatedRoute
+      .queryParams
+      .subscribe({
+        next: (params) => {
+          if(params.search)
+            this.searchForm.get('searchInput').patchValue(params.search);
           this.pageIndex = params.page || 1;
-          this.loading = true;
-          return this.cuttingService.findAllExchange(((this.pageIndex - 1) * this.pageSize) || 0, this.pageSize)
-        }),
-        finalize(() => this.loading = false)
-      ).subscribe({
-        next: (cuttings: ResultData<Cutting>) => this.cuttings = cuttings
+          this.findAllExchange(this.searchForm.get('searchInput').value);
+        }
+      });
+
+    this.searchForm
+      .get('searchInput')
+      .valueChanges
+      .pipe(
+        debounceTime(850),
+        distinctUntilChanged(),
+      )
+      .subscribe({
+        next: (search: string) => {
+          this.pageIndex = 1;
+          const queryParams = {
+            page: this.pageIndex
+          };
+          if(search) Object.assign(queryParams, { search: search });
+          this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: queryParams });
+        }
       });
   }
 
-  onSearch() {
-    if(this.searchForm.invalid) {
-      return;
-    }
-
-    alert(this.searchInput.value);
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   onPageIndexChange(newIndex: number) {
@@ -60,5 +77,15 @@ export class ListCuttingComponent implements OnInit {
       .subscribe({
         next: (cuttings: ResultData<Cutting>) => this.cuttings = cuttings
       });
+  }
+
+  private findAllExchange(search?: string) {
+    this.loading = true;
+    this.sub = this.cuttingService
+      .findAllExchange(((this.pageIndex - 1) * this.pageSize) || 0, this.pageSize, search)
+      .subscribe({
+        next: (cuttings) => this.cuttings = cuttings,
+        complete: () => this.loading = false
+      })
   }
 }

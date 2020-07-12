@@ -1,26 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Plant } from 'src/app/shared/models/plant/plant';
 import { PlantService } from 'src/app/core/services/plant/plant.service';
 import { ResultData } from 'src/app/shared/models/query/query';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-community-plant',
   templateUrl: './community-plant.component.html',
   styleUrls: ['./community-plant.component.scss']
 })
-export class CommunityPlantComponent implements OnInit {
+export class CommunityPlantComponent implements OnInit, OnDestroy {
 
   public plants: ResultData<Plant>;
   public loading: boolean = true;
 
-  public searchInput = new FormControl('');
-  public searchForm = new FormGroup({});
+  public searchForm = new FormGroup({
+    searchInput: new FormControl('')
+  });
 
   public pageIndex: number;
   public pageSize = 12;
+
+  private sub: Subscription;
 
   constructor(
     private plantService: PlantService,
@@ -29,27 +33,38 @@ export class CommunityPlantComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.queryParams
-      .pipe(
-        switchMap((params) => {
+    this.activatedRoute
+      .queryParams
+      .subscribe({
+        next: (params) => {
+          if(params.search)
+            this.searchForm.get('searchInput').patchValue(params.search);
           this.pageIndex = params.page || 1;
-          this.loading = true;
-          return this.plantService.findAllExceptOwner(((this.pageIndex - 1) * this.pageSize) || 0, this.pageSize)
-        }),
-      ).subscribe({
-        next: (plants: ResultData<Plant>) => {
-          this.plants = plants;
-          this.loading = false;
+          this.findAllExceptOwner(this.searchForm.get('searchInput').value);
         },
+      });
+    
+    this.searchForm
+      .get('searchInput')
+      .valueChanges
+      .pipe(
+        debounceTime(850),
+        distinctUntilChanged(),
+      )
+      .subscribe({
+        next: (search: string) => {
+          this.pageIndex = 1;
+          const queryParams = {
+            page: this.pageIndex
+          };
+          if(search) Object.assign(queryParams, { search: search });
+          this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: queryParams });
+        }
       });
   }
 
-  onSearch() {
-    if(this.searchForm.invalid) {
-      return;
-    }
-
-    alert(this.searchInput.value);
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   onPageIndexChange(newIndex: number) {
@@ -57,10 +72,16 @@ export class CommunityPlantComponent implements OnInit {
   }
 
   plantDeleted(id: number) {
-    this.plantService
-      .findAllExceptOwner(((this.pageIndex - 1) * this.pageSize) || 0, this.pageSize)
+    this.findAllExceptOwner();
+  }
+
+  private findAllExceptOwner(search?: string) {
+    this.loading = true;
+    this.sub = this.plantService
+      .findAllExceptOwner(((this.pageIndex - 1) * this.pageSize) || 0, this.pageSize, search)
       .subscribe({
-        next: (plants: ResultData<Plant>) => this.plants = plants
+        next: (plants: ResultData<Plant>) => this.plants = plants,
+        complete: () => this.loading = false
       });
   }
 }

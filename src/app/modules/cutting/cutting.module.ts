@@ -21,6 +21,7 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { ImagePickerModule } from 'src/app/shared/components/image-picker/image-picker.module';
 import { NzMessageModule  } from 'ng-zorro-antd/message';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { NzMessageModule  } from 'ng-zorro-antd/message';
     NzPaginationModule,
     NzDropDownModule,
     ImagePickerModule,
+    NzSpinModule,
   ],
 })
 export class CuttingModule {}
