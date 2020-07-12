@@ -17,12 +17,16 @@ export class CuttingService {
     return this.http.post<Cutting>(CuttingService.USER_URL, cutting);
   }
 
-  findAllByUser(skip?: number, take?: number): Observable<ResultData<Cutting>> {
+  findAllByUser(skip?: number, take?: number, search?: string): Observable<ResultData<Cutting>> {
+    const params = {
+      skip: String(skip),
+      take: String(take)
+    }
+
+    if(search) Object.assign(params, { search: search });
+
     return this.http.get<ResultData<Cutting>>(`${CuttingService.USER_URL}/my`, {
-      params: {
-        skip: String(skip),
-        take: String(take)
-      }
+      params: params
     });
   }
 
@@ -30,8 +34,21 @@ export class CuttingService {
     return this.http.get<Cutting>(`${CuttingService.USER_URL}/${id}`);
   }
 
-  findAllExchange(skip?: number, take?: number): Observable<ResultData<Cutting>> {
+  findAllExchange(skip?: number, take?: number, search?: string): Observable<ResultData<Cutting>> {
+    const params = {
+      skip: String(skip),
+      take: String(take)
+    }
+
+    if(search) Object.assign(params, { search: search });
+
     return this.http.get<ResultData<Cutting>>(`${CuttingService.USER_URL}/exchange`, {
+      params: params
+    });
+  }
+
+  findAll(skip?: number, take?: number): Observable<ResultData<Cutting>> {
+    return this.http.get<ResultData<Cutting>>(`${CuttingService.USER_URL}/all`, {
       params: {
         skip: String(skip),
         take: String(take)

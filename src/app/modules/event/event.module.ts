@@ -30,6 +30,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { SearchOutline } from '@ant-design/icons-angular/icons';
+import { ImagePickerModule } from 'src/app/shared/components/image-picker/image-picker.module';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { SearchOutline } from '@ant-design/icons-angular/icons';
     NzDividerModule,
     NzTypographyModule,
     NzIconModule.forChild([SearchOutline]),
+    ImagePickerModule,
   ],
   providers: [
     EventService,

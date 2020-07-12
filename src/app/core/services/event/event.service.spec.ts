@@ -7,6 +7,7 @@ import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@an
 
 import { EventService } from './event.service';
 import { Event } from 'src/app/shared/models/event/event.model';
+import { ResultData } from 'src/app/shared/models/query/query';
 
 describe('EventService', () => {
   let service: EventService;
@@ -35,9 +36,9 @@ describe('EventService', () => {
     service.getEvents().subscribe((e: Event[]) => {
       expect(e).toBeTruthy();
       expect(e).toHaveLength(2);
-      expect(e).toBe(events);
+      expect(e).toStrictEqual(events);
     });
-    const req: TestRequest = httpMock.expectOne(EventService.BASE_URL);
+    const req: TestRequest = httpMock.expectOne(`${EventService.BASE_URL}?skip=undefined&take=undefined`);
     req.flush(events);
     expect(req.request.method).toBe('GET');
 

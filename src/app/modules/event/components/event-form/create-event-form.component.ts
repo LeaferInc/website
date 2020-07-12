@@ -11,6 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { UploadFile } from 'ng-zorro-antd/upload';
 
 @Component({
   selector: 'app-create-event-form',
@@ -27,6 +28,8 @@ export class EventFormComponent implements OnInit {
   locations: Location[] = []; // The found addresses
   
   minDate: Date = new Date(); // Minimum choosable Date
+
+  newImage: UploadFile;
 
   @Output() created = new EventEmitter<Event>();
 
@@ -67,7 +70,8 @@ export class EventFormComponent implements OnInit {
    * Submit the form to the server to add an Event.
    * Checks the anteriority of the start Date over the end Date
    */
-  submit(): void {
+  async submit(): Promise<void> {
+    // TODO
     // Display validation
     Object.keys(this.eventForm.controls).forEach((key) => {
       this.eventForm.get(key).markAsDirty();
@@ -87,14 +91,21 @@ export class EventFormComponent implements OnInit {
       event.startDate = new Date(event.startDate);
       event.endDate = new Date(event.endDate);
 
+      // Handle image
+      if (this.newImage) {
+        event.picture = await UtilsService.toBase64(this.newImage);
+      }
+
       this.eventService.addEvent(event).subscribe(
         (event: Event) => {
-          this.router.navigate(['/events/' + event.id]);
+          this.router.navigate(['events', event.id.toString()]);
         },
         (err: HttpErrorResponse) => {
           console.log(err);
         },
-        () => (this.sending = false)
+        () =>  {
+          this.sending = false;
+        }
       );
     }
   }

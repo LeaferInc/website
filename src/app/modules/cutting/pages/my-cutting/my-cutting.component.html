@@ -1,33 +1,42 @@
 <div nz-row>
   <h2 nz-col nzOffset="8" nzSpan="8">Mes boutures à échanger</h2>
+  <h5 nz-col>
+    {{ myCuttings?.count }} / 
+    <ng-container *ngIf="(authService.getUserAuth() | async).user.premium; else cuttingLimit">illimité</ng-container>
+    <ng-template #cuttingLimit>3</ng-template>
+  </h5>
 </div>
 
 <div nz-row>
   <div nz-col nzOffset="8" nzSpan="8">
-    <nz-input-group [nzSuffix]="suffixIconSearch">
-      <input type="text" nz-input placeholder="input search text" />
-    </nz-input-group>
-    <ng-template #suffixIconSearch>
-      <i nz-icon nzType="search"></i>
-    </ng-template>
+    <form nz-form [formGroup]="searchForm">
+      <nz-input-group [nzSuffix]="suffixIconSearch">
+        <input formControlName="searchInput" type="text" nz-input placeholder="Recherche" />
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+    </form>
   </div>
 </div>
 
 <ng-container *ngIf="myCuttings?.items">
   <ng-container *ngIf="myCuttings?.items?.length !== 0">
-    <div nz-row class="cutting-list">
-      <ng-container *ngFor="let cutting of myCuttings?.items">
-          <app-my-cutting-card nz-col [nzSpan]="4" [cutting]="cutting"></app-my-cutting-card>
-      </ng-container>
-    </div>
-    <div nz-row nzJustify="center">
-      <nz-pagination [nzPageIndex]="pageIndex" [nzTotal]="myCuttings?.count" (nzPageIndexChange)="onPageIndexChange($event)"></nz-pagination>
-    </div>
+    <nz-spin [nzSpinning]="loading" nzTip="Loading...">
+      <div nz-row class="cutting-list">
+        <ng-container *ngFor="let cutting of myCuttings?.items">
+            <app-my-cutting-card nz-col [nzSpan]="4" [cutting]="cutting"></app-my-cutting-card>
+        </ng-container>
+      </div>
+      <div nz-row nzJustify="center">
+        <nz-pagination [nzPageIndex]="pageIndex" [nzTotal]="myCuttings?.count" [nzPageSize]="pageSize" (nzPageIndexChange)="onPageIndexChange($event)"></nz-pagination>
+      </div>
+    </nz-spin>
   </ng-container>
 
   <ng-container *ngIf="myCuttings?.items.length === 0">
     <div nz-row nzJustify="center" class="no-cutting">
-      <p>No cutting found</p>
+      <p class="not-found">Aucune bouture trouvée</p>
     </div>
   </ng-container>
 </ng-container>

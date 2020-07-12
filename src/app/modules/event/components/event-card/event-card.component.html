@@ -1,15 +1,10 @@
-<!-- <div *ngIf="event" class="event-card" routerLink="/events/{{event.id}}">
-    <img src="../../../../../assets/images/event-temp.jpg" alt="Squared picture of the Event">
-	<h6>{{event.name}}</h6>
-	<p>{{event.location}}</p>
-</div> -->
-
 <div *ngIf="event">
 	<nz-card nzHoverable [nzCover]="coverTemplate" [routerLink]="['/events', event.id]">
 		<nz-card-meta [nzTitle]="event.name" [nzDescription]="descriptionTemplate"></nz-card-meta>
 	</nz-card>
 	<ng-template #coverTemplate>
-		<img alt="Squared picture of the Event" src="../../../../../assets/images/event-temp.jpg" />
+		<img *ngIf="event.picture" alt="Image de l'évènement" [src]="'data:image/jpg;base64,' + event.picture" />
+		<img *ngIf="!event.picture" alt="Image de l'évènement" src="assets/images/event.jpg" />
 	</ng-template>
 	<ng-template #descriptionTemplate>
 		<p nz-typography nzEllipsis>{{ event.location }}</p>

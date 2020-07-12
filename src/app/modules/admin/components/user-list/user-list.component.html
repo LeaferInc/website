@@ -1,0 +1,50 @@
+<nz-table 
+  #nzTable
+  [nzData]="users.items"
+  [nzTotal]="users.count"
+  [nzPageSize]="pageSize"
+  [nzPageIndex]="pageIndex"
+  [nzFrontPagination]="false"
+  (nzQueryParams)="onQueryParamsChange($event)"
+>
+  <thead>
+    <tr>
+      <th nzWidth="60px"></th>
+      <th>Pseudonyme</th>
+      <th>Prenom</th>
+      <th>Nom</th>
+      <th>Creation</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let data of nzTable.data">
+      <tr>
+        <td
+          [nzExpand]="expandSet.has(data.id)"
+          (nzExpandChange)="onExpandChange(data.id, $event)"
+          [nzShowExpand]="data.biography"
+        ></td>
+        <td>{{data.username}}</td>
+        <td>{{data.firstname}}</td>
+        <td>{{data.lastname}}</td>
+        <td>{{data.createdAt}}</td>
+        <td>{{data.email}}</td>
+        <td>{{data.role}}</td>
+        <td>
+          <a
+            nz-popconfirm
+            nzPopconfirmTitle="Etes vous sure de supprimer cet utilisateur ?"
+            (nzOnConfirm)="deleteUser(data.id)"
+          >Delete</a>
+        </td>
+      </tr>
+
+      <tr [nzExpand]="expandSet.has(data.id)">
+        {{ data.biography }}
+      </tr>
+    </ng-container>
+  </tbody>
+</nz-table>

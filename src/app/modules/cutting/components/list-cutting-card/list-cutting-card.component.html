@@ -1,11 +1,20 @@
-<nz-card [routerLink]="['/cutting', cutting.id]" nzHoverable [nzCover]="coverTemplate">
+<nz-card [routerLink]="['/cutting', cutting.id]" nzHoverable [nzCover]="coverTemplate" (contextmenu)="contextMenu($event, menu)">
   <nz-card-meta [nzTitle]="cutting.name" [nzDescription]="descriptionTemplate"></nz-card-meta>
 </nz-card>
 <ng-template #coverTemplate>
-  <img alt="photo test" src="/assets/photo_test.jpg" />
+  <div class="card-image">
+    <img *ngIf="cutting.picture" alt="Image de la bouture" [src]="'data:image/jpg;base64,' + cutting.picture" />
+    <img *ngIf="!cutting.picture" alt="Image de la bouture" src="assets/images/cutting.jpg" />
+  </div>
 </ng-template>
 <ng-template #descriptionTemplate>
   <p nz-typography nzEllipsis>
     {{ cutting.description }}
   </p>
 </ng-template>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item (click)="deleteCutting()">Supprimer</li>
+  </ul>
+</nz-dropdown-menu>

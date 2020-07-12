@@ -22,6 +22,9 @@ import localeFr from '@angular/common/locales/fr';
 import localeFrExtra from '@angular/common/locales/extra/fr';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 import { GlobalErrorHandler } from './core/services/error-handler/global-error.handler';
+import { AboutComponent } from './shared/components/about/about.component';
+import { MarkdownModule } from 'ngx-markdown';
+import { NzGridModule } from 'ng-zorro-antd/grid';
 
 const icons: IconDefinition[] = [UserOutline, LockOutline];
 
@@ -31,6 +34,7 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
   declarations: [
     AppComponent,
     PageNotFoundComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,10 +43,12 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
     AppRoutingModule,
     CoreModule,
     NzLayoutModule,
+    NzGridModule,
     NzMenuModule,
     NzBreadCrumbModule,
     NzAvatarModule,
-    NzIconModule.forRoot(icons)
+    NzIconModule.forRoot(icons),
+    MarkdownModule.forRoot(),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HeadersInterceptor, multi: true },

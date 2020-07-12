@@ -1,3 +1,5 @@
+import { User } from '../user/user';
+
 export enum Difficulty {
   EASY = "easy",
   MEDIUM = "medium",
@@ -26,4 +28,6 @@ export class Plant {
   humidity: string;
   potting: string;
   toxicity: boolean;
+  owner: User;
+  picture: string;
 }

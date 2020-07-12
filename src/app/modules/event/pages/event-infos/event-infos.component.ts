@@ -4,6 +4,8 @@ import { EventService } from 'src/app/core/services/event/event.service';
 import { Event } from 'src/app/shared/models/event/event.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { EntryService } from 'src/app/core/services/entry/entry.service';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { UserAuth } from 'src/app/shared/models/auth/auth';
 
 
 @Component({
@@ -14,9 +16,11 @@ import { EntryService } from 'src/app/core/services/entry/entry.service';
 export class EventInfosComponent implements OnInit {
   event: Event;
   querying: boolean = false; // True if waiting for a server response
+  currentUserId: number;
 
   constructor(private route: ActivatedRoute, private router: Router,
-    private eventService: EventService, private entryService: EntryService) { }
+    private eventService: EventService, private entryService: EntryService,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
@@ -34,8 +38,17 @@ export class EventInfosComponent implements OnInit {
         this.router.navigate(['/404']);
       }
     });
+
+    this.authService.getUserAuth().subscribe(
+      (userAuth: UserAuth) => {
+        this.currentUserId = userAuth.user.id;
+      },
+      (e) => console.log(e));
   }
 
+  /**
+   * Join an event
+   */
   participate(): void {
     this.querying = true;
     this.entryService.joinEvent(this.event.id).subscribe(
@@ -50,6 +63,9 @@ export class EventInfosComponent implements OnInit {
     );
   }
 
+  /**
+   * Leave the event
+   */
   leave(): void {
     this.querying = true;
     this.entryService.unjoinEvent(this.event.id).subscribe(
@@ -58,6 +74,22 @@ export class EventInfosComponent implements OnInit {
         console.log(err);
       },
       () => this.querying = false
+    );
+  }
+
+  /**
+   * Delete an event
+   */
+  deleteEvent(): void {
+    this.querying = true;
+    this.eventService.deleteEvent(this.event.id).subscribe(
+      () => {
+        this.router.navigate(['events']);
+      },
+      (err: HttpErrorResponse) => {
+        this.querying = false;
+        console.log(err);
+      }
     );
   }
 }

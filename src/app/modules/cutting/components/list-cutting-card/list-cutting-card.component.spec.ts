@@ -4,6 +4,9 @@ import { ListCuttingCardComponent } from './list-cutting-card.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Cutting } from 'src/app/shared/models/cutting/cutting';
 import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzDropDownModule, NzContextMenuService } from 'ng-zorro-antd/dropdown';
+import { CuttingService } from 'src/app/core/services/cutting/cutting.service';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 describe('ListCuttingCardComponent', () => {
   let component: ListCuttingCardComponent;
@@ -11,7 +14,12 @@ describe('ListCuttingCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule, NzCardModule ],
+      imports: [ RouterTestingModule, NzCardModule, NzDropDownModule ],
+      providers: [
+        { provide: NzContextMenuService, useValue: {} },
+        { provide: CuttingService, useValue: {} },
+        { provide: AuthService, useValue: {} },
+      ],
       declarations: [ ListCuttingCardComponent ]
     })
     .compileComponents();
