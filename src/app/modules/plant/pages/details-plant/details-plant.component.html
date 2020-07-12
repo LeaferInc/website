@@ -23,7 +23,7 @@
       <h4 nz-typography>Environ {{ plant?.height }} cm</h4>
     </div>
 
-    <div nz-row *ngIf="plant?.wateringFrequencyAutumnToWinterNumber && plant?.wateringFrequencySpringToSummerNumber">
+    <div nz-row *ngIf="plant?.wateringFrequencyAutumnToWinterNumber && plant?.wateringFrequencySpringToSummerNumber" class="row">
 
       <div nz-col nz-row>
         <i nz-icon>
@@ -91,13 +91,13 @@
         <div nz-col nzSpan="24" *ngIf="plant?.wateringFrequencySpringToSummerNumber">
           Arroser tous les {{ plant?.wateringFrequencySpringToSummerNumber }} {{ plant?.wateringFrequencySpringToSummer }} au printemps - été
         </div>
-        <div nz-typography nz-col nzSpan="24" *ngIf="plant?.wateringFrequencyAutumnToWinterNumber">
+        <div nz-col nzSpan="24" *ngIf="plant?.wateringFrequencyAutumnToWinterNumber">
           Arroser tous les {{ plant?.wateringFrequencyAutumnToWinterNumber }} {{ plant?.wateringFrequencyAutumnToWinter }} au printemps - été
         </div>
       </div>
     </div>
 
-    <div nz-row *ngIf="plant?.exposure">
+    <div nz-row *ngIf="plant?.exposure" class="row">
       <div nz-col>
         <i class="float-left" nz-icon>
           <svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -167,13 +167,13 @@
           </g>
           </svg>
         </i>
-        <p>
+        <p class="inline">
           {{ plant.exposure }}
         </p>
       </div>
     </div>
 
-    <div nz-row *ngIf="plant?.humidity">
+    <div nz-row *ngIf="plant?.humidity" class="row">
       <div nz-col>
         <i class="float-left" nz-icon>
           <svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -231,13 +231,13 @@
             c-0.3,6.2-2.2,12-5.3,17.1c-3.1,5-7.5,9.5-12.9,12.3c-3.4,2-4.8,6.4-2.8,9.8C193.1,245.3,197.6,246.4,201,244.4z"/>
           </svg>
         </i>
-        <p>
+        <p class="inline">
           {{ plant.humidity }}
         </p>
       </div>
     </div>
 
-    <div nz-row *ngIf="plant?.potting">
+    <div nz-row *ngIf="plant?.potting" class="row">
       <div nz-col>
         <i class="float-left" nz-icon>
           <svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -323,13 +323,13 @@
           </g>
           </svg>
         </i>
-        <p>
+        <p class="inline">
           {{ plant.potting }}
         </p>
       </div>
     </div>
 
-    <div nz-row *ngIf="plant?.toxicity" nzAlign="middle">
+    <div nz-row *ngIf="plant?.toxicity" nzAlign="middle" class="row">
       <!-- <img src="assets/images/icons/toxicite.svg" /> -->
       <i class="float-left" nz-icon>
         <!-- <img src="assets/images/icons/toxicite.svg" /> -->
@@ -398,7 +398,7 @@
           C287.6,45.9,282.3,45.4,279.3,48.7L279.3,48.7z"/>
         </svg>
       </i>
-      <p>
+      <p class="inline" class="row">
         Toxique pour les animaux de compagnie
       </p>
     </div>
