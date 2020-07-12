@@ -15,7 +15,7 @@
             <li nz-menu-item [routerLink]="['']" [nzDisabled]="true">Mes favoris</li>
           </ul>
         </li>
-        <li nz-submenu nzTitle="Fiches d'entretien">
+        <li nz-submenu nzTitle="Plantes">
           <ul>
             <li nz-menu-item routerLink="/plant/create" [nzMatchRouter]="true">Créer</li>
             <li nz-menu-item routerLink="/plant/community" [nzMatchRouter]="true">Communauté</li>
@@ -48,8 +48,8 @@
             <li nz-menu-item routerLink="/users/me" [nzMatchRouter]="true">Profil</li>
             <li nz-menu-group nzTitle="Mes plantes">
               <ul>
-                <li nz-menu-item [nzMatchRouter]="true">Capteur d'humidité</li>
-                <li nz-menu-item [nzMatchRouter]="true">Quelles plantes pour chez moi ?</li>
+                <li nz-menu-item [nzMatchRouter]="true" [nzDisabled]="true">Capteur d'humidité</li>
+                <li nz-menu-item [nzMatchRouter]="true" [nzDisabled]="true">Quelles plantes pour chez moi ?</li>
               </ul>
             </li>
             <li nz-menu-group nzTitle="Généralités">
