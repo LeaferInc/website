@@ -11,16 +11,18 @@ nz-header, .left-nav {
   display: flex;
 }
 
-.logo {
-  width: 100px;
-  height: 45px;
-  margin-right: 10px;
+.left-nav {
+  align-items: center;
 }
 
-.logo > img {
-  border-radius: 1em;
-  height: 100%;
-  width: 100%;
+.logo {
+  height: 45px;
+  margin-right: 15px;
+
+  img {
+    height: 100%;
+    vertical-align: unset;
+  }
 }
 
 [nz-menu] {
