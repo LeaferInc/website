@@ -9,6 +9,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { User } from 'src/app/shared/models/user/user';
 import { UserAuth } from 'src/app/shared/models/auth/auth';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NzFormModule } from 'ng-zorro-antd/form';
 
 describe('MyCuttingComponent', () => {
   const cuttings = [new Cutting(), new Cutting()];
@@ -42,6 +44,10 @@ describe('MyCuttingComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ MyCuttingComponent ],
+      imports: [
+        ReactiveFormsModule,
+        NzFormModule,
+      ],
       providers: [
         { provide: CuttingService, useValue: cuttingServiceMock },
         { provide: ActivatedRoute, useValue: activatedRouteMock },

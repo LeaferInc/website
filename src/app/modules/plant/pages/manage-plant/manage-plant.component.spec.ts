@@ -7,6 +7,8 @@ import { PlantService } from 'src/app/core/services/plant/plant.service';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NzFormModule } from 'ng-zorro-antd/form';
 
 describe('ManagePlantComponent', () => {
   let component: ManagePlantComponent;
@@ -16,7 +18,9 @@ describe('ManagePlantComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        NzGridModule
+        NzGridModule,
+        ReactiveFormsModule,
+        NzFormModule,
       ],
       declarations: [ ManagePlantComponent ],
       providers: [
