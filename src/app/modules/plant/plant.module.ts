@@ -25,6 +25,7 @@ import { MyGardenComponent } from './pages/my-garden/my-garden.component';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { ImagePickerModule } from 'src/app/shared/components/image-picker/image-picker.module';
 import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
     NzCardModule,
     NzDropDownModule,
     ImagePickerModule,
+    NzIconModule,
   ],
 })
 export class PlantModule {}
