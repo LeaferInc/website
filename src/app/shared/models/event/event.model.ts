@@ -13,5 +13,5 @@ export class Event {
         public joined: boolean = false,
         public id?: number,
         public picture?: string,
-        public organizer?: User) { }
+        public organizer?: number) { }
 }

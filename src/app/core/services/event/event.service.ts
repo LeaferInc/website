@@ -59,12 +59,17 @@ export class EventService {
 
   /**
    * Search for events with criteria
+   * @param search  The research criteria
    */
   searchEvents(search: SearchEvent): Observable<Event[]> {
     return this.http.get<Event[]>(EventService.BASE_URL + `search?${search.toUrlParams()}`);
   }
 
-  // delete(): Observable<unknown> {
-  //   return this.http.delete(``);
-  // }
+  /**
+   * Deletes an event
+   * @param id the id of the event
+   */
+  deleteEvent(id: number): Observable<void> {
+    return this.http.delete<void>(EventService.BASE_URL + id);
+  }
 }

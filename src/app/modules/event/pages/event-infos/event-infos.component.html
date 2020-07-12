@@ -26,4 +26,10 @@
 			Ne plus participer
 		</button>
 	</div>
+	<br/>
+	<div nz-row *ngIf="event && event.organizer === currentUserId">
+		<button nz-button nzDanger (click)="deleteEvent()" [disabled]="querying">
+			Supprimer l'évènement
+		</button>
+	</div>
 </div>
