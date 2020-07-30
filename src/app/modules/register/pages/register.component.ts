@@ -15,8 +15,8 @@ export class RegisterComponent {
   public emailInput = new FormControl(null, [Validators.required, Validators.email]);
   public passwordInput = new FormControl(null, Validators.required);
   public passwordConfirmInput = new FormControl(null, [Validators.required]);
-  public firstnameInput = new FormControl(null);
-  public lastnameInput = new FormControl(null);
+  public firstnameInput = new FormControl(null, [Validators.required]);
+  public lastnameInput = new FormControl(null, [Validators.required]);
   // public locationInput = new FormControl(null);
   // public birthdateInput = new FormControl(null);
   // public biographyInput = new FormControl(null);
