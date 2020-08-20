@@ -40,7 +40,6 @@ export class CreateCuttingComponent {
       return;
     }
 
-
     if (this.createCuttingForm.invalid) {
       return;
     }

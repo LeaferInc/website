@@ -21,6 +21,16 @@ export interface User {
 }
 
 /**
+ * Used for events
+ */
+export interface Entrant {
+  id: number;
+  username: string;
+  firstname: string;
+  lastname: string;
+}
+
+/**
  * Used for User edition
  */
 export interface UserEdit {

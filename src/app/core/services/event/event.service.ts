@@ -43,6 +43,13 @@ export class EventService {
   }
 
   /**
+   * Get organized events
+   */
+  getOrganizedEvents(): Observable<Event[]> {
+    return this.http.get<Event[]>(EventService.BASE_URL + "organized");
+  }
+
+  /**
    * Get a single Event from the server by its id
    */
   getEvent(id: number): Observable<Event> {

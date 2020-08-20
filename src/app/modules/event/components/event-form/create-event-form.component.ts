@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { UploadFile } from 'ng-zorro-antd/upload';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-create-event-form',
@@ -33,7 +34,8 @@ export class EventFormComponent implements OnInit {
 
   @Output() created = new EventEmitter<Event>();
 
-  constructor(private eventService: EventService, private utilsService: UtilsService, private router: Router) {}
+  constructor(private eventService: EventService, private utilsService: UtilsService, private router: Router,
+    private message: NzMessageService) {}
 
   ngOnInit(): void {
     // Default start date is next day
@@ -78,10 +80,36 @@ export class EventFormComponent implements OnInit {
       this.eventForm.get(key).updateValueAndValidity();
     });
 
-    const startBeforeEnd: boolean = this.eventForm.get('startDate').value < this.eventForm.get('endDate').value;
+    // Various checks below
 
+    // Image is required
+    if (!this.newImage) {
+      this.message.error('Une image est nécessaire');
+      return;
+    }
+
+    // Location has to be chosen
+    if (!this.locationChoosed) {
+      this.message.error('Aucun lieu selectionné');
+      return;
+    }
+
+    // Start date before end date
+    const startBeforeEnd: boolean = this.eventForm.get('startDate').value < this.eventForm.get('endDate').value;
+    if (!startBeforeEnd) {
+      this.message.error('La date de fin doit être supérieure à celle de début');
+      return;
+    }
+
+    // start date in the future
+    const futureDate: boolean = (new Date(this.eventForm.get('startDate').value) > new Date());
+    if (!futureDate) {
+      this.message.error('L\'évènement ne peut pas commencer dans le passé');
+      return;
+    }
+    
     // Create form
-    if (startBeforeEnd && this.eventForm.valid && this.locationChoosed) {
+    if (startBeforeEnd && futureDate && this.newImage && this.eventForm.valid && this.locationChoosed) {
       this.sending = true;
 
       const event: Event = this.eventForm.value;
@@ -101,6 +129,7 @@ export class EventFormComponent implements OnInit {
           this.router.navigate(['events', event.id.toString()]);
         },
         (err: HttpErrorResponse) => {
+          this.message.error(err.message);
           console.log(err);
         },
         () =>  {
