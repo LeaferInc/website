@@ -6,6 +6,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { EntryService } from 'src/app/core/services/entry/entry.service';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { UserAuth } from 'src/app/shared/models/auth/auth';
+import { User, Entrant } from 'src/app/shared/models/user/user';
+import { ColumnItem } from 'src/app/shared/models/ngzorro/column.item';
 
 
 @Component({
@@ -16,7 +18,27 @@ import { UserAuth } from 'src/app/shared/models/auth/auth';
 export class EventInfosComponent implements OnInit {
   event: Event;
   querying: boolean = false; // True if waiting for a server response
-  currentUserId: number;
+  currentUser: User;
+  isModalVisible: boolean = false;
+
+  currentPage: Entrant[] = [];
+  listOfColumns: ColumnItem[] = [
+    {
+      name: 'Nom d\'utilisateur',
+      sortOrder: 'ascend',
+      sortFn: (a: Entrant, b: Entrant) => a.username.localeCompare(b.username),
+    },
+    {
+      name: 'Prénom',
+      sortOrder: null,
+      sortFn: (a: Entrant, b: Entrant) => a.firstname.localeCompare(b.firstname),
+    },
+    {
+      name: 'Nom',
+      sortOrder: null,
+      sortFn: (a: Entrant, b: Entrant) => a.lastname.localeCompare(b.lastname),
+    }
+  ];
 
   constructor(private route: ActivatedRoute, private router: Router,
     private eventService: EventService, private entryService: EntryService,
@@ -41,18 +63,35 @@ export class EventInfosComponent implements OnInit {
 
     this.authService.getUserAuth().subscribe(
       (userAuth: UserAuth) => {
-        this.currentUserId = userAuth.user.id;
+        this.currentUser = userAuth.user;
       },
       (e) => console.log(e));
   }
 
   /**
-   * Join an event
+   * Whether or not the event is over
+   */
+  isEventFinished(): boolean {
+    return new Date(this.event.endDate) < new Date();
+  }
+
+  /**
+   * Joins an event
    */
   participate(): void {
     this.querying = true;
     this.entryService.joinEvent(this.event.id).subscribe(
-      () => this.event.joined = true,
+      () => {
+        this.event.joined = true;
+        const entrant: Entrant = {
+          id: this.currentUser.id,
+          username: this.currentUser.username,
+          firstname: this.currentUser.firstname,
+          lastname: this.currentUser.lastname,
+        }
+        // Need immutable array
+        this.event.entrants = [...this.event.entrants, entrant];
+      },
       (err: HttpErrorResponse) => {
         if (err.status === 403) {
           alert('Aucune place disponible!');
@@ -64,12 +103,15 @@ export class EventInfosComponent implements OnInit {
   }
 
   /**
-   * Leave the event
+   * Leaves the event
    */
   leave(): void {
     this.querying = true;
     this.entryService.unjoinEvent(this.event.id).subscribe(
-      () => this.event.joined = false,
+      () => { 
+        this.event.joined = false;
+        this.event.entrants = this.event.entrants.filter((e: Entrant) => e.id !== this.currentUser.id);
+      },
       (err: HttpErrorResponse) => {
         console.log(err);
       },
@@ -78,7 +120,7 @@ export class EventInfosComponent implements OnInit {
   }
 
   /**
-   * Delete an event
+   * Deletes an event
    */
   deleteEvent(): void {
     this.querying = true;

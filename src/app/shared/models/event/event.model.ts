@@ -1,4 +1,4 @@
-import { User, Entrant } from '../user/user';
+import { Entrant } from '../user/user';
 
 export class Event {
     constructor(public name: string,

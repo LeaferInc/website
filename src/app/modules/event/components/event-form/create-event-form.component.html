@@ -52,6 +52,7 @@
             (ngModelChange)="locationChoosedSubject.next($event)"
             [ngModelOptions]="{standalone: true}"
             [nzAutocomplete]="auto"
+            placeholder="23 rue Victor Hugo 35000 Rennes"
           />
           <nz-autocomplete nzBackfill #auto>
             <nz-auto-option *ngFor="let location of locations" [nzValue]="location" [nzLabel]="location.label">
@@ -115,7 +116,7 @@
       </nz-form-item> -->
 
       <nz-form-item>
-        <nz-form-label [nzSpan]="24" nzFor="price" nzRequired>Prix&nbsp;:</nz-form-label>
+        <nz-form-label [nzSpan]="24" nzFor="price" nzRequired>Prix (en €)&nbsp;:</nz-form-label>
         <nz-form-control [nzSpan]="24" [nzErrorTip]="priceErrorTpl">
           <!-- <input formControlName="price" type="number" name="price" nz-input placeholder="Prix" /> -->
           <nz-input-number formControlName="price" [nzMin]="0" [nzStep]="1"></nz-input-number>
@@ -131,7 +132,7 @@
         <nz-form-label [nzSpan]="24" nzFor="maxPeople" nzRequired>Capacité&nbsp;:</nz-form-label>
         <nz-form-control [nzSpan]="24" [nzErrorTip]="maxPeopleErrorTpl">
           <!-- <input formControlName="maxPeople" type="number" name="maxPeople" nz-input /> -->
-          <nz-input-number formControlName="maxPeople" [nzMin]="1" [nzStep]="1"></nz-input-number>
+          <nz-input-number formControlName="maxPeople" [nzStep]="1"></nz-input-number>
           <ng-template #maxPeopleErrorTpl>
             <ng-container *ngIf="eventForm.get('maxPeople').hasError('required')">
               Veuillez entrer une capacité maximale

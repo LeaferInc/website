@@ -24,10 +24,10 @@ export class EventFormComponent implements OnInit {
   sending: boolean = false; // True when the form has been sent to server
 
   locationChoosed: Location = null; // The Location the user has selected
-  locationChoosedSubject  = new Subject<string>();
+  locationChoosedSubject = new Subject<string>();
   locationTimeout: NodeJS.Timeout; // Delay to search for addresses after user's input
   locations: Location[] = []; // The found addresses
-  
+
   minDate: Date = new Date(); // Minimum choosable Date
 
   newImage: UploadFile;
@@ -35,7 +35,7 @@ export class EventFormComponent implements OnInit {
   @Output() created = new EventEmitter<Event>();
 
   constructor(private eventService: EventService, private utilsService: UtilsService, private router: Router,
-    private message: NzMessageService) {}
+    private message: NzMessageService) { }
 
   ngOnInit(): void {
     // Default start date is next day
@@ -49,10 +49,8 @@ export class EventFormComponent implements OnInit {
 
     // Form initialization
     this.eventForm = new FormGroup({
-      name: new FormControl('Un nom au hasard', [Validators.required]),
-      description: new FormControl('Un évènement comme un autre, il faut meubler pour remplir la textarea.', [
-        Validators.required,
-      ]),
+      name: new FormControl('', [Validators.required]),
+      description: new FormControl('', [Validators.required,]),
       startDate: new FormControl(UtilsService.dateToJSONLocal(startDate).slice(0, 16), [Validators.required]),
       endDate: new FormControl(UtilsService.dateToJSONLocal(endDate).slice(0, 16), [Validators.required]),
       price: new FormControl(0, [Validators.required, Validators.min(0)]),
@@ -94,6 +92,11 @@ export class EventFormComponent implements OnInit {
       return;
     }
 
+    // MaxPeople Minimum
+    if (Number.parseInt(this.eventForm.get('maxPeople').value) < 1) {
+      this.message.error('Au moins une personne doit pouvoir participer');
+    }
+
     // Start date before end date
     const startBeforeEnd: boolean = this.eventForm.get('startDate').value < this.eventForm.get('endDate').value;
     if (!startBeforeEnd) {
@@ -107,7 +110,7 @@ export class EventFormComponent implements OnInit {
       this.message.error('L\'évènement ne peut pas commencer dans le passé');
       return;
     }
-    
+
     // Create form
     if (startBeforeEnd && futureDate && this.newImage && this.eventForm.valid && this.locationChoosed) {
       this.sending = true;
@@ -132,7 +135,7 @@ export class EventFormComponent implements OnInit {
           this.message.error(err.message);
           console.log(err);
         },
-        () =>  {
+        () => {
           this.sending = false;
         }
       );

@@ -20,6 +20,8 @@ describe('PremiumHomeComponent', () => {
         email: 'email',
         username: 'username',
         premium: false,
+        firstname: 'John',
+        lastname: 'Doe',
       };
       const userAuth: UserAuth = {
         token: '',

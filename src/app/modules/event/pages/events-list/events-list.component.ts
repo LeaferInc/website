@@ -23,7 +23,7 @@ export class EventsListComponent implements OnInit {
     // Incoming events
     this.eventService.getIncomingEvents().subscribe(
       (events: Event[]) => {
-        //this.incomingEvents = events;
+        this.incomingEvents = events;
       },
       (err: HttpErrorResponse) => {
         console.log(err);
@@ -41,7 +41,7 @@ export class EventsListComponent implements OnInit {
     );
 
     // Organized events
-    this.eventService.getJoinedEvents().subscribe(
+    this.eventService.getOrganizedEvents().subscribe(
       (events: Event[]) => {
         this.organizedEvents = events;
       },

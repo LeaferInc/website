@@ -9,8 +9,8 @@ export interface User {
   enabled?: boolean;
   email: string;
   username: string;
-  firstname?: string;
-  lastname?: string;
+  firstname: string;
+  lastname: string;
   birthdate?: Date;
   biography?: string;
   location?: string;

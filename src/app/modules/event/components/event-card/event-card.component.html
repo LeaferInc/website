@@ -8,5 +8,6 @@
 	</ng-template>
 	<ng-template #descriptionTemplate>
 		<p nz-typography nzEllipsis>{{ event.location }}</p>
+		<p nz-typography nzEllipsis>{{ event.startDate | date:'MM/dd/yy HH:mm' }}</p>
 	</ng-template>
 </div>

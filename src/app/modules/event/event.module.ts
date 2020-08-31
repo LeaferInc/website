@@ -31,6 +31,9 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { SearchOutline } from '@ant-design/icons-angular/icons';
 import { ImagePickerModule } from 'src/app/shared/components/image-picker/image-picker.module';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
 
 @NgModule({
   declarations: [
@@ -54,6 +57,9 @@ import { ImagePickerModule } from 'src/app/shared/components/image-picker/image-
     NzInputNumberModule,
     NzDatePickerModule,
     NzCardModule,
+    NzAlertModule,
+    NzModalModule,
+    NzTableModule,
     NzAutocompleteModule,
     NzDividerModule,
     NzTypographyModule,

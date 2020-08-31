@@ -52,6 +52,8 @@ describe('ChatContentComponent', () => {
         id: 0,
         email: 'email@email.com',
         username: 'username',
+        firstname: 'John',
+        lastname: 'Doe',
       },
       token: 'token'
     };
