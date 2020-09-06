@@ -1,16 +1,21 @@
 <div nz-row>
   <div nz-col nzOffset="10" nzSpan="4">
-    <h1>Create Cuttings</h1>
+    <h1>Créer un bouture</h1>
   </div>
+
+  <div nz-col nzOffset="10" nzSpan="4">
+    <app-image-picker label="Image" required="true" (picked)="newImage = $event"></app-image-picker>
+  </div>
+
   <div nz-col nzOffset="10" nzSpan="4">
     <form nz-form nzLayout="vertical" [formGroup]="createCuttingForm" class="create-cutting-form" (ngSubmit)="onSubmit()">
       <nz-form-item>
-        <nz-form-label nzFor="name" nzRequired>Name</nz-form-label>
+        <nz-form-label nzFor="name" nzRequired>Nom</nz-form-label>
         <nz-form-control [nzErrorTip]="nameErrorTpl">
-          <input formControlName="nameInput" type="text" id="name" nz-input placeholder="name" />
+          <input formControlName="nameInput" type="text" id="name" nz-input placeholder="Nom" />
           <ng-template #nameErrorTpl>
             <ng-container *ngIf="createCuttingForm.get('nameInput').hasError('required')">
-              Please input a cutting name !
+              Veuillez entrer un nom
             </ng-container>
           </ng-template>
         </nz-form-control>
@@ -22,19 +27,19 @@
           <textarea rows="3" nz-input formControlName="descriptionInput" id="description" nz-input></textarea>
           <ng-template #descriptionErrorTpl>
             <ng-container *ngIf="createCuttingForm.get('descriptionInput').hasError('required')">
-              Please input a cutting description !
+              Veuillez entrer une description
             </ng-container>
           </ng-template>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label nzFor="tradeWith">Trade with</nz-form-label>
+        <nz-form-label nzFor="tradeWith">Échange contre</nz-form-label>
         <nz-form-control [nzErrorTip]="tradeWithErrorTpl">
           <input formControlName="tradeWithInput" type="text" id="tradeWith" nz-input />
           <ng-template #tradeWithErrorTpl>
             <ng-container *ngIf="createCuttingForm.get('tradeWithInput').hasError('required')">
-              Please input a trade with !
+              Veuillez indiquer pour quoi vous l'échangeriez
             </ng-container>
           </ng-template>
         </nz-form-control>

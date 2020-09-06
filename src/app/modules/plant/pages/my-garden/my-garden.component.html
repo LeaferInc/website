@@ -1,11 +1,18 @@
 <div nz-row>
-  <h2 nz-col nzOffset="8" nzSpan="8">Mon jardin</h2>
+  <h2 nz-col nzOffset="8" nzSpan="8">
+    Mon jardin
+  </h2>
+  <h5 nz-col>
+    {{ plants?.count }} / 
+    <ng-container *ngIf="(authService.getUserAuth() | async).user.premium; else plantLimit">illimité</ng-container>
+    <ng-template #plantLimit>3</ng-template>
+  </h5>
 </div>
 
 <div nz-row>
   <div nz-col nzOffset="8" nzSpan="8">
     <nz-input-group [nzSuffix]="suffixIconSearch">
-      <input type="text" nz-input placeholder="input search text" />
+      <input type="text" nz-input placeholder="Recherche" />
     </nz-input-group>
     <ng-template #suffixIconSearch>
       <i nz-icon nzType="search"></i>
@@ -21,13 +28,13 @@
       </ng-container>
     </div>
     <div nz-row nzJustify="center" class="pagination">
-      <nz-pagination [nzPageIndex]="pageIndex" [nzPageSize]="12" [nzTotal]="plants?.count" (nzPageIndexChange)="onPageIndexChange($event)"></nz-pagination>
+      <nz-pagination [nzPageIndex]="pageIndex" [nzPageSize]="pageSize" [nzTotal]="plants?.count" (nzPageIndexChange)="onPageIndexChange($event)"></nz-pagination>
     </div>
   </ng-container>
 
   <ng-container *ngIf="plants?.items?.length === 0">
     <div nz-row nzJustify="center" class="no-plant">
-      <p>No plant found</p>
+      <p class="not-found">Aucune plante trouvée</p>
     </div>
   </ng-container>
 </ng-container>

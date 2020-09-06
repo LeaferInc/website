@@ -1,10 +1,8 @@
-<div nz-row>
-  <div nz-col [nzSpan]="16" [nzOffset]="4">
-    <img src="../../../../../assets/images/event-temp.jpg" style="height: 450px; width: 100%; object-fit: cover;" />
-  </div>
-</div>
-
 <div nz-col [nzSpan]="16" [nzOffset]="4" *ngIf="event">
+	<div nz-col [nzOffset]="4" class="picture">
+		<img *ngIf="event.picture" alt="Image de l'évènement" [src]="'data:image/jpg;base64,' + event.picture" />
+		<img *ngIf="!event.picture" alt="Image de l'évènement" src="assets/images/event.jpg" />
+	</div>
 	<div nz-row>
 		<h3>{{event.name}}</h3>
 	</div>
@@ -19,13 +17,56 @@
 	</div>
 	<div nz-row>
 		<p>Fin&nbsp;:&nbsp;{{event.endDate | date:'EEE d MMM y à HH:mm'}}</p>
-  </div>
-  <div nz-row>
-    <button nz-button *ngIf="!event.joined" (click)="participate()" [disabled]="querying">
-			Participer
-		</button>
-		<button nz-button nzDanger *ngIf="event.joined" (click)="leave()" [disabled]="querying">
-			Ne plus participer
-		</button>
-  </div>
+	</div>
+
+	<div nz-row>
+		<p>Participants&nbsp;:&nbsp;{{event.entrants.length}}&nbsp;(Max&nbsp;:&nbsp;{{event.maxPeople}})</p>
+
+		<nz-table #entrantsTable [nzData]="event.entrants" nzTableLayout="fixed" nzShowPagination nzShowSizeChanger>
+			<thead>
+			  <tr>
+				<th
+				  *ngFor="let column of listOfColumns"
+				  [nzSortOrder]="column.sortOrder"
+				  [nzSortFn]="column.sortFn"
+				  [nzSortDirections]="column.sortDirections"
+				>
+				  {{ column.name }}
+				</th>
+				<th></th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <tr *ngFor="let data of entrantsTable.data">
+				<td>{{ data.username }}</td>
+				<td>{{ data.firstname }}</td>
+				<td>{{ data.lastname }}</td>
+				<td><a href="#" [routerLink]="['/users', data.id]">Voir profil</a></td>
+			  </tr>
+			</tbody>
+		  </nz-table>
+	</div>
+	<div nz-row *ngIf="isEventFinished()">
+		<nz-alert nzType="warning" nzMessage="Évènement terminé."></nz-alert>
+	</div>
+	<div nz-row *ngIf="!isEventFinished()">
+		<div nz-row *ngIf="event.organizer !== currentUser.id">
+			<button nz-button *ngIf="!event.joined" (click)="participate()" [disabled]="querying">
+				Participer
+			</button>
+			<button nz-button nzDanger *ngIf="event.joined" (click)="leave()" [disabled]="querying">
+				Ne plus participer
+			</button>
+		</div>
+		<br/>
+		<div nz-row *ngIf="event && event.organizer === currentUser.id">
+			<button nz-button nzDanger (click)="isModalVisible = true" [disabled]="querying">
+				Annuler l'évènement
+			</button>
+
+			<nz-modal [(nzVisible)]="isModalVisible" nzTitle="Annulation de l'évènement" (nzOnCancel)="isModalVisible = false" (nzOnOk)="deleteEvent()">
+				<p>Voulez-vous vraiment annuler cet évènement ? Cette action est irréversible.</p>
+			</nz-modal>
+		</div>
+	</div>
 </div>

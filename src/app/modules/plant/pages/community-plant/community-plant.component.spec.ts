@@ -7,6 +7,8 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NzGridModule } from 'ng-zorro-antd/grid';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NzFormModule } from 'ng-zorro-antd/form';
 
 describe('CommunityPlantComponent', () => {
   let component: CommunityPlantComponent;
@@ -16,7 +18,9 @@ describe('CommunityPlantComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        NzGridModule
+        NzGridModule,
+        ReactiveFormsModule,
+        NzFormModule,
       ],
       declarations: [ CommunityPlantComponent ],
       providers: [

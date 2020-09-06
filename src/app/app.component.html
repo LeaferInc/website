@@ -1,7 +1,9 @@
 <nz-layout [ngClass]="(appService.currentFullHeight | async) ? 'full-height' : 'min-full-height'">
   <nz-header>
     <div class="left-nav">
-      <div class="logo"></div>
+      <div class="logo">
+        <img src="assets/images/logo-leafer.svg" alt="Logo de l'application">
+      </div>
       <ul nz-menu [nzSelectable]="false" nzTheme="dark" nzMode="horizontal">
         <li nz-menu-item routerLink="/" [nzMatchRouter]="true" [nzMatchRouterExact]="true">Accueil</li>
         <li nz-submenu nzTitle="Boutures">
@@ -10,10 +12,10 @@
             <li nz-menu-item [routerLink]="['cutting', 'exchange']" [nzMatchRouter]="true">Échanges</li>
             <li nz-menu-item [routerLink]="['cutting', 'inventory']" [nzMatchRouter]="true">Inventaire</li>
             <li nz-menu-item [routerLink]="['chat']" [nzMatchRouter]="true">Mes messages</li>
-            <li nz-menu-item [routerLink]="['']">Mes favoris</li>
+            <li nz-menu-item [routerLink]="['']" [nzDisabled]="true">Mes favoris</li>
           </ul>
         </li>
-        <li nz-submenu nzTitle="Fiches d'entretien">
+        <li nz-submenu nzTitle="Plantes">
           <ul>
             <li nz-menu-item routerLink="/plant/create" [nzMatchRouter]="true">Créer</li>
             <li nz-menu-item routerLink="/plant/community" [nzMatchRouter]="true">Communauté</li>
@@ -21,7 +23,7 @@
             <li nz-menu-item routerLink="/plant/manage" [nzMatchRouter]="true">Gestion</li>
           </ul>
         </li>
-        <li nz-submenu nzTitle="Evenements">
+        <li nz-submenu nzTitle="Évènements">
           <ul>
             <li nz-menu-item routerLink="/events" [nzMatchRouter]="true" [nzMatchRouterExact]="true">Liste</li>
             <li nz-menu-item routerLink="/events/create" [nzMatchRouter]="true">Créer</li>
@@ -67,22 +69,23 @@
             </ul>
           </nz-dropdown-menu>
         </li>
+        <li nz-menu-item [routerLink]="['premium']" [nzMatchRouter]="true">Premium</li>
+        <li nz-menu-item [nzMatchRouter]="true"><i class="fas fa-bell"></i></li>
+        <li *ngIf="(authService.getUserAuth() | async).user.role === 1" nz-menu-item [routerLink]="['admin']" [nzMatchRouter]="true">Moderation</li>
         <li nz-submenu nzTitle="Mon compte" nzIcon="user">
           <ul>
+            <li nz-menu-item routerLink="/users/me" [nzMatchRouter]="true">Profil</li>
             <li nz-menu-group nzTitle="Mes plantes">
               <ul>
-                <li nz-menu-item [nzMatchRouter]="true">Capteur d'humidité</li>
-                <li nz-menu-item [nzMatchRouter]="true">Quelles plantes pour chez moi ?</li>
+                <li nz-menu-item [nzMatchRouter]="true" [nzDisabled]="true">Capteur d'humidité</li>
+                <li nz-menu-item [nzMatchRouter]="true" [nzDisabled]="true">Quelles plantes pour chez moi ?</li>
               </ul>
             </li>
             <li nz-menu-group nzTitle="Généralités">
               <ul>
-                <li nz-menu-item [nzMatchRouter]="true">Paramètres</li>
-                <li nz-menu-item [nzMatchRouter]="true">Notifications</li>
-                <li nz-menu-item [nzMatchRouter]="true">Confidentialité</li>
-                <li nz-menu-item [nzMatchRouter]="true">À propos</li>
+                <li nz-menu-item routerLink="/about">À propos</li>
                 <li nz-menu-divider></li>
-                <li nz-menu-item>Se deconnecter</li>
+                <li nz-menu-item (click)="logout()">Se déconnecter</li>
               </ul>
             </li>
           </ul>
@@ -92,6 +95,7 @@
       <ul *ngIf="!(authService.isLogged() | async)" nz-menu [nzSelectable]="false" nzTheme="dark" nzMode="horizontal">
         <li nz-menu-item routerLink="/login" [nzMatchRouter]="true">Se connecter</li>
         <li nz-menu-item routerLink="/register" [nzMatchRouter]="true">S'enregistrer</li>
+        <li nz-menu-item routerLink="/about"><i class="fas fa-question-circle"></i></li>
       </ul>
     </div>
   </nz-header>
@@ -100,5 +104,5 @@
       <router-outlet></router-outlet>
     </div>
   </nz-content>
-  <nz-footer>Leafer, Inc ©2020 Design by Ant Design and Implement By Angular</nz-footer>
+  <nz-footer>Leafer, Inc ©2020</nz-footer>
 </nz-layout>

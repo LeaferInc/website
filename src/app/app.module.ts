@@ -25,6 +25,9 @@ import { GlobalErrorHandler } from './core/services/error-handler/global-error.h
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NotificationItemModule } from './shared/components/notification-item/notification-item.module';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { AboutComponent } from './shared/components/about/about.component';
+import { MarkdownModule } from 'ngx-markdown';
+import { NzGridModule } from 'ng-zorro-antd/grid';
 
 const icons: IconDefinition[] = [UserOutline, LockOutline, BellOutline];
 
@@ -34,6 +37,7 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
   declarations: [
     AppComponent,
     PageNotFoundComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +46,7 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
     AppRoutingModule,
     CoreModule,
     NzLayoutModule,
+    NzGridModule,
     NzMenuModule,
     NzBreadCrumbModule,
     NzAvatarModule,
@@ -49,6 +54,7 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
     NzDropDownModule,
     NotificationItemModule,
     NzBadgeModule,
+    MarkdownModule.forRoot(),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HeadersInterceptor, multi: true },

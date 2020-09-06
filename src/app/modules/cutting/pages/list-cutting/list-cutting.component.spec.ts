@@ -7,6 +7,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NzFormModule } from 'ng-zorro-antd/form';
 
 describe('ListCuttingComponent', () => {
   let component: ListCuttingComponent;
@@ -23,7 +24,10 @@ describe('ListCuttingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule],
+      imports: [
+        ReactiveFormsModule,
+        NzFormModule,
+      ],
       declarations: [ ListCuttingComponent ],
       providers: [
         { provide: CuttingService, useValue: cuttingServiceMock },

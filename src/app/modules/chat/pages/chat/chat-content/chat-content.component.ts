@@ -6,13 +6,14 @@ import { ChatSocketService } from 'src/app/core/services/chat-socket/chat-socket
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MessageService } from 'src/app/core/services/message/message.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chat-content',
   templateUrl: './chat-content.component.html',
   styleUrls: ['./chat-content.component.scss'],
 })
-export class ChatContentComponent implements OnInit {
+export class ChatContentComponent implements OnInit, OnDestroy {
   messages: Message[];
 
   public messageInput = new FormControl('');
@@ -23,6 +24,7 @@ export class ChatContentComponent implements OnInit {
 
   currentUser: User;
   roomId: number;
+  public sub: Subscription;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -32,7 +34,7 @@ export class ChatContentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.authService.getUserAuth().subscribe((userAuth) => (this.currentUser = userAuth.user));
+    this.sub = this.authService.getUserAuth().subscribe((userAuth) => (this.currentUser = userAuth.user));
 
     this.activatedRoute.params.subscribe((routes) => {
       if (routes.roomId) {
@@ -49,6 +51,10 @@ export class ChatContentComponent implements OnInit {
       console.log('[Client]', message);
       this.messages.push(message);
     });
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   onSubmitMessage() {

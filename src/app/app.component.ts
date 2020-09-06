@@ -7,6 +7,7 @@ import { NotificationService } from './core/services/notification/notification.s
 import { switchMap, filter } from 'rxjs/operators';
 import { Notification } from './shared/models/notification/notification';
 import { NotificationSocketService } from './core/services/notification-socket/notification-socket.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -26,11 +27,12 @@ export class AppComponent implements OnInit {
     public appService: AppService,
     public notificationService: NotificationService,
     public notificationSocketService: NotificationSocketService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
     const token = this.authService.getTokenFromLocalStorage();
-    if(token) {
+    if (token) {
       this.authService
         .getUserFromToken(token)
         .subscribe((user: User) => {
@@ -72,5 +74,13 @@ export class AppComponent implements OnInit {
 
   onNotificationClick() {
     this.newNotificationCount = 0;
+  }
+
+  /**
+   * Log out of the app
+   */
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['login']);
   }
 }

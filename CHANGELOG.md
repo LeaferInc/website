@@ -1,3 +1,22 @@
+# [1.3.0](https://github.com/LeaferInc/website/compare/v1.2.0...v1.3.0) (2020-07-12)
+
+
+### Bug Fixes
+
+* **home:** fix authorization to the home component and fix display ([27c8e4d](https://github.com/LeaferInc/website/commit/27c8e4dac845aa3d5e1b75999c8bef59263c8e29))
+* **home:** fix tests in home component ([a2a8634](https://github.com/LeaferInc/website/commit/a2a863406671cc6b0a1c1575cf4951ab2b0dbf0a))
+* **logout:** fix bug when login out ([6389023](https://github.com/LeaferInc/website/commit/6389023b4e3a8fa30ffb0554384d743e80ed4d99))
+* **payment:** fix loading ([4f238e9](https://github.com/LeaferInc/website/commit/4f238e9d5bf699058ac6cd65bccd007905d31184))
+* **payment:** fix null error when disconnect user ([5cb4c37](https://github.com/LeaferInc/website/commit/5cb4c3787b978ae185f1c865a56d616ed2673eac))
+* **test:** fix test for cuttings and plants ([a630dc4](https://github.com/LeaferInc/website/commit/a630dc4be6d4df5bdbdc16607d98aca6b85cbbba))
+
+
+### Features
+
+* **admin:** add admin panel ([422559f](https://github.com/LeaferInc/website/commit/422559f7c5de3354fd7c611338b4c0f00745f057))
+* **premium:** add premium page and feature ([7630626](https://github.com/LeaferInc/website/commit/76306264161a4390cf19963bc7d75793027be1b2))
+* **search:** add search in cuttings and plants except garden ([446c99f](https://github.com/LeaferInc/website/commit/446c99fbed2626b00d893932915bcfeb08e1aab3))
+
 # [1.2.0](https://github.com/LeaferInc/website/compare/v1.1.3...v1.2.0) (2020-06-26)
 
 

@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { Event } from 'src/app/shared/models/event/event.model';
 import { HttpClient } from '@angular/common/http';
 import { SearchEvent } from 'src/app/shared/models/event/searchEvent.model';
+import { ResultData } from 'src/app/shared/models/query/query';
 
 
 @Injectable()
@@ -18,8 +19,13 @@ export class EventService {
   /**
    * Get all Events from the server 
    */
-  getEvents(): Observable<Event[]> {
-    return this.http.get<Event[]>(EventService.BASE_URL);
+  getEvents(skip?: number, take?: number): Observable<Event[]> {
+    return this.http.get<Event[]>(EventService.BASE_URL, {
+      params: {
+        skip: String(skip),
+        take: String(take)
+      }
+    });
   }
 
   /**
@@ -34,6 +40,13 @@ export class EventService {
    */
   getJoinedEvents(): Observable<Event[]> {
     return this.http.get<Event[]>(EventService.BASE_URL + "joined");
+  }
+
+  /**
+   * Get organized events
+   */
+  getOrganizedEvents(): Observable<Event[]> {
+    return this.http.get<Event[]>(EventService.BASE_URL + "organized");
   }
 
   /**
@@ -53,8 +66,17 @@ export class EventService {
 
   /**
    * Search for events with criteria
+   * @param search  The research criteria
    */
   searchEvents(search: SearchEvent): Observable<Event[]> {
     return this.http.get<Event[]>(EventService.BASE_URL + `search?${search.toUrlParams()}`);
+  }
+
+  /**
+   * Deletes an event
+   * @param id the id of the event
+   */
+  deleteEvent(id: number): Observable<void> {
+    return this.http.delete<void>(EventService.BASE_URL + id);
   }
 }

@@ -1,0 +1,42 @@
+<!-- <p>admin-home works!</p> -->
+<nz-page-header [nzGhost]="false">
+  <nz-page-header-title>Administration</nz-page-header-title>
+  <nz-page-header-subtitle>LeaferInc</nz-page-header-subtitle>
+  <!-- <nz-page-header-extra>
+    <button nz-button>Operation</button>
+    <button nz-button>Operation</button>
+    <button nz-button nzType="primary">Primary</button>
+  </nz-page-header-extra> -->
+  <nz-page-header-content>
+    <nz-row nzType="flex" [nzGutter]="64">
+      <nz-statistic nz-col nzTitle="Nombre d'utilisateur" [nzValue]="stats?.userCount"></nz-statistic>
+      <nz-statistic nz-col nzTitle="Nombre de bouture" [nzValue]="stats?.cuttingCount"></nz-statistic>
+      <nz-statistic nz-col nzTitle="Nombre de plantes" [nzValue]="stats?.plantCount"></nz-statistic>
+      <nz-statistic nz-col nzTitle="Nombre d'évenements" [nzValue]="stats?.eventCount"></nz-statistic>
+    </nz-row>
+  </nz-page-header-content>
+  <nz-page-header-footer>
+    <nz-tabset [nzSelectedIndex]="0">
+      <nz-tab nzTitle="Utilisateurs">
+        <ng-template nz-tab>
+          <app-user-list></app-user-list>
+        </ng-template>
+      </nz-tab>
+      <nz-tab nzTitle="Boutures">
+        <ng-template nz-tab>
+          <app-cutting-list></app-cutting-list>
+        </ng-template>
+      </nz-tab>
+      <nz-tab nzTitle="Plantes">
+        <ng-template nz-tab>
+          <app-plant-list></app-plant-list>
+        </ng-template>
+      </nz-tab>
+      <nz-tab nzTitle="Evenements">
+        <ng-template nz-tab>
+          <app-admin-event-list></app-admin-event-list>
+        </ng-template>
+      </nz-tab>
+    </nz-tabset>
+  </nz-page-header-footer>
+</nz-page-header>

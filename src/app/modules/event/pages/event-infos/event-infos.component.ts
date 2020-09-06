@@ -4,6 +4,10 @@ import { EventService } from 'src/app/core/services/event/event.service';
 import { Event } from 'src/app/shared/models/event/event.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { EntryService } from 'src/app/core/services/entry/entry.service';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { UserAuth } from 'src/app/shared/models/auth/auth';
+import { User, Entrant } from 'src/app/shared/models/user/user';
+import { ColumnItem } from 'src/app/shared/models/ngzorro/column.item';
 
 
 @Component({
@@ -14,9 +18,31 @@ import { EntryService } from 'src/app/core/services/entry/entry.service';
 export class EventInfosComponent implements OnInit {
   event: Event;
   querying: boolean = false; // True if waiting for a server response
+  currentUser: User;
+  isModalVisible: boolean = false;
+
+  currentPage: Entrant[] = [];
+  listOfColumns: ColumnItem[] = [
+    {
+      name: 'Nom d\'utilisateur',
+      sortOrder: 'ascend',
+      sortFn: (a: Entrant, b: Entrant) => a.username.localeCompare(b.username),
+    },
+    {
+      name: 'Prénom',
+      sortOrder: null,
+      sortFn: (a: Entrant, b: Entrant) => a.firstname.localeCompare(b.firstname),
+    },
+    {
+      name: 'Nom',
+      sortOrder: null,
+      sortFn: (a: Entrant, b: Entrant) => a.lastname.localeCompare(b.lastname),
+    }
+  ];
 
   constructor(private route: ActivatedRoute, private router: Router,
-    private eventService: EventService, private entryService: EntryService) { }
+    private eventService: EventService, private entryService: EntryService,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
@@ -34,12 +60,38 @@ export class EventInfosComponent implements OnInit {
         this.router.navigate(['/404']);
       }
     });
+
+    this.authService.getUserAuth().subscribe(
+      (userAuth: UserAuth) => {
+        this.currentUser = userAuth.user;
+      },
+      (e) => console.log(e));
   }
 
+  /**
+   * Whether or not the event is over
+   */
+  isEventFinished(): boolean {
+    return new Date(this.event.endDate) < new Date();
+  }
+
+  /**
+   * Joins an event
+   */
   participate(): void {
     this.querying = true;
     this.entryService.joinEvent(this.event.id).subscribe(
-      () => this.event.joined = true,
+      () => {
+        this.event.joined = true;
+        const entrant: Entrant = {
+          id: this.currentUser.id,
+          username: this.currentUser.username,
+          firstname: this.currentUser.firstname,
+          lastname: this.currentUser.lastname,
+        }
+        // Need immutable array
+        this.event.entrants = [...this.event.entrants, entrant];
+      },
       (err: HttpErrorResponse) => {
         if (err.status === 403) {
           alert('Aucune place disponible!');
@@ -50,14 +102,36 @@ export class EventInfosComponent implements OnInit {
     );
   }
 
+  /**
+   * Leaves the event
+   */
   leave(): void {
     this.querying = true;
     this.entryService.unjoinEvent(this.event.id).subscribe(
-      () => this.event.joined = false,
+      () => { 
+        this.event.joined = false;
+        this.event.entrants = this.event.entrants.filter((e: Entrant) => e.id !== this.currentUser.id);
+      },
       (err: HttpErrorResponse) => {
         console.log(err);
       },
       () => this.querying = false
+    );
+  }
+
+  /**
+   * Deletes an event
+   */
+  deleteEvent(): void {
+    this.querying = true;
+    this.eventService.deleteEvent(this.event.id).subscribe(
+      () => {
+        this.router.navigate(['events']);
+      },
+      (err: HttpErrorResponse) => {
+        this.querying = false;
+        console.log(err);
+      }
     );
   }
 }

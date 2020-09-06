@@ -29,7 +29,9 @@ describe('AuthService', () => {
     const user: User = {
       id: 0,
       username: 'test',
-      email: 'test@test.com'
+      email: 'test@test.com',
+      firstname: 'John',
+      lastname: 'Doe',
     };
 
     const token = "un_magnifique_token";

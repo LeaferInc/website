@@ -9,3 +9,9 @@ nz-form-item {
 #informations-section, #buttons-section {
   margin: 20px 0;
 }
+
+.picture > img {
+  max-height: 600px;
+  width: 100%;
+  object-fit: cover;
+}

@@ -12,12 +12,12 @@
               [formControl]="usernameInput"
               type="text"
               nz-input
-              placeholder="Username"
+              placeholder="Nom d'utilisateur"
               autocomplete="on"
             />
             <ng-template #usernameErrorTpl>
               <ng-container *ngIf="usernameInput.hasError('required')">
-                Please input your username !
+                Veuillez entrer un nom d'utilisateur !
               </ng-container>
             </ng-template>
           </nz-input-group>
@@ -31,20 +31,20 @@
               [formControl]="passwordInput"
               type="password"
               nz-input
-              placeholder="Password"
+              placeholder="Mot de passe"
               autocomplete="on"
             />
             <ng-template #passwordErrorTpl>
               <ng-container *ngIf="passwordInput.hasError('required')">
-                Please input your password !
+                Veuillez entrer un mot de passe !
               </ng-container>
             </ng-template>
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
     
-      <button nz-button class="login-form-button" [nzType]="'primary'" [nzLoading]="loginIsLoading">Log in</button>
-      Or <a [routerLink]="['/register']"> register now! </a>
+      <button nz-button class="login-form-button" [nzType]="'primary'" [nzLoading]="loginIsLoading">Se connecter</button>
+      Ou <a [routerLink]="['/register']"> créer un compte</a>
     </form>
   </div>
 </div>

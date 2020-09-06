@@ -28,7 +28,6 @@ export class LoginComponent {
   ) { }
 
   onSubmit() {
-
     this.loginIsLoading = true;
 
     for (const key in this.loginForm.controls) {

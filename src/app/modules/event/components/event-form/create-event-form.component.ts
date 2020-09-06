@@ -11,6 +11,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { UploadFile } from 'ng-zorro-antd/upload';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-create-event-form',
@@ -22,15 +24,18 @@ export class EventFormComponent implements OnInit {
   sending: boolean = false; // True when the form has been sent to server
 
   locationChoosed: Location = null; // The Location the user has selected
-  locationChoosedSubject  = new Subject<string>();
+  locationChoosedSubject = new Subject<string>();
   locationTimeout: NodeJS.Timeout; // Delay to search for addresses after user's input
   locations: Location[] = []; // The found addresses
-  
+
   minDate: Date = new Date(); // Minimum choosable Date
+
+  newImage: UploadFile;
 
   @Output() created = new EventEmitter<Event>();
 
-  constructor(private eventService: EventService, private utilsService: UtilsService, private router: Router) {}
+  constructor(private eventService: EventService, private utilsService: UtilsService, private router: Router,
+    private message: NzMessageService) { }
 
   ngOnInit(): void {
     // Default start date is next day
@@ -44,10 +49,8 @@ export class EventFormComponent implements OnInit {
 
     // Form initialization
     this.eventForm = new FormGroup({
-      name: new FormControl('Un nom au hasard', [Validators.required]),
-      description: new FormControl('Un évènement comme un autre, il faut meubler pour remplir la textarea.', [
-        Validators.required,
-      ]),
+      name: new FormControl('', [Validators.required]),
+      description: new FormControl('', [Validators.required,]),
       startDate: new FormControl(UtilsService.dateToJSONLocal(startDate).slice(0, 16), [Validators.required]),
       endDate: new FormControl(UtilsService.dateToJSONLocal(endDate).slice(0, 16), [Validators.required]),
       price: new FormControl(0, [Validators.required, Validators.min(0)]),
@@ -67,17 +70,49 @@ export class EventFormComponent implements OnInit {
    * Submit the form to the server to add an Event.
    * Checks the anteriority of the start Date over the end Date
    */
-  submit(): void {
+  async submit(): Promise<void> {
+    // TODO
     // Display validation
     Object.keys(this.eventForm.controls).forEach((key) => {
       this.eventForm.get(key).markAsDirty();
       this.eventForm.get(key).updateValueAndValidity();
     });
 
+    // Various checks below
+
+    // Image is required
+    if (!this.newImage) {
+      this.message.error('Une image est nécessaire');
+      return;
+    }
+
+    // Location has to be chosen
+    if (!this.locationChoosed) {
+      this.message.error('Aucun lieu selectionné');
+      return;
+    }
+
+    // MaxPeople Minimum
+    if (Number.parseInt(this.eventForm.get('maxPeople').value) < 1) {
+      this.message.error('Au moins une personne doit pouvoir participer');
+    }
+
+    // Start date before end date
     const startBeforeEnd: boolean = this.eventForm.get('startDate').value < this.eventForm.get('endDate').value;
+    if (!startBeforeEnd) {
+      this.message.error('La date de fin doit être supérieure à celle de début');
+      return;
+    }
+
+    // start date in the future
+    const futureDate: boolean = (new Date(this.eventForm.get('startDate').value) > new Date());
+    if (!futureDate) {
+      this.message.error('L\'évènement ne peut pas commencer dans le passé');
+      return;
+    }
 
     // Create form
-    if (startBeforeEnd && this.eventForm.valid && this.locationChoosed) {
+    if (startBeforeEnd && futureDate && this.newImage && this.eventForm.valid && this.locationChoosed) {
       this.sending = true;
 
       const event: Event = this.eventForm.value;
@@ -87,14 +122,22 @@ export class EventFormComponent implements OnInit {
       event.startDate = new Date(event.startDate);
       event.endDate = new Date(event.endDate);
 
+      // Handle image
+      if (this.newImage) {
+        event.picture = await UtilsService.toBase64(this.newImage);
+      }
+
       this.eventService.addEvent(event).subscribe(
         (event: Event) => {
-          this.router.navigate(['/events/' + event.id]);
+          this.router.navigate(['events', event.id.toString()]);
         },
         (err: HttpErrorResponse) => {
+          this.message.error(err.message);
           console.log(err);
         },
-        () => (this.sending = false)
+        () => {
+          this.sending = false;
+        }
       );
     }
   }

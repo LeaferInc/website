@@ -1,0 +1,10 @@
+<div>
+    <nz-form-label nzFor="upload" [nzRequired]="required">{{label}}</nz-form-label>
+    <nz-upload id="upload" [nzBeforeUpload]="handleFile"
+        [nzFileList]="image ? [image] : []"
+        [nzShowUploadList]="{ showRemoveIcon: false, showDownloadIcon: false }"
+        [nzFileType]="'image/png,image/jpeg'"
+        [nzLimit]="1">
+        <button nz-button><i nz-icon nzType="upload"></i>Choisir une image</button>
+    </nz-upload>
+</div>

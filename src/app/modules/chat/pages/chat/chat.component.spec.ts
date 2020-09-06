@@ -54,7 +54,9 @@ describe('ChatComponent', () => {
   it('should create', () => {
     const user: User = {
       email: 'email',
-      username: 'username'
+      username: 'username',
+      firstname: 'John',
+      lastname: 'Doe',
     }
     userServiceMock.getTalkTo.mockReturnValue(of([user, user]))
     chatSocketServiceMock.init.mockReturnValue(of());
