@@ -16,7 +16,7 @@ import { UserAuth } from 'src/app/shared/models/auth/auth';
 })
 export class MyProfileComponent implements OnInit {
 
-  user: User; // The current user
+  user: User = null; // The current user
   isModalVisible: boolean = false; // Weither or not the modal should be displayed
 
   constructor(private authService: AuthService, private userService: UserService, private router: Router) { }

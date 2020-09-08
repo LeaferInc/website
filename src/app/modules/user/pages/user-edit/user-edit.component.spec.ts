@@ -12,6 +12,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { ImagePickerModule } from 'src/app/shared/components/image-picker/image-picker.module';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 describe('UserEditComponent', () => {
   let component: UserEditComponent;
@@ -25,6 +26,7 @@ describe('UserEditComponent', () => {
         FormsModule,
         NzGridModule,
         NzInputModule,
+        NzMessageModule,
         NzAutocompleteModule,
         NzUploadModule,
         ImagePickerModule,

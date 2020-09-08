@@ -1,4 +1,4 @@
-<div *ngIf="event">
+<div *ngIf="event" class="event-card">
 	<nz-card nzHoverable [nzCover]="coverTemplate" [routerLink]="['/events', event.id]">
 		<nz-card-meta [nzTitle]="event.name" [nzDescription]="descriptionTemplate"></nz-card-meta>
 	</nz-card>

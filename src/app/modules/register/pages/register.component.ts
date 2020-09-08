@@ -40,7 +40,6 @@ export class RegisterComponent {
     }
   );
 
-  public submitted: boolean = false;
   public registerIsLoading = false;
 
   constructor(
@@ -55,9 +54,6 @@ export class RegisterComponent {
   }
 
   onSubmit() {
-    this.registerIsLoading = true;
-    this.submitted = true;
-
     for (const i in this.registerForm.controls) {
       this.registerForm.controls[i].markAsDirty();
       this.registerForm.controls[i].updateValueAndValidity();
@@ -66,6 +62,8 @@ export class RegisterComponent {
     if (this.registerForm.invalid) {
       return;
     }
+
+    this.registerIsLoading = true;
 
     const usernameValue = this.usernameInput.value;
     const emailValue = this.emailInput.value;

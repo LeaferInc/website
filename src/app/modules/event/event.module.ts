@@ -34,6 +34,7 @@ import { ImagePickerModule } from 'src/app/shared/components/image-picker/image-
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { NzAlertModule } from 'ng-zorro-antd/alert';
     NzCardModule,
     NzAlertModule,
     NzModalModule,
+    NzMessageModule,
     NzTableModule,
     NzAutocompleteModule,
     NzDividerModule,

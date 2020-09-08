@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { UserAuth } from 'src/app/shared/models/auth/auth';
 import { UploadFile } from 'ng-zorro-antd/upload';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-user-edit',
@@ -16,14 +17,15 @@ import { UtilsService } from 'src/app/core/services/utils/utils.service';
 })
 export class UserEditComponent implements OnInit {
 
-  userAuth: UserAuth; // The current user
+  userAuth: UserAuth = null; // The current user
   userForm: FormGroup;
   submitted: boolean = false; // True if the form has been submitted
   newAvatar: UploadFile; // The selected avatar image file
 
   //sub: Subscription; // Get user observable subscription
 
-  constructor(private authService: AuthService, public userService: UserService, private router: Router) { }
+  constructor(private authService: AuthService, public userService: UserService, private router: Router, 
+    private message: NzMessageService) { }
 
   ngOnInit(): void {
     this.authService.getUserAuth().subscribe(
@@ -64,6 +66,12 @@ export class UserEditComponent implements OnInit {
       const birth = new Date(this.userForm.get('birthdate').value); // Parse input field
       if (this.userAuth.user.birthdate.getTime() !== birth.getTime()) {
         changes.birthdate = birth;
+
+        // Check birthdate in past
+        if (birth > new Date()) {
+          this.message.error('La naissance ne peut être dans le futur');
+          return;
+        }
       } else {
         delete changes.birthdate;
       }

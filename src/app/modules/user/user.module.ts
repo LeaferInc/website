@@ -20,6 +20,7 @@ import { UserRoutingModule } from './user-routing.module';
 import { UserEditComponent } from './pages/user-edit/user-edit.component';
 import { ImagePickerModule } from 'src/app/shared/components/image-picker/image-picker.module';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
     NzDatePickerModule,
     NzCardModule,
     NzAutocompleteModule,
+    NzMessageModule,
     NzDividerModule,
     NzTypographyModule,
     NzModalModule,

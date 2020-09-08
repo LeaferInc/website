@@ -1,9 +1,9 @@
 import { User } from '../user/user';
 
 export enum Difficulty {
-  EASY = "easy",
-  MEDIUM = "medium",
-  HARD = "hard",
+  EASY = "facile",
+  MEDIUM = "moyen",
+  HARD = "difficile",
 }
 
 export enum Time {

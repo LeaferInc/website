@@ -14,6 +14,7 @@ import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { Event } from 'src/app/shared/models/event/event.model';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { MockAuthService } from 'src/app/shared/mocks/auth.service.mock';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 describe('EventInfosComponent', () => {
   let component: EventInfosComponent;
@@ -28,6 +29,7 @@ describe('EventInfosComponent', () => {
         NzTableModule,
         NzAlertModule,
         NzModalModule,
+        NzMessageModule,
         RouterModule,
       ],
       declarations: [EventInfosComponent],

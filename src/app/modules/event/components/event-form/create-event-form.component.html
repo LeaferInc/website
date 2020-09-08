@@ -132,7 +132,7 @@
         <nz-form-label [nzSpan]="24" nzFor="maxPeople" nzRequired>Capacité&nbsp;:</nz-form-label>
         <nz-form-control [nzSpan]="24" [nzErrorTip]="maxPeopleErrorTpl">
           <!-- <input formControlName="maxPeople" type="number" name="maxPeople" nz-input /> -->
-          <nz-input-number formControlName="maxPeople" [nzStep]="1"></nz-input-number>
+          <nz-input-number formControlName="maxPeople" [nzMin]="1" [nzStep]="1"></nz-input-number>
           <ng-template #maxPeopleErrorTpl>
             <ng-container *ngIf="eventForm.get('maxPeople').hasError('required')">
               Veuillez entrer une capacité maximale

@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { UserAuth } from 'src/app/shared/models/auth/auth';
 import { User, Entrant } from 'src/app/shared/models/user/user';
 import { ColumnItem } from 'src/app/shared/models/ngzorro/column.item';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 
 @Component({
@@ -42,7 +43,8 @@ export class EventInfosComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router,
     private eventService: EventService, private entryService: EntryService,
-    private authService: AuthService) { }
+    private authService: AuthService, 
+    private message: NzMessageService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
@@ -76,6 +78,13 @@ export class EventInfosComponent implements OnInit {
   }
 
   /**
+   * Whether or not the event is full
+   */
+  isEventFull(): boolean {
+    return this.event.entrants.length >= this.event.maxPeople;
+  }
+
+  /**
    * Joins an event
    */
   participate(): void {
@@ -94,9 +103,9 @@ export class EventInfosComponent implements OnInit {
       },
       (err: HttpErrorResponse) => {
         if (err.status === 403) {
-          alert('Aucune place disponible!');
+          this.message.error('Aucune place disponible!');
         }
-        console.log(err);
+        else console.log(err);
       },
       () => this.querying = false
     );
