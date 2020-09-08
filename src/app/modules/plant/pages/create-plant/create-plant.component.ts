@@ -87,7 +87,6 @@ export class CreatePlantComponent implements OnInit {
 
     this.btnLoading = true;
 
-    console.log(plant);
     this.plantService.createPlant(plant)
       .pipe(
         finalize(() => this.btnLoading = false)

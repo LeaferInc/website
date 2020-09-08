@@ -33,6 +33,11 @@ const routes: Routes = [
     loadChildren: () => import('src/app/modules/login/login.module').then((m) => m.LoginModule),
   },
   {
+    path: 'identify',
+    canActivate: [AuthenticateGuard],
+    loadChildren: () => import('src/app/modules/recognition/recognition.module').then((m) => m.RecognitionModule),
+  },
+  {
     path: 'register',
     canActivate: [NotAuthenticateGuard],
     loadChildren: () => import('src/app/modules/register/register.module').then((m) => m.RegisterModule),
