@@ -1,4 +1,7 @@
 <div nz-row nzGutter="12" nzJustify="center" nzAlign="middle">
+  <div *ngIf="!notification.read" nz-col nzFlex="0 1 auto">
+    <i nz-icon nzType="exclamation-circle" nzTheme="outline"></i>
+  </div>
   <div nz-col nzFlex="1 0 auto">
     <p nz-typography id="notification-content">
       {{ notification.content }}

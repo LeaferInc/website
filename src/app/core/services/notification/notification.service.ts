@@ -17,4 +17,8 @@ export class NotificationService {
     return this.http.get<ResultData<Notification>>(`${NotificationService.NOTIFICATION_URL}/my`);
   }
 
+  readNotification(notificationsId: number[]): Observable<Notification[]> {
+    return this.http.post<Notification[]>(`${NotificationService.NOTIFICATION_URL}/readNotifications`, notificationsId);
+  }
+
 }

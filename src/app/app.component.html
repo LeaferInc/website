@@ -41,8 +41,8 @@
     <div class="right-nav">
       <ul *ngIf="authService.isLogged() | async" nz-menu [nzSelectable]="false" nzTheme="dark" nzMode="horizontal">
         <li nz-menu-item>
-          <a nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomRight" nzTrigger="click" (click)="onNotificationClick()">
-            <nz-badge [nzCount]="newNotificationCount">
+          <a nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomRight" nzTrigger="click">
+            <nz-badge [nzCount]="unreadNotificationCount">
               <i nz-icon nzType="bell" nzTheme="outline"></i>
             </nz-badge>
           </a>
@@ -53,9 +53,9 @@
               </li>
               <li nz-menu-divider></li>
               <div style="max-height: 500px; overflow-y: auto;">
-                <ng-container *ngIf="notificationsUser.length !== 0; else noNotifications">
-                  <ng-container *ngFor="let notification of notificationsUser">
-                    <li nz-menu-item>
+                <ng-container *ngIf="(notificationsUser | async).length !== 0; else noNotifications">
+                  <ng-container *ngFor="let notification of notificationsUser | async">
+                    <li nz-menu-item (mouseenter)="onMouseEnterNotification(notification)">
                       <app-notification-item [notification]="notification"></app-notification-item>
                     </li>
                   </ng-container>
@@ -70,7 +70,6 @@
           </nz-dropdown-menu>
         </li>
         <li nz-menu-item [routerLink]="['premium']" [nzMatchRouter]="true">Premium</li>
-        <li nz-menu-item [nzMatchRouter]="true"><i class="fas fa-bell"></i></li>
         <li *ngIf="(authService.getUserAuth() | async).user.role === 1" nz-menu-item [routerLink]="['admin']" [nzMatchRouter]="true">Moderation</li>
         <li nz-submenu nzTitle="Mon compte" nzIcon="user">
           <ul>

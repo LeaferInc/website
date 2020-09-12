@@ -6,4 +6,5 @@ export class Notification {
   createdAt: string | Date;
   content: string;
   notifier: User;
+  read: boolean;
 }
