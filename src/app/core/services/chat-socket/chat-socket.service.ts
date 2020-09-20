@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.local';
 import io from 'socket.io-client';
-import { Observable, fromEvent, of, Subscription } from 'rxjs';
+import { Observable, fromEvent, of, Subscription, BehaviorSubject } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { filter, switchMap } from 'rxjs/operators';
 
@@ -9,8 +9,7 @@ import { filter, switchMap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class ChatSocketService {
-  private socket: SocketIOClient.Socket;
-  private sub: Subscription;
+  private socket: BehaviorSubject<SocketIOClient.Socket> = new BehaviorSubject<SocketIOClient.Socket>(null);
 
   constructor(private authService: AuthService) {}
 
@@ -18,7 +17,7 @@ export class ChatSocketService {
     return this.authService.getUserAuth().pipe(
       filter((userAuth) => !!userAuth),
       switchMap((userAuth) => {
-        this.socket = io(`${environment.socketUrl}/chat`, {
+        this.socket.next(io(`${environment.socketUrl}/chat`, {
           transportOptions: {
             polling: {
               extraHeaders: {
@@ -26,27 +25,28 @@ export class ChatSocketService {
               },
             },
           },
-        });
-        return of(this.socket);
+        }));
+        return this.socket.asObservable();
       })
     );
   }
 
   emit(event: string, arg: any): Observable<unknown> {
     return new Observable((observer) => {
-      this.socket.emit(event, arg, (data: any) => {
+      this.socket.getValue().emit(event, arg, (data: any) => {
         observer.next(data);
-        observer.complete();
       });
     });
   }
 
   on(event: string): Observable<unknown> {
-    return fromEvent(this.socket, event);
+    return this.socket.pipe(
+      filter(() => !!this.socket.getValue()),
+      switchMap(() => fromEvent(this.socket.getValue(), event))
+    );
   }
 
   disconnect(): void {
-    this.socket.disconnect();
-    if (this.sub) this.sub.unsubscribe();
+    this.socket.getValue().disconnect();
   }
 }

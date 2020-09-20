@@ -8,7 +8,7 @@ import { switchMap, filter, map, distinctUntilChanged, debounceTime, reduce } fr
 import { Notification } from './shared/models/notification/notification';
 import { NotificationSocketService } from './core/services/notification-socket/notification-socket.service';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, merge, Subscription } from 'rxjs';
 import { count } from 'console';
 
 @Component({
@@ -66,21 +66,23 @@ export class AppComponent implements OnInit, OnDestroy {
     );
 
     this.sub.add(
-      this.notificationSocketService.init().subscribe({
-        next: (socket) => {
-          this.notificationSocketService.on('init').subscribe((message) => {
-            console.log('[Client Notification]', message);
-          });
+      this.notificationSocketService
+        .init()
+        .pipe(
+          switchMap(() => merge(
+            this.notificationSocketService.on('init'),
+            this.notificationSocketService.on('disconnect')
+          ))
+        )
+        .subscribe({
+        next: (message) => console.log('[Client Notification]', message),
+      })
+    );
 
-          this.notificationSocketService.on('disconnect').subscribe((message) => {
-            console.log('[Client Notification]', message);
-          });
-
-          this.notificationSocketService.on('onNotification').subscribe((notification: Notification) => {
-            console.log('[Client Notification]', notification);
-            this.notificationsUser.next([notification, ...this.notificationsUser.getValue()]);
-          });
-        },
+    this.sub.add(
+      this.notificationSocketService.on('onNotification').subscribe((notification: Notification) => {
+        console.log('[Client Notification]', notification);
+        this.notificationsUser.next([notification, ...this.notificationsUser.getValue()]);
       })
     );
 

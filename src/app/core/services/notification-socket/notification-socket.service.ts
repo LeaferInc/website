@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
-import { Observable, fromEvent, of } from 'rxjs';
+import { Observable, fromEvent, of, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment.local';
 import io from 'socket.io-client';
 import { filter, switchMap } from 'rxjs/operators';
@@ -9,16 +9,16 @@ import { filter, switchMap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class NotificationSocketService {
-  private socket: SocketIOClient.Socket;
+  private socket: BehaviorSubject<SocketIOClient.Socket> = new BehaviorSubject<SocketIOClient.Socket>(null);
 
   constructor(private authService: AuthService) {}
 
   init(): Observable<SocketIOClient.Socket> {
-    return new Observable((observer) => {
-      this.authService.getUserAuth().pipe(
-        filter((userAuth) => (userAuth ? true : false)),
-        switchMap((userAuth) => {
-          this.socket = io(`${environment.socketUrl}/notification`, {
+    return this.authService.getUserAuth().pipe(
+      filter((userAuth) => (userAuth ? true : false)),
+      switchMap((userAuth) => {
+        this.socket.next(
+          io(`${environment.socketUrl}/notification`, {
             transportOptions: {
               polling: {
                 extraHeaders: {
@@ -26,27 +26,29 @@ export class NotificationSocketService {
                 },
               },
             },
-          });
-          return of(this.socket);
-        })
-      );
-    });
+          })
+        );
+        return this.socket.asObservable();
+      })
+    );
   }
 
   emit(event: string, arg: any): Observable<unknown> {
     return new Observable((observer) => {
-      this.socket.emit(event, arg, (data: any) => {
+      this.socket.getValue().emit(event, arg, (data: any) => {
         observer.next(data);
-        observer.complete();
       });
     });
   }
 
   on(event: string): Observable<unknown> {
-    return fromEvent(this.socket, event);
+    return this.socket.pipe(
+      filter(() => !!this.socket.getValue()),
+      switchMap(() => fromEvent(this.socket.getValue(), event))
+    );
   }
 
   disconnect(): void {
-    this.socket.disconnect();
+    this.socket.getValue().disconnect();
   }
 }
