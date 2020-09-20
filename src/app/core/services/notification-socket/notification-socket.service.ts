@@ -1,44 +1,35 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
-import { Observable, fromEvent } from 'rxjs';
+import { Observable, fromEvent, of } from 'rxjs';
 import { environment } from 'src/environments/environment.local';
 import io from 'socket.io-client';
-import { filter } from 'rxjs/operators';
+import { filter, switchMap } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NotificationSocketService {
-
   private socket: SocketIOClient.Socket;
 
-  constructor(
-    private authService: AuthService
-  ) { }
+  constructor(private authService: AuthService) {}
 
   init(): Observable<SocketIOClient.Socket> {
     return new Observable((observer) => {
-      this.authService
-      .getUserAuth()
-      .pipe(
-        filter((userAuth) => userAuth ? true : false)
-      )
-      .subscribe(userAuth => {
-        this.socket = io(
-          `${environment.socketUrl}/notification`,
-          {
+      this.authService.getUserAuth().pipe(
+        filter((userAuth) => (userAuth ? true : false)),
+        switchMap((userAuth) => {
+          this.socket = io(`${environment.socketUrl}/notification`, {
             transportOptions: {
               polling: {
                 extraHeaders: {
-                  Authorization: `Bearer ${userAuth.token}`
-                }
-              }
+                  Authorization: `Bearer ${userAuth.token}`,
+                },
+              },
             },
-          }
-        );
-        observer.next(this.socket);
-        observer.complete();
-      })
+          });
+          return of(this.socket);
+        })
+      );
     });
   }
 

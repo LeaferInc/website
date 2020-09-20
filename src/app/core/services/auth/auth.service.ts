@@ -29,13 +29,9 @@ export class AuthService {
       );
   }
 
-  /**
-   * TODO: Not yet implemented
-   */
   logout() {
     localStorage.removeItem('token');
     this.userAuth.next(null);
-    //throw new Error('Not yet implemented');
   }
 
   getUserAuth(): Observable<UserAuth> {
@@ -73,12 +69,8 @@ export class AuthService {
   }
 
   isLogged(): Observable<boolean> {
-    return new Observable((obs) => {
-      this.userAuth.subscribe({
-        next: (userAuth) => {
-          userAuth ? obs.next(true) : obs.next(false);
-        }
-      });
-    });
+    return this.userAuth.pipe(
+      map((userAuth) => userAuth ? true : false)
+    );
   }
 }

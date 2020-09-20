@@ -5,6 +5,7 @@ export class Notification {
   enabled: boolean;
   createdAt: string | Date;
   content: string;
+  href: string;
   notifier: User;
   read: boolean;
 }

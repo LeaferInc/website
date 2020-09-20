@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl, Validators, FormGroup, ValidatorFn, AbstractControl } from '@angular/forms';
 import { UserService } from 'src/app/core/services/user/user.service';
 import { User } from 'src/app/shared/models/user/user';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy {
   public usernameInput = new FormControl(null, Validators.required);
   public emailInput = new FormControl(null, [Validators.required, Validators.email]);
   public passwordInput = new FormControl(null, Validators.required);
@@ -43,10 +44,13 @@ export class RegisterComponent {
   public submitted: boolean = false;
   public registerIsLoading = false;
 
-  constructor(
-    private userService: UserService,
-    private router: Router,
-  ) {}
+  private sub: Subscription = new Subscription();
+
+  constructor(private userService: UserService, private router: Router) {}
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
 
   static MatchPassword(control: AbstractControl) {
     return control.get('passwordInput').value === control.get('passwordConfirmInput').value
@@ -81,15 +85,15 @@ export class RegisterComponent {
       lastname: lastnameValue ? String(lastnameValue) : null,
       // location: locationValue ? String(locationValue) : null,
       // birthdate: birthdateValue ? null : null,
-    }
+    };
 
-    this.userService
-      .create(user, this.passwordInput.value)
-      .pipe(
-        finalize(() => this.registerIsLoading = false)
-      )
-      .subscribe({
-        next: () => this.router.navigate(['login']),
-      });
+    this.sub.add(
+      this.userService
+        .create(user, this.passwordInput.value)
+        .pipe(finalize(() => (this.registerIsLoading = false)))
+        .subscribe({
+          next: () => this.router.navigate(['login']),
+        })
+    );
   }
 }

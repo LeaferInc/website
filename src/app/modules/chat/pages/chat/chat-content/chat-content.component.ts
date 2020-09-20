@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MessageService } from 'src/app/core/services/message/message.service';
 import { Subscription } from 'rxjs';
+import { filter, switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-chat-content',
@@ -24,7 +25,10 @@ export class ChatContentComponent implements OnInit, OnDestroy {
 
   currentUser: User;
   roomId: number;
-  public sub: Subscription;
+  /***
+   * TODO: REGLER LE PROBLEME DE SUBSCRIPTION
+   */
+  private sub: Subscription = new Subscription();
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -34,23 +38,51 @@ export class ChatContentComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.sub = this.authService.getUserAuth().subscribe((userAuth) => (this.currentUser = userAuth.user));
+    this.sub.add(this.authService.getUserAuth().subscribe((userAuth) => (this.currentUser = userAuth?.user)));
 
-    this.activatedRoute.params.subscribe((routes) => {
-      if (routes.roomId) {
-        if(this.roomId) {
-          this.chatSocketService.emit('leaveRoom', this.roomId).subscribe(message => console.log('[Client]', message));
-        }
-        this.roomId = routes.roomId;
-        this.chatSocketService.emit('joinRoom', Number(routes.roomId)).subscribe();
-        this.messageService.findConversation(routes.roomId).subscribe((messages) => (this.messages = messages));
-      }
-    });
+    this.sub.add(
+      this.activatedRoute.params
+        .pipe(
+          filter((routes) => routes.roomId),
+          tap((routes) => {
+            if (this.roomId) {
+              this.sub.add(
+                this.chatSocketService
+                  .emit('leaveRoom', this.roomId)
+                  .subscribe((message) => console.log('[Client]', message))
+              );
+            }
+          }),
+          tap((routes) => {
+            this.roomId = routes.roomId;
+            this.sub.add(this.chatSocketService.emit('joinRoom', Number(routes.roomId)).subscribe());
+            this.sub.add(
+              this.messageService.findConversation(routes.roomId).subscribe((messages) => (this.messages = messages))
+            );
+          })
+        )
+        .subscribe((routes) => {})
+    );
 
-    this.chatSocketService.on('messageServerToClient').subscribe((message: Message) => {
-      console.log('[Client]', message);
-      this.messages.push(message);
-    });
+    // this.activatedRoute.params.subscribe((routes) => {
+    //   if (routes.roomId) {
+    //     if (this.roomId) {
+    //       this.chatSocketService
+    //         .emit('leaveRoom', this.roomId)
+    //         .subscribe((message) => console.log('[Client]', message));
+    //     }
+    //     this.roomId = routes.roomId;
+    //     this.chatSocketService.emit('joinRoom', Number(routes.roomId)).subscribe();
+    //     this.messageService.findConversation(routes.roomId).subscribe((messages) => (this.messages = messages));
+    //   }
+    // });
+
+    this.sub.add(
+      this.chatSocketService.on('messageServerToClient').subscribe((message: Message) => {
+        console.log('[Client]', message);
+        this.messages.push(message);
+      })
+    );
   }
 
   ngOnDestroy() {
@@ -68,6 +100,8 @@ export class ChatContentComponent implements OnInit, OnDestroy {
 
     this.messageForm.reset();
 
-    this.messageService.create(message).subscribe((message: Message) => console.log('[MESSAGE]', message));
+    this.sub.add(
+      this.messageService.create(message).subscribe((message: Message) => console.log('[MESSAGE]', message))
+    );
   }
 }

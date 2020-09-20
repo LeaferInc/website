@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EventService } from 'src/app/core/services/event/event.service';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { switchMap } from 'rxjs/operators';
 import { ResultData } from 'src/app/shared/models/query/query';
 import { Event } from 'src/app/shared/models/event/event.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-admin-event-list',
   templateUrl: './event-list.component.html',
-  styleUrls: ['./event-list.component.scss']
+  styleUrls: ['./event-list.component.scss'],
 })
-export class EventListComponent implements OnInit {
-
+export class EventListComponent implements OnInit, OnDestroy {
   public events: Event[] = [];
 
   public expandSet = new Set<number>();
@@ -19,10 +19,16 @@ export class EventListComponent implements OnInit {
   public pageIndex = 1;
   public pageSize = 8;
 
-  constructor(private eventService: EventService) { }
+  private sub: Subscription = new Subscription();
+
+  constructor(private eventService: EventService) {}
 
   ngOnInit(): void {
     this.loadDataFromServer(this.pageIndex, this.pageSize);
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   onExpandChange(id: number, checked: boolean): void {
@@ -34,11 +40,11 @@ export class EventListComponent implements OnInit {
   }
 
   loadDataFromServer(pageIndex?: number, pageSize?: number) {
-    this.eventService
-      .getEvents(((pageIndex - 1) * pageSize) || 0, pageSize)
-      .subscribe({
-        next: (events) => this.events = events
+    this.sub.add(
+      this.eventService.getEvents((pageIndex - 1) * pageSize || 0, pageSize).subscribe({
+        next: (events) => (this.events = events),
       })
+    );
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
@@ -57,5 +63,4 @@ export class EventListComponent implements OnInit {
     //   });
     alert('Delete ' + id);
   }
-
 }

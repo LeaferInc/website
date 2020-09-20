@@ -1,31 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { UserAuth } from 'src/app/shared/models/auth/auth';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
-
+export class LoginComponent implements OnDestroy {
   public usernameInput = new FormControl('', Validators.required);
   public passwordInput = new FormControl('', Validators.required);
 
   public loginForm = new FormGroup({
     usernameInput: this.usernameInput,
-    passwordInput: this.passwordInput
+    passwordInput: this.passwordInput,
   });
 
   public loginIsLoading = false;
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-  ) { }
+  private sub: Subscription = new Subscription();
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
 
   onSubmit() {
     this.loginIsLoading = true;
@@ -35,19 +38,20 @@ export class LoginComponent {
       this.loginForm.controls[key].updateValueAndValidity();
     }
 
-    if(this.loginForm.invalid) {
+    if (this.loginForm.invalid) {
       return;
     }
 
     const usernameValue = this.usernameInput.value;
     const passwordValue = this.passwordInput.value;
 
-    this.authService.login(String(usernameValue), passwordValue)
-      .pipe(
-        finalize(() => this.loginIsLoading = false)
-      )
-      .subscribe({
-        next: () => this.router.navigate(['']),
-      });
+    this.sub.add(
+      this.authService
+        .login(String(usernameValue), passwordValue)
+        .pipe(finalize(() => (this.loginIsLoading = false)))
+        .subscribe({
+          next: () => this.router.navigate(['']),
+        })
+    );
   }
 }

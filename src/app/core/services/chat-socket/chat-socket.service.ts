@@ -3,40 +3,33 @@ import { environment } from 'src/environments/environment.local';
 import io from 'socket.io-client';
 import { Observable, fromEvent, of, Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
+import { filter, switchMap } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ChatSocketService {
-
   private socket: SocketIOClient.Socket;
   private sub: Subscription;
 
-  constructor(
-    private authService: AuthService
-  ) { }
+  constructor(private authService: AuthService) {}
 
   init(): Observable<SocketIOClient.Socket> {
-    return new Observable((observer) => {
-      this.sub = this.authService
-      .getUserAuth()
-      .subscribe(userAuth => {
-        this.socket = io(
-          `${environment.socketUrl}/chat`,
-          {
-            transportOptions: {
-              polling: {
-                extraHeaders: {
-                  Authorization: `Bearer ${userAuth.token}`
-                }
-              }
+    return this.authService.getUserAuth().pipe(
+      filter((userAuth) => !!userAuth),
+      switchMap((userAuth) => {
+        this.socket = io(`${environment.socketUrl}/chat`, {
+          transportOptions: {
+            polling: {
+              extraHeaders: {
+                Authorization: `Bearer ${userAuth.token}`,
+              },
             },
-          }
-        );
-        observer.next(this.socket);
-        observer.complete();
+          },
+        });
+        return of(this.socket);
       })
-    });
+    );
   }
 
   emit(event: string, arg: any): Observable<unknown> {
@@ -54,6 +47,6 @@ export class ChatSocketService {
 
   disconnect(): void {
     this.socket.disconnect();
-    if(this.sub) this.sub.unsubscribe();
+    if (this.sub) this.sub.unsubscribe();
   }
 }
