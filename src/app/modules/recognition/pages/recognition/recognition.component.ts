@@ -63,7 +63,7 @@ export class RecognitionComponent implements OnInit {
             this.result = null;
           } else console.log(err);
         }
-      )
+      );
     }
   }
 }
