@@ -12,6 +12,11 @@ const routes: Routes = [
     canActivate: [AuthenticateGuard],
     loadChildren: () => import('src/app/modules/home/home.module').then((m) => m.HomeModule),
   },
+  { 
+    path: 'best-plant',
+    canActivate: [AuthenticateGuard],
+    loadChildren: () => import('src/app/modules/best-plant/best-plant.module').then((m) => m.BestPlantModule),
+  },
   {
     path: 'chat',
     canActivate: [AuthenticateGuard],

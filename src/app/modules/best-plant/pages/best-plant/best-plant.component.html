@@ -1,0 +1,120 @@
+<div nz-row>
+	<div nz-col nzOffset="8" nzSpan="8">
+		<h1 style="text-align: center;">Quelle plante pour chez moi ?</h1>
+	</div>
+	<br />
+	<div nz-col nzOffset="6" nzSpan="12" *ngIf="!result">
+		<form nz-form [formGroup]="bestPlantForm" (ngSubmit)="submit()">
+			<div nz-col>
+				<nz-form-item>
+					<nz-form-label nzFor="careTime" nzRequired>
+						Combien de temps pouvez-vous vous occuper d'une plante ?
+					</nz-form-label>
+					<nz-form-control [nzErrorTip]="careTimeErrorTpl">
+						<nz-select formControlName="careTime">
+							<nz-option nzValue="très peu" nzLabel="Très peu"></nz-option>
+							<nz-option nzValue="suffisamment" nzLabel="Suffisamment"></nz-option>
+							<nz-option nzValue="beaucoup" nzLabel="Beaucoup"></nz-option>
+						</nz-select>
+						<ng-template #careTimeErrorTpl>
+							<ng-container *ngIf="bestPlantForm.get('careTime').hasError('required')">
+								Veuillez sélectionner une disponibilité
+							</ng-container>
+						</ng-template>
+					</nz-form-control>
+				</nz-form-item>
+
+				<nz-form-item>
+					<nz-form-label nzFor="weather" nzRequired>
+						En général, quel temps fait-il chez vous ?
+					</nz-form-label>
+					<nz-form-control [nzErrorTip]="weatherErrorTpl">
+						<nz-select formControlName="weather">
+							<nz-option nzValue="ensoleillé" nzLabel="Ensoleillé"></nz-option>
+							<nz-option nzValue="nuageux" nzLabel="Nuageux"></nz-option>
+							<nz-option nzValue="pluvieux" nzLabel="Pluvieux"></nz-option>
+						</nz-select>
+						<ng-template #weatherErrorTpl>
+							<ng-container *ngIf="bestPlantForm.get('weather').hasError('required')">
+								Veuillez sélectionner un climat
+							</ng-container>
+						</ng-template>
+					</nz-form-control>
+				</nz-form-item>
+
+				<nz-form-item>
+					<nz-form-label nzFor="space" nzRequired>
+						Disposez-vous de beaucoup d'espace pour cette plante ?
+					</nz-form-label>
+					<nz-form-control [nzErrorTip]="spaceErrorTpl">
+						<nz-switch formControlName="space" nzCheckedChildren="Oui" nzUnCheckedChildren="Non"></nz-switch>
+						<ng-template #spaceErrorTpl>
+							<ng-container *ngIf="bestPlantForm.get('space').hasError('required')">
+								Veuillez indiquer si vous avez beaucoup d'espace
+							</ng-container>
+						</ng-template>
+					</nz-form-control>
+				</nz-form-item>
+
+				<nz-form-item>
+					<nz-form-label nzFor="budget" nzRequired>
+						Combien pouvez-vous dépenser pour l'acquisition d'une plante ?
+					</nz-form-label>
+					<nz-form-control [nzErrorTip]="budgetErrorTpl">
+						<nz-input-number formControlName="budget" [nzMin]="1" [nzStep]="1"></nz-input-number> €
+						<ng-template #budgetErrorTpl>
+							<ng-container *ngIf="bestPlantForm.get('budget').hasError('required')">
+								Veuillez indiquer un prix
+							</ng-container>
+						</ng-template>
+					</nz-form-control>
+				</nz-form-item>
+
+				<nz-form-item>
+					<nz-form-label nzFor="hasPet" nzRequired>
+						Possédez-vous des animaux de compagnie ?
+					</nz-form-label>
+					<nz-form-control [nzErrorTip]="hasPetErrorTpl">
+						<nz-switch formControlName="hasPet" nzCheckedChildren="Oui" nzUnCheckedChildren="Non"></nz-switch>
+						<ng-template #hasPetErrorTpl>
+							<ng-container *ngIf="bestPlantForm.get('hasPet').hasError('required')">
+								Veuillez indiquer si vous avez des animaux
+							</ng-container>
+						</ng-template>
+					</nz-form-control>
+				</nz-form-item>
+			</div>
+
+			<nz-form-item>
+				<nz-form-control>
+					<button nz-button nzType="primary" [nzLoading]="submitted">Chercher</button>
+				</nz-form-control>
+			</nz-form-item>
+		</form>
+	</div>
+</div>
+
+<div nz-row *ngIf="result">
+	<div nz-col nzOffset="6" nzSpan="6">
+		<div class="image">
+			<img [src]="'data:image/jpg;base64,' + result.picture" alt="Photo de la plante" />
+		</div>
+	</div>
+	<div nz-col nzSpan="8">
+    <br/>
+		<u><h3>Plante conseillée</h3></u>
+		<p>Nom: <strong>{{result.name}}</strong></p>
+		<p>Taille: {{result.height}}</p>
+		<p>Exposition lumineuse: {{result.luminosity}}</p>
+		<p>Entretien demandé: {{result.careTime}}</p>
+		<p>Rempottage: Tous les {{result.potting}} an(s)</p>
+		<p>Prix estimé: ~{{result.price}}€</p>
+		<p>Toxique pour les animaux: {{result.toxicity ? 'Oui' : 'Non'}}</p>
+	</div>
+</div>
+<br />
+<div nz-row *ngIf="result">
+	<div nz-col nzOffset="6">
+		<button nz-button nzType="secondary" (click)="result = null">Retour</button>
+	</div>
+</div>
