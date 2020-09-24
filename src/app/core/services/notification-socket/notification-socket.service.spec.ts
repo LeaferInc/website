@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SocketioService } from './socketio.service';
+import { NotificationSocketService } from './notification-socket.service';
 import { AuthService } from '../auth/auth.service';
 
-describe('SocketioService', () => {
-  let service: SocketioService;
+describe('NotificationSocketService', () => {
+  let service: NotificationSocketService;
   const authServiceMock = {
     getUserAuth: jest.fn()
-  }
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -15,7 +15,7 @@ describe('SocketioService', () => {
         { provide: AuthService, useValue: authServiceMock }
       ]
     });
-    service = TestBed.inject(SocketioService);
+    service = TestBed.inject(NotificationSocketService);
   });
 
   it('should be created', () => {

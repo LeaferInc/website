@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PlantService } from 'src/app/core/services/plant/plant.service';
 import { finalize } from 'rxjs/operators';
@@ -7,14 +7,14 @@ import { Router } from '@angular/router';
 import { UploadFile } from 'ng-zorro-antd/upload';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-create-plant',
   templateUrl: './create-plant.component.html',
-  styleUrls: ['./create-plant.component.scss']
+  styleUrls: ['./create-plant.component.scss'],
 })
-export class CreatePlantComponent implements OnInit {
-
+export class CreatePlantComponent implements OnInit, OnDestroy {
   public btnLoading = false;
   newImage: UploadFile; // Picture of the plant;
 
@@ -32,13 +32,14 @@ export class CreatePlantComponent implements OnInit {
     toxicity: new FormControl(false),
   });
 
-  constructor(
-    private router: Router,
-    private plantService: PlantService,
-    private message: NzMessageService,
-  ) { }
+  private sub: Subscription = new Subscription();
 
-  ngOnInit(): void {
+  constructor(private router: Router, private plantService: PlantService, private message: NzMessageService) {}
+
+  ngOnInit(): void {}
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   public formatterCentimeter(value: number) {
@@ -69,8 +70,10 @@ export class CreatePlantComponent implements OnInit {
     plant.name = this.createPlantForm.get('plantName').value;
     plant.height = this.createPlantForm.get('height').value;
     plant.difficulty = this.createPlantForm.get('difficulty').value;
-    plant.wateringFrequencySpringToSummerNumber = this.createPlantForm.get('wateringFrequencySpringToSummerNumber').value || null;
-    plant.wateringFrequencyAutumnToWinterNumber = this.createPlantForm.get('wateringFrequencyAutumnToWinterNumber').value || null;
+    plant.wateringFrequencySpringToSummerNumber =
+      this.createPlantForm.get('wateringFrequencySpringToSummerNumber').value || null;
+    plant.wateringFrequencyAutumnToWinterNumber =
+      this.createPlantForm.get('wateringFrequencyAutumnToWinterNumber').value || null;
     if (plant.wateringFrequencySpringToSummerNumber) {
       plant.wateringFrequencySpringToSummer = this.createPlantForm.get('wateringFrequencySpringToSummer').value;
     }
@@ -87,13 +90,15 @@ export class CreatePlantComponent implements OnInit {
 
     this.btnLoading = true;
 
-    this.plantService.createPlant(plant)
-      .pipe(
-        finalize(() => this.btnLoading = false)
-      ).subscribe(
-        (createdPlant: Plant) => this.router.navigate(['plant', createdPlant.id]),
-        err => console.error(err)
-      );
+    console.log(plant);
+    this.sub.add(
+      this.plantService
+        .createPlant(plant)
+        .pipe(finalize(() => (this.btnLoading = false)))
+        .subscribe(
+          (createdPlant: Plant) => this.router.navigate(['plant', createdPlant.id]),
+          (err) => console.error(err)
+        )
+    );
   }
-
 }

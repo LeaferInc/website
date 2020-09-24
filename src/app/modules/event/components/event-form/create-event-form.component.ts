@@ -1,7 +1,7 @@
 /**
  * @author ddaninthe
  */
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { EventService } from 'src/app/core/services/event/event.service';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
@@ -9,7 +9,7 @@ import { Event } from 'src/app/shared/models/event/event.model';
 import { Location } from 'src/app/shared/models/location/location.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { UploadFile } from 'ng-zorro-antd/upload';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -19,7 +19,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   templateUrl: './create-event-form.component.html',
   styleUrls: ['./create-event-form.component.scss'],
 })
-export class EventFormComponent implements OnInit {
+export class EventFormComponent implements OnInit, OnDestroy {
   eventForm: FormGroup;
   sending: boolean = false; // True when the form has been sent to server
 
@@ -32,10 +32,16 @@ export class EventFormComponent implements OnInit {
 
   newImage: UploadFile;
 
+  private sub: Subscription = new Subscription();
+
   @Output() created = new EventEmitter<Event>();
 
-  constructor(private eventService: EventService, private utilsService: UtilsService, private router: Router,
-    private message: NzMessageService) { }
+  constructor(
+    private eventService: EventService,
+    private utilsService: UtilsService,
+    private router: Router,
+    private message: NzMessageService
+  ) {}
 
   ngOnInit(): void {
     // Default start date is next day
@@ -50,20 +56,28 @@ export class EventFormComponent implements OnInit {
     // Form initialization
     this.eventForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required,]),
+      description: new FormControl('', [Validators.required]),
       startDate: new FormControl(UtilsService.dateToJSONLocal(startDate).slice(0, 16), [Validators.required]),
       endDate: new FormControl(UtilsService.dateToJSONLocal(endDate).slice(0, 16), [Validators.required]),
       price: new FormControl(0, [Validators.required, Validators.min(0)]),
       maxPeople: new FormControl(10, [Validators.required, Validators.min(1)]),
     });
 
-    this.locationChoosedSubject.pipe(
-      debounceTime(1500),
-      distinctUntilChanged(),
-      switchMap((addr) => this.utilsService.getLocations(addr))
-    ).subscribe({
-      next: (locations) => this.locations = locations
-    });
+    this.sub.add(
+      this.locationChoosedSubject
+        .pipe(
+          debounceTime(1500),
+          distinctUntilChanged(),
+          switchMap((addr) => this.utilsService.getLocations(addr))
+        )
+        .subscribe({
+          next: (locations) => (this.locations = locations),
+        })
+    );
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   /**
@@ -105,9 +119,9 @@ export class EventFormComponent implements OnInit {
     }
 
     // start date in the future
-    const futureDate: boolean = (new Date(this.eventForm.get('startDate').value) > new Date());
+    const futureDate: boolean = new Date(this.eventForm.get('startDate').value) > new Date();
     if (!futureDate) {
-      this.message.error('L\'évènement ne peut pas commencer dans le passé');
+      this.message.error("L'évènement ne peut pas commencer dans le passé");
       return;
     }
 
@@ -127,17 +141,19 @@ export class EventFormComponent implements OnInit {
         event.picture = await UtilsService.toBase64(this.newImage);
       }
 
-      this.eventService.addEvent(event).subscribe(
-        (event: Event) => {
-          this.router.navigate(['events', event.id.toString()]);
-        },
-        (err: HttpErrorResponse) => {
-          this.message.error(err.message);
-          console.log(err);
-        },
-        () => {
-          this.sending = false;
-        }
+      this.sub.add(
+        this.eventService.addEvent(event).subscribe(
+          (event: Event) => {
+            this.router.navigate(['events', event.id.toString()]);
+          },
+          (err: HttpErrorResponse) => {
+            this.message.error(err.message);
+            console.log(err);
+          },
+          () => {
+            this.sending = false;
+          }
+        )
       );
     }
   }

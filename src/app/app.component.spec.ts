@@ -4,20 +4,27 @@ import { AppComponent } from './app.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AuthService } from './core/services/auth/auth.service';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NotificationService } from './core/services/notification/notification.service';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
 describe('AppComponent', () => {
   const authServiceMock = {
     getUserFromToken: jest.fn()
   };
+  const notificationServiceMock = {
+    findNotificationByUser: jest.fn()
+  }
   
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        NzMenuModule
+        NzMenuModule,
+        NzDropDownModule,
       ],
       providers: [ 
-        { provide: AuthService, useValue: authServiceMock } 
+        { provide: AuthService, useValue: authServiceMock },
+        { provide: NotificationService, useValue: notificationServiceMock },
       ],
       declarations: [
         AppComponent
