@@ -11,7 +11,6 @@
             <li nz-menu-item [routerLink]="['cutting', 'create']" [nzMatchRouter]="true">Publier une bouture</li>
             <li nz-menu-item [routerLink]="['cutting', 'exchange']" [nzMatchRouter]="true">Échanges</li>
             <li nz-menu-item [routerLink]="['cutting', 'inventory']" [nzMatchRouter]="true">Inventaire</li>
-            <li nz-menu-item [routerLink]="['chat']" [nzMatchRouter]="true">Mes messages</li>
             <li nz-menu-item [routerLink]="['']" [nzDisabled]="true">Mes favoris</li>
           </ul>
         </li>
@@ -71,13 +70,14 @@
           </nz-dropdown-menu>
         </li>
         <li nz-menu-item [routerLink]="['premium']" [nzMatchRouter]="true">Premium</li>
+        <li nz-menu-item [routerLink]="['chat']" [nzMatchRouter]="true">Mes messages</li>
         <li *ngIf="(authService.getUserAuth() | async).user.role === 1" nz-menu-item [routerLink]="['admin']" [nzMatchRouter]="true">Moderation</li>
         <li nz-submenu nzTitle="Mon compte" nzIcon="user">
           <ul>
             <li nz-menu-item routerLink="/users/me" [nzMatchRouter]="true">Profil</li>
             <li nz-menu-group nzTitle="Mes plantes">
               <ul>
-                <li nz-menu-item [nzMatchRouter]="true" [nzDisabled]="true">Capteur d'humidité</li>
+                <li nz-menu-item routerLink="/sensor" [nzMatchRouter]="true">Capteur d'humidité</li>
                 <li nz-menu-item [nzMatchRouter]="true" routerLink="/best-plant">Quelles plantes pour chez moi ?</li>
               </ul>
             </li>

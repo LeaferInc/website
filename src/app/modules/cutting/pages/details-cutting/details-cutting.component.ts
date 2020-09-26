@@ -150,10 +150,6 @@ export class DetailsCuttingComponent implements OnInit, OnDestroy {
     );
   }
 
-  onSendMessage() {
-    alert('onSendMessage');
-  }
-
   createModal(tplContent: TemplateRef<{}>) {
     this.tplModal = this.modal.create({
       nzTitle: 'Message',

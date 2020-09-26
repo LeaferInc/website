@@ -67,6 +67,11 @@ const routes: Routes = [
     canActivate: [AuthenticateGuard],
     loadChildren: () => import('src/app/modules/premium/premium.module').then(m => m.PremiumModule),
   },
+  {
+    path: 'sensor',
+    canActivate: [AuthenticateGuard],
+    loadChildren: () => import('src/app/modules/sensor/sensor.module').then(m => m.SensorModule),
+  },
   { path: 'about', component: AboutComponent },
   { path: '**', component: PageNotFoundComponent },
 ];

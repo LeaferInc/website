@@ -39,10 +39,10 @@ export class ChatSocketService {
     });
   }
 
-  on(event: string): Observable<unknown> {
+  on<T = unknown>(event: string): Observable<T> {
     return this.socket.pipe(
       filter(() => !!this.socket.getValue()),
-      switchMap(() => fromEvent(this.socket.getValue(), event))
+      switchMap(() => fromEvent<T>(this.socket.getValue(), event))
     );
   }
 

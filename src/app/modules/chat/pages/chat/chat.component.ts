@@ -68,6 +68,14 @@ export class ChatComponent implements OnInit, OnDestroy {
           console.log('[Client]', message);
         })
     );
+
+    this.sub.add(
+      this.chatSocketService
+        .on<User>('newDiscussion')
+        .subscribe({
+          next: (user) => this.users.unshift(user)
+        })
+    )
   }
 
   ngOnDestroy(): void {
