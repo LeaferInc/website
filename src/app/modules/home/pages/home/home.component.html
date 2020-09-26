@@ -20,8 +20,8 @@
 </div>
 
 
-<div nz-row *ngIf="cuttings?.length > 0">
-  <div class="title" nz-row nz-col nzSpan="24">
+<div *ngIf="cuttings?.length > 0">
+  <div class="title" nz-row nzSpan="24">
     <div nz-col>
       <h3 style="display: inline;">Les dernières boutures de la communauté</h3>
       <a nz-col [routerLink]="['/cutting', 'exchange']" class="see-more">Voir plus</a>

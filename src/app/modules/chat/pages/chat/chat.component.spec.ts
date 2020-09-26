@@ -60,7 +60,7 @@ describe('ChatComponent', () => {
     }
     userServiceMock.getTalkTo.mockReturnValue(of([user, user]))
     chatSocketServiceMock.init.mockReturnValue(of());
-    // socketioServiceMock.on.mockReturnValue('message');
+    chatSocketServiceMock.on.mockReturnValue(of());
 
     fixture.detectChanges();
 
