@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PlantService } from 'src/app/core/services/plant/plant.service';
 import { finalize } from 'rxjs/operators';
-import { Plant, Difficulty } from 'src/app/shared/models/plant/plant';
+import { Plant, Difficulty, Time } from 'src/app/shared/models/plant/plant';
 import { Router } from '@angular/router';
 import { UploadFile } from 'ng-zorro-antd/upload';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
@@ -24,8 +24,8 @@ export class CreatePlantComponent implements OnInit, OnDestroy {
     difficulty: new FormControl(Difficulty.EASY, [Validators.required]),
     wateringFrequencySpringToSummerNumber: new FormControl(),
     wateringFrequencyAutumnToWinterNumber: new FormControl(),
-    wateringFrequencySpringToSummer: new FormControl('hour'),
-    wateringFrequencyAutumnToWinter: new FormControl('hour'),
+    wateringFrequencySpringToSummer: new FormControl(Time.DAY),
+    wateringFrequencyAutumnToWinter: new FormControl(Time.DAY),
     exposure: new FormControl(),
     humidity: new FormControl(),
     potting: new FormControl(),

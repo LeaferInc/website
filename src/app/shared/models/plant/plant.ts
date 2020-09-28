@@ -7,10 +7,10 @@ export enum Difficulty {
 }
 
 export enum Time {
-  HOUR,
-  DAY,
-  WEEK,
-  MONTH,
+  HOUR = "heure",
+  DAY = "jour",
+  WEEK = "semaine",
+  MONTH = "mois",
 }
 
 export class Plant {
