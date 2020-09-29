@@ -49,10 +49,11 @@ export class EventsSearchComponent implements OnInit, OnDestroy {
     }
 
     // Location Search
-    if (this.searchType == SearchType.LOCATION) {
+    if (this.searchType === SearchType.LOCATION) {
       this.utils
         .getCurrentLocation()
         .then((loc: Location) => {
+          console.log(loc);
           const search = SearchEvent.fromLocation(loc.lat, loc.long);
           this.doSearch(search);
         })

@@ -4,7 +4,6 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { UserService } from 'src/app/core/services/user/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { UserAuth } from 'src/app/shared/models/auth/auth';
 import { Subscription } from 'rxjs';
 
 /**

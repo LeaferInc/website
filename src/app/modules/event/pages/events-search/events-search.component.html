@@ -24,11 +24,11 @@
 	</div>
 
 	<div nz-row *ngIf="searched">
-		<div nz-col [nzSpan]="6" *ngFor="let event of searchedEvents" class="card">
+		<div nz-col [nzSpan]="4" *ngFor="let event of searchedEvents" class="card">
 			<app-event-card [event]="event"></app-event-card>
 		</div>
-		<div nz-col [nzOffset]="1" *ngIf="searchedEvents.length === 0" class="event-not-found">
-			Aucun résultat.
+		<div nz-col [nzOffset]="2" *ngIf="searchedEvents.length === 0" class="not-found">
+			Aucun évènement proche de ma position.
 		</div>
 	</div>
 </div>
