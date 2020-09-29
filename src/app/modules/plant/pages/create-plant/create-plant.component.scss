@@ -9,3 +9,7 @@ h4 {
 .upload {
   font-weight: 500;
 }
+
+#humidity nz-input-number, #humidity nz-input-number input {
+  width: 100%;
+}
