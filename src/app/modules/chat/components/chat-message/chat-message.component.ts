@@ -10,6 +10,7 @@ export class ChatMessageComponent implements OnInit {
 
   @Input() message: Message;
   @Input() leftIcon: boolean = true;
+  @Input() picture: string;
 
   constructor() { }
 

@@ -23,7 +23,13 @@ export class UserService {
   }
 
   getTalkTo(): Observable<User[]> {
-    return this.http.get<User[]>(`${UserService.USER_URL}/talkto`);
+    return this.http.get<User[]>(`${UserService.USER_URL}/talkto`)
+    .pipe(map((users: User[]) => 
+      users.map((user: User) => {
+        user.birthdate = new Date(user.birthdate); // Parse date
+        return user;
+      })
+    ));
   }
 
   /**

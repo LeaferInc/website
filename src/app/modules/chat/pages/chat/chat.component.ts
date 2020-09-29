@@ -1,21 +1,13 @@
 import {
   Component,
   OnInit,
-  OnDestroy,
-  AfterViewInit,
-  AfterContentChecked,
-  AfterContentInit,
-  AfterViewChecked,
-} from '@angular/core';
+  OnDestroy} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/core/services/user/user.service';
 import { User } from 'src/app/shared/models/user/user';
-import { Message, CreateMessage } from 'src/app/shared/models/message/message';
-import { MessageService } from 'src/app/core/services/message/message.service';
-import { FormControl, FormGroup } from '@angular/forms';
 import { ChatSocketService } from 'src/app/core/services/chat-socket/chat-socket.service';
 import { AppService } from 'src/app/core/services/app/app.service';
-import { merge, pipe, Subscription } from 'rxjs';
+import { merge,  Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 @Component({

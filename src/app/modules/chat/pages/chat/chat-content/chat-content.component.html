@@ -1,7 +1,7 @@
 <div nz-row id="chat-content">
   <div nz-col nzFlex="1 1 auto" class="overflow-auto">
     <ng-container *ngFor="let message of messages">
-      <app-chat-message [message]="message" [leftIcon]="message.user.id !== currentUser?.id"></app-chat-message>
+      <app-chat-message [message]="message" [leftIcon]="message.user.id !== currentUser?.id" [picture]="message.user.picture"></app-chat-message>
     </ng-container>
   </div>
 

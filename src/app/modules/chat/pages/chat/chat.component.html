@@ -4,8 +4,17 @@
     <ng-container *ngIf="users?.length !== 0; else noUsersFound">
       <nz-list nzBordered [nzLoading]="false">
         <nz-list-item *ngFor="let user of users" [routerLink]="['/chat', user.roomId]" >
-          <nz-list-item-meta
-            nzAvatar="https://www.w3schools.com/w3images/avatar2.png"
+          <nz-list-item-meta *ngIf="user.picture"
+            [nzAvatar]="'data:image/jpg;base64,' + user.picture"
+            [nzDescription]="user.username"
+          >
+            <nz-list-item-meta-title>
+              <a (click)="onCuttingClicked($event)">Bouture de Ficus Elastica</a>
+            </nz-list-item-meta-title>
+          </nz-list-item-meta>
+
+          <nz-list-item-meta *ngIf="!user.picture"
+            nzAvatar="assets/images/user.png"
             [nzDescription]="user.username"
           >
             <nz-list-item-meta-title>
