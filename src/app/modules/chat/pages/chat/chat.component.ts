@@ -75,9 +75,4 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.chatSocketService.disconnect();
     this.sub.unsubscribe();
   }
-
-  onCuttingClicked(ev: Event) {
-    ev.stopPropagation();
-    this.router.navigate(['cutting']);
-  }
 }

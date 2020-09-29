@@ -8,18 +8,12 @@
             [nzAvatar]="'data:image/jpg;base64,' + user.picture"
             [nzDescription]="user.username"
           >
-            <nz-list-item-meta-title>
-              <a (click)="onCuttingClicked($event)">Bouture de Ficus Elastica</a>
-            </nz-list-item-meta-title>
           </nz-list-item-meta>
 
           <nz-list-item-meta *ngIf="!user.picture"
             nzAvatar="assets/images/user.png"
             [nzDescription]="user.username"
           >
-            <nz-list-item-meta-title>
-              <a (click)="onCuttingClicked($event)">Bouture de Ficus Elastica</a>
-            </nz-list-item-meta-title>
           </nz-list-item-meta>
         </nz-list-item>
       </nz-list>
