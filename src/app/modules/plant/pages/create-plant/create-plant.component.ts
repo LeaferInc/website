@@ -18,6 +18,9 @@ export class CreatePlantComponent implements OnInit, OnDestroy {
   public btnLoading = false;
   newImage: UploadFile; // Picture of the plant;
 
+  formatterPercent = (value: number) => value ? `${value} %` : '';
+  parserPercent = (value: string) => value ? value.replace(' %', '') : '';
+
   public createPlantForm = new FormGroup({
     plantName: new FormControl('', Validators.required),
     height: new FormControl(1, [Validators.required]),
@@ -27,7 +30,8 @@ export class CreatePlantComponent implements OnInit, OnDestroy {
     wateringFrequencySpringToSummer: new FormControl(Time.DAY),
     wateringFrequencyAutumnToWinter: new FormControl(Time.DAY),
     exposure: new FormControl(),
-    humidity: new FormControl(),
+    humidityMin: new FormControl(),
+    humidityMax: new FormControl(),
     potting: new FormControl(),
     toxicity: new FormControl(false),
   });
@@ -81,7 +85,8 @@ export class CreatePlantComponent implements OnInit, OnDestroy {
       plant.wateringFrequencyAutumnToWinter = this.createPlantForm.get('wateringFrequencyAutumnToWinter').value;
     }
     plant.exposure = this.createPlantForm.get('exposure').value;
-    plant.humidity = this.createPlantForm.get('humidity').value;
+    plant.humidityMin = this.createPlantForm.get('humidityMin').value;
+    plant.humidityMax = this.createPlantForm.get('humidityMax').value;
     plant.potting = this.createPlantForm.get('potting').value;
     plant.toxicity = this.createPlantForm.get('toxicity').value;
 

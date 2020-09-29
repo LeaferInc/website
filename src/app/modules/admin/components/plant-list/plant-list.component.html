@@ -24,7 +24,7 @@
         <td
           [nzExpand]="expandSet.has(data.id)"
           (nzExpandChange)="onExpandChange(data.id, $event)"
-          [nzShowExpand]="data.exposure || data.humidity || data.potting"
+          [nzShowExpand]="data.exposure || data.humidityMin || data.humidityMax || data.potting"
         ></td>
         <td>{{data.name}}</td>
         <td>{{data.createdAt}}</td>
@@ -44,8 +44,11 @@
         <p *ngIf="data.exposure" nz-typography nzEllipsis nzExpandable [nzEllipsisRows]="2">
           Exposition : {{ data.exposure }}
         </p>
-        <p *ngIf="data.humidity" nz-typography nzEllipsis nzExpandable [nzEllipsisRows]="2">
-          Humidité :  {{ data.humidity }}
+        <p *ngIf="data.humidityMin" nz-typography nzEllipsis nzExpandable [nzEllipsisRows]="2">
+          Humidité minimum :  {{ data.humidityMin }}
+        </p>
+        <p *ngIf="data.humidityMax" nz-typography nzEllipsis nzExpandable [nzEllipsisRows]="2">
+          Humidité maximum :  {{ data.humidityMax }}
         </p>
         <p *ngIf="data.potting" nz-typography nzEllipsis nzExpandable [nzEllipsisRows]="2">
           Rempotage : {{ data.potting }}

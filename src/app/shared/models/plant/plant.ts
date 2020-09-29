@@ -25,7 +25,8 @@ export class Plant {
   wateringFrequencySpringToSummer: Time;
   wateringFrequencyAutumnToWinter: Time;
   exposure: string;
-  humidity: string;
+  humidityMin: number;
+  humidityMax: number;
   potting: string;
   toxicity: boolean;
   owner: User;
