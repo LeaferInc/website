@@ -231,10 +231,14 @@
             c-0.3,6.2-2.2,12-5.3,17.1c-3.1,5-7.5,9.5-12.9,12.3c-3.4,2-4.8,6.4-2.8,9.8C193.1,245.3,197.6,246.4,201,244.4z"/>
           </svg>
         </i>
-        <p class="inline">
-          <ng-container *ngIf="plant.humidityMin">Humidité minimum : {{ plant.humidityMin }}</ng-container>
-          <ng-container *ngIf="plant.humidityMax">Humidité maximum : {{ plant.humidityMax }}</ng-container>
-        </p>
+        <div nz-row>
+          <div nz-col nzSpan="24">
+            <ng-container *ngIf="plant.humidityMin">Humidité minimum : {{ plant.humidityMin }} %</ng-container>
+          </div>
+          <div nz-col nzSpan="24">
+            <ng-container *ngIf="plant.humidityMax">Humidité maximum : {{ plant.humidityMax }} %</ng-container>
+          </div>
+        </div>
       </div>
     </div>
 
