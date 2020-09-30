@@ -26,15 +26,15 @@
           [nzShowExpand]="data.description"
         ></td>
         <td>{{data.name}}</td>
-        <td>{{data.createdAt }}</td>
+        <td>{{data.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
         <td>{{data.tradeWith}}</td>
         <td>{{data.owner?.username}}</td>
         <td>
           <a
             nz-popconfirm
-            nzPopconfirmTitle="Etes vous sure de supprimer cette bouture ?"
+            nzPopconfirmTitle="Êtes-vous sûr de supprimer cette bouture ?"
             (nzOnConfirm)="deleteCutting(data.id)"
-          >Delete</a>
+          >Supprimer</a>
         </td>
       </tr>
 

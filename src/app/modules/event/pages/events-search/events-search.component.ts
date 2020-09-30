@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EventService } from 'src/app/core/services/event/event.service';
 import { Event } from '../../../../shared/models/event/event.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { Location } from 'src/app/shared/models/location/location.model';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 export enum SearchType {
   LOCATION,
@@ -16,23 +17,25 @@ export enum SearchType {
 @Component({
   selector: 'app-events-search',
   templateUrl: './events-search.component.html',
-  styleUrls: ['./events-search.component.scss']
+  styleUrls: ['./events-search.component.scss'],
 })
-export class EventsSearchComponent implements OnInit {
-
+export class EventsSearchComponent implements OnInit, OnDestroy {
   searchType: SearchType = SearchType.DATE; // Default to date search
 
   dateForm: FormGroup; // Form for date search
   searchedEvents: Array<Event> = []; // Searched events
   searched: boolean = false; // True if the search has been done
 
-  constructor(private eventService: EventService, private route: ActivatedRoute, private utils: UtilsService) { }
+  private sub: Subscription = new Subscription();
+
+  constructor(private eventService: EventService, private route: ActivatedRoute, private utils: UtilsService) {}
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: { searchType: SearchType }) => {
-      this.searchType = data.searchType;
-    });
-
+    this.sub.add(
+      this.route.data.subscribe((data: { searchType: SearchType }) => {
+        this.searchType = data.searchType;
+      })
+    );
 
     // Date Search
     if (this.searchType == SearchType.DATE) {
@@ -46,13 +49,19 @@ export class EventsSearchComponent implements OnInit {
     }
 
     // Location Search
-    if (this.searchType == SearchType.LOCATION) {
-      this.utils.getCurrentLocation()
+    if (this.searchType === SearchType.LOCATION) {
+      this.utils
+        .getCurrentLocation()
         .then((loc: Location) => {
           const search = SearchEvent.fromLocation(loc.lat, loc.long);
           this.doSearch(search);
-        }).catch(err => console.log(err));
+        })
+        .catch((err) => console.log(err));
     }
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   /**
@@ -78,11 +87,11 @@ export class EventsSearchComponent implements OnInit {
    * @param query object with query parameters
    */
   private doSearch(query: SearchEvent): void {
-    this.eventService.searchEvents(query).subscribe((events: Event[]) => {
-      this.searchedEvents = events;
-      this.searched = true;
-    }), (e: HttpErrorResponse) => {
-      console.log(e);
-    }
+    this.sub.add(
+      this.eventService.searchEvents(query).subscribe((events: Event[]) => {
+        this.searchedEvents = events;
+        this.searched = true;
+      })
+    );
   }
 }

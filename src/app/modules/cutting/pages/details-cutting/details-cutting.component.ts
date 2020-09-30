@@ -38,30 +38,36 @@ export class DetailsCuttingComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
+  private sub: Subscription = new Subscription();
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private cuttingService: CuttingService,
     private authService: AuthService,
     private messageService: MessageService,
-    private modal: NzModalService,
-  ) { }
+    private modal: NzModalService
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
 
-    this.activatedRoute.params.pipe(
-      tap(params => this.currentRoute = params),
-      switchMap(params => this.cuttingService.findOne(params.id)),
-      tap(cutting => this.cutting = cutting),
-      switchMap(() => this.authService.getUserAuth()),
-      takeUntil(this.destroy$),
-    ).subscribe(
-      (userAuth) => {
-        this.currentUser = userAuth?.user
-        this.loading = false;
-      },
-      (err) => console.error(err)
+    this.sub.add(
+      this.activatedRoute.params
+        .pipe(
+          tap((params) => (this.currentRoute = params)),
+          switchMap((params) => this.cuttingService.findOne(params.id)),
+          tap((cutting) => (this.cutting = cutting)),
+          switchMap(() => this.authService.getUserAuth()),
+          takeUntil(this.destroy$)
+        )
+        .subscribe(
+          (userAuth) => {
+            this.currentUser = userAuth?.user;
+            this.loading = false;
+          },
+          (err) => console.error(err)
+        )
     );
   }
 
@@ -69,6 +75,7 @@ export class DetailsCuttingComponent implements OnInit, OnDestroy {
     this.modal.closeAll();
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
+    this.sub.unsubscribe();
   }
 
   onEdit() {
@@ -86,10 +93,12 @@ export class DetailsCuttingComponent implements OnInit, OnDestroy {
       nzContent: 'When clicked the OK button, this cutting will be deleted',
       nzOnOk: () =>
         new Observable((sub) => {
-          this.cuttingService
-            .delete(this.currentRoute.id)
-            .pipe(tap(() => sub.complete()))
-            .subscribe((res) => this.router.navigate(['cutting', 'inventory']));
+          this.sub.add(
+            this.cuttingService
+              .delete(this.currentRoute.id)
+              .pipe(tap(() => sub.complete()))
+              .subscribe((res) => this.router.navigate(['cutting', 'inventory']))
+          );
         }).toPromise(),
     });
   }
@@ -108,11 +117,13 @@ export class DetailsCuttingComponent implements OnInit, OnDestroy {
 
     const newCutting = { ...this.cutting, ...cutting };
 
-    this.cuttingService.edit(newCutting).subscribe((cutting) => {
-      this.isOnEditMode = false;
-      this.updateCuttingForm.reset();
-      this.cutting = cutting;
-    });
+    this.sub.add(
+      this.cuttingService.edit(newCutting).subscribe((cutting) => {
+        this.isOnEditMode = false;
+        this.updateCuttingForm.reset();
+        this.cutting = cutting;
+      })
+    );
   }
 
   onCancelEdit() {
@@ -127,18 +138,16 @@ export class DetailsCuttingComponent implements OnInit, OnDestroy {
     const message: CreateDiscussion = {
       messageContent: this.offerForm.get('offerInput').value,
       receiverId: this.cutting.ownerId,
-    }
+    };
 
-    this.messageService.createDiscussion(message).subscribe({
-      next: (message) => {
-        this.tplModal.destroy();
-        this.router.navigate(['chat', message.room.id]);
-      }
-    });
-  }
-
-  onSendMessage() {
-    alert('onSendMessage');
+    this.sub.add(
+      this.messageService.createDiscussion(message).subscribe({
+        next: (message) => {
+          this.tplModal.destroy();
+          this.router.navigate(['chat', message.room.id]);
+        },
+      })
+    );
   }
 
   createModal(tplContent: TemplateRef<{}>) {

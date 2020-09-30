@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { MessageService } from 'src/app/core/services/message/message.service';
-import { SocketioService } from 'src/app/core/services/socketio/socketio.service';
+import { ChatSocketService } from 'src/app/core/services/chat-socket/chat-socket.service';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserAuth } from 'src/app/shared/models/auth/auth';
@@ -20,7 +20,7 @@ describe('ChatContentComponent', () => {
   const messageServiceMock = {
     findConversation: jest.fn()
   };
-  const socketioServiceMock = {
+  const chatSocketServiceMock = {
     on: jest.fn(),
     emit: jest.fn()
   }
@@ -33,7 +33,7 @@ describe('ChatContentComponent', () => {
         { provide: ActivatedRoute, useValue: { params: of(params) } },
         { provide: AuthService, useValue: authServiceMock },
         { provide: MessageService, useValue: messageServiceMock },
-        { provide: SocketioService, useValue: socketioServiceMock },
+        { provide: ChatSocketService, useValue: chatSocketServiceMock },
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
@@ -52,12 +52,14 @@ describe('ChatContentComponent', () => {
         id: 0,
         email: 'email@email.com',
         username: 'username',
+        firstname: 'John',
+        lastname: 'Doe',
       },
       token: 'token'
     };
     authServiceMock.getUserAuth.mockReturnValue(of(userAuth));
     // socketioServiceMock.emit.mockReturnValue();
-    socketioServiceMock.on.mockReturnValue(of());
+    chatSocketServiceMock.on.mockReturnValue(of());
 
     fixture.detectChanges();
 

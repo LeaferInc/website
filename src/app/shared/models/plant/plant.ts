@@ -1,16 +1,16 @@
 import { User } from '../user/user';
 
 export enum Difficulty {
-  EASY = "easy",
-  MEDIUM = "medium",
-  HARD = "hard",
+  EASY = "facile",
+  MEDIUM = "moyen",
+  HARD = "difficile",
 }
 
 export enum Time {
-  HOUR,
-  DAY,
-  WEEK,
-  MONTH,
+  HOUR = "heure",
+  DAY = "jour",
+  WEEK = "semaine",
+  MONTH = "mois",
 }
 
 export class Plant {
@@ -25,7 +25,8 @@ export class Plant {
   wateringFrequencySpringToSummer: Time;
   wateringFrequencyAutumnToWinter: Time;
   exposure: string;
-  humidity: string;
+  humidityMin: number;
+  humidityMax: number;
   potting: string;
   toxicity: boolean;
   owner: User;

@@ -36,17 +36,4 @@ describe('CuttingService', () => {
 
     httpMock.verify();
   });
-
-  // TODO
-  // it('should create a cutting', () => {
-
-  // });
-
-  // it('should create a cutting', () => {
-
-  // });
-
-  // it('should create a cutting', () => {
-
-  // });
 });

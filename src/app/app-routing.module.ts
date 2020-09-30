@@ -12,6 +12,11 @@ const routes: Routes = [
     canActivate: [AuthenticateGuard],
     loadChildren: () => import('src/app/modules/home/home.module').then((m) => m.HomeModule),
   },
+  { 
+    path: 'best-plant',
+    canActivate: [AuthenticateGuard],
+    loadChildren: () => import('src/app/modules/best-plant/best-plant.module').then((m) => m.BestPlantModule),
+  },
   {
     path: 'chat',
     canActivate: [AuthenticateGuard],
@@ -31,6 +36,11 @@ const routes: Routes = [
     path: 'login',
     canActivate: [NotAuthenticateGuard],
     loadChildren: () => import('src/app/modules/login/login.module').then((m) => m.LoginModule),
+  },
+  {
+    path: 'identify',
+    canActivate: [AuthenticateGuard],
+    loadChildren: () => import('src/app/modules/recognition/recognition.module').then((m) => m.RecognitionModule),
   },
   {
     path: 'register',
@@ -56,6 +66,11 @@ const routes: Routes = [
     path: 'premium',
     canActivate: [AuthenticateGuard],
     loadChildren: () => import('src/app/modules/premium/premium.module').then(m => m.PremiumModule),
+  },
+  {
+    path: 'sensor',
+    canActivate: [AuthenticateGuard],
+    loadChildren: () => import('src/app/modules/sensor/sensor.module').then(m => m.SensorModule),
   },
   { path: 'about', component: AboutComponent },
   { path: '**', component: PageNotFoundComponent },

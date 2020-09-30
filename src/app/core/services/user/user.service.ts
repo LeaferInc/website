@@ -23,14 +23,32 @@ export class UserService {
   }
 
   getTalkTo(): Observable<User[]> {
-    return this.http.get<User[]>(`${UserService.USER_URL}/talkto`);
+    return this.http.get<User[]>(`${UserService.USER_URL}/talkto`)
+    .pipe(map((users: User[]) => 
+      users.map((user: User) => {
+        user.birthdate = new Date(user.birthdate); // Parse date
+        return user;
+      })
+    ));
   }
 
   /**
    * Gets the current user's profile
    */
-  getProfile(): Observable<User> {
+  getMyProfile(): Observable<User> {
     return this.http.get<User>(`${UserService.USER_URL}/me`)
+    .pipe(map((user: User) => {
+      user.birthdate = new Date(user.birthdate); // Parse date
+      return user;
+    }));
+  }
+
+  /**
+   * Gets a user profile
+   * @param userId  the user's id
+   */
+  getProfile(userId: number): Observable<User> {
+    return this.http.get<User>(`${UserService.USER_URL}/${userId}`)
     .pipe(map((user: User) => {
       user.birthdate = new Date(user.birthdate); // Parse date
       return user;

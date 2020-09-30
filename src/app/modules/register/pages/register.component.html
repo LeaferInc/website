@@ -1,8 +1,8 @@
 <div nz-row>
-  <div nz-col nzOffset="10" nzSpan="4">
+  <div nz-col nzOffset="9" nzSpan="6">
     <h1>Créer un compte</h1>
   </div>
-  <div nz-col nzOffset="10" nzSpan="4">
+  <div nz-col nzOffset="9" nzSpan="6">
     <form nz-form nzLayout="vertical" [formGroup]="registerForm" class="register-form" (ngSubmit)="onSubmit()">
       <nz-form-item>
         <nz-form-label nzFor="username" nzRequired>Nom d'utilisateur</nz-form-label>
@@ -80,7 +80,7 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label nzFor="firstname">Prénom</nz-form-label>
+        <nz-form-label nzFor="firstname" nzRequired>Prénom</nz-form-label>
         <nz-form-control [nzErrorTip]="firstnameErrorTpl">
           <input
             [formControl]="firstnameInput"
@@ -99,7 +99,7 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label nzFor="lastname">Nom</nz-form-label>
+        <nz-form-label nzFor="lastname" nzRequired>Nom</nz-form-label>
         <nz-form-control [nzErrorTip]="lastnameErrorTpl">
           <input
             [formControl]="lastnameInput"

@@ -1,7 +1,7 @@
 <div nz-row id="chat-content">
   <div nz-col nzFlex="1 1 auto" class="overflow-auto">
     <ng-container *ngFor="let message of messages">
-      <app-chat-message [message]="message" [leftIcon]="message.user.id !== currentUser.id"></app-chat-message>
+      <app-chat-message [message]="message" [leftIcon]="message.user.id !== currentUser?.id" [picture]="message.user.picture"></app-chat-message>
     </ng-container>
   </div>
 
@@ -21,20 +21,3 @@
     </form>
   </div>
 </div>
-
-
-
-
-<!-- <div class="d-flex flex-column">
-  <ng-container *ngFor="let message of messages">
-    <app-chat-message [leftIcon]="message.user.id !== currentUser.id">{{ message.message_content }}</app-chat-message>
-  </ng-container>
-  <div class="row">
-    <form [formGroup]="messageForm" (ngSubmit)="onSubmitMessage()">
-      <div class="form-group">
-        <input [formControl]="messageInput" type="text" class="form-control" id="message" />
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-  </div>
-</div> -->

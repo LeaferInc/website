@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { PlantService } from 'src/app/core/services/plant/plant.service';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { switchMap } from 'rxjs/operators';
 import { ResultData } from 'src/app/shared/models/query/query';
 import { Plant } from 'src/app/shared/models/plant/plant';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-plant-list',
   templateUrl: './plant-list.component.html',
-  styleUrls: ['./plant-list.component.scss']
+  styleUrls: ['./plant-list.component.scss'],
 })
-export class PlantListComponent implements OnInit {
+export class PlantListComponent implements OnInit, OnDestroy {
+  
+  @Output() deleted = new EventEmitter<void>();
 
   public plants: ResultData<Plant> = {
     count: 0,
-    items: []
+    items: [],
   };
 
   public expandSet = new Set<number>();
@@ -22,12 +25,16 @@ export class PlantListComponent implements OnInit {
   public pageIndex = 1;
   public pageSize = 8;
 
-  constructor(
-    private plantService: PlantService,
-  ) { }
+  private sub: Subscription = new Subscription();
+
+  constructor(private plantService: PlantService) {}
 
   ngOnInit(): void {
     this.loadDataFromServer(this.pageIndex, this.pageSize);
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   onExpandChange(id: number, checked: boolean): void {
@@ -39,27 +46,29 @@ export class PlantListComponent implements OnInit {
   }
 
   loadDataFromServer(pageIndex?: number, pageSize?: number) {
-    this.plantService
-      .findAll(((pageIndex - 1) * pageSize) || 0, pageSize)
-      .subscribe({
-        next: (plants) => this.plants = plants
+    this.sub.add(
+      this.plantService.findAll((pageIndex - 1) * pageSize || 0, pageSize).subscribe({
+        next: (plants) => (this.plants = plants),
       })
+    );
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
-    console.log(params);
     const { pageSize, pageIndex, sort, filter } = params;
     this.loadDataFromServer(pageIndex, pageSize);
   }
 
   deletePlant(id: number) {
-    this.plantService
-      .delete(id)
-      .pipe(
-        switchMap(() => this.plantService.findAll(((this.pageIndex - 1) * this.pageSize) || 0, this.pageSize))
-      ).subscribe({
-        next: (plants) => this.plants = plants
-      });
+    this.sub.add(
+      this.plantService
+        .delete(id)
+        .pipe(switchMap(() => this.plantService.findAll((this.pageIndex - 1) * this.pageSize || 0, this.pageSize)))
+        .subscribe({
+          next: (plants) => {
+            this.plants = plants;
+            this.deleted.emit();
+          },
+        })
+    );
   }
-
 }

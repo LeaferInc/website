@@ -10,66 +10,57 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-community-plant',
   templateUrl: './community-plant.component.html',
-  styleUrls: ['./community-plant.component.scss']
+  styleUrls: ['./community-plant.component.scss'],
 })
 export class CommunityPlantComponent implements OnInit, OnDestroy {
-
   public plants: ResultData<Plant>;
   public loading: boolean = true;
 
   public searchForm = new FormGroup({
-    searchInput: new FormControl('')
+    searchInput: new FormControl(''),
   });
 
   public pageIndex: number;
   public pageSize = 12;
 
-  private sub: Subscription;
+  private sub: Subscription = new Subscription();
 
-  constructor(
-    private plantService: PlantService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-  ) { }
+  constructor(private plantService: PlantService, private activatedRoute: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
-    this.activatedRoute
-      .queryParams
-      .subscribe({
+    this.sub.add(
+      this.activatedRoute.queryParams.subscribe({
         next: (params) => {
-          if(params.search)
-            this.searchForm.get('searchInput').patchValue(params.search);
+          if (params.search) this.searchForm.get('searchInput').patchValue(params.search);
           this.pageIndex = params.page || 1;
           this.findAllExceptOwner(this.searchForm.get('searchInput').value);
         },
-      });
-    
-    this.searchForm
-      .get('searchInput')
-      .valueChanges
-      .pipe(
-        debounceTime(850),
-        distinctUntilChanged(),
-      )
-      .subscribe({
-        next: (search: string) => {
-          this.pageIndex = 1;
-          const queryParams = {
-            page: this.pageIndex
-          };
-          if(search) Object.assign(queryParams, { search: search });
-          this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: queryParams });
-        }
-      });
+      })
+    );
+
+    this.sub.add(
+      this.searchForm
+        .get('searchInput')
+        .valueChanges.pipe(debounceTime(850), distinctUntilChanged())
+        .subscribe({
+          next: (search: string) => {
+            this.pageIndex = 1;
+            const queryParams = {
+              page: this.pageIndex,
+            };
+            if (search) Object.assign(queryParams, { search: search });
+            this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: queryParams });
+          },
+        })
+    );
   }
 
   ngOnDestroy() {
-    if(this.sub)
-      this.sub.unsubscribe();
+    if (this.sub) this.sub.unsubscribe();
   }
 
   onPageIndexChange(newIndex: number) {
-    this.router.navigate(['plant/community'], { queryParams: { page: newIndex } })
+    this.router.navigate(['plant/community'], { queryParams: { page: newIndex } });
   }
 
   plantDeleted(id: number) {
@@ -78,11 +69,11 @@ export class CommunityPlantComponent implements OnInit, OnDestroy {
 
   private findAllExceptOwner(search?: string) {
     this.loading = true;
-    this.sub = this.plantService
-      .findAllExceptOwner(((this.pageIndex - 1) * this.pageSize) || 0, this.pageSize, search)
-      .subscribe({
-        next: (plants: ResultData<Plant>) => this.plants = plants,
-        complete: () => this.loading = false
-      });
+    this.sub.add(
+      this.plantService.findAllExceptOwner((this.pageIndex - 1) * this.pageSize || 0, this.pageSize, search).subscribe({
+        next: (plants: ResultData<Plant>) => (this.plants = plants),
+        complete: () => (this.loading = false),
+      })
+    );
   }
 }

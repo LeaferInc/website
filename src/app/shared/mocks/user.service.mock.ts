@@ -10,7 +10,7 @@ export class MockUserService extends UserService {
         lastname: 'Doe',
     }
 
-    getProfile(): Observable<User> {
+    getMyProfile(): Observable<User> {
         return of(MockUserService.user);
     }
 }

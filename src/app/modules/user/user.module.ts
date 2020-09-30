@@ -1,5 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ProfileComponent } from './pages/profile/profile.component';
+import { MyProfileComponent } from './pages/my-profile/my.profile.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzFormModule } from 'ng-zorro-antd/form';
@@ -19,9 +19,12 @@ import { UserService } from 'src/app/core/services/user/user.service';
 import { UserRoutingModule } from './user-routing.module';
 import { UserEditComponent } from './pages/user-edit/user-edit.component';
 import { ImagePickerModule } from 'src/app/shared/components/image-picker/image-picker.module';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 @NgModule({
   declarations: [
+    MyProfileComponent,
     ProfileComponent,
     UserEditComponent,
   ],
@@ -38,6 +41,7 @@ import { ImagePickerModule } from 'src/app/shared/components/image-picker/image-
     NzDatePickerModule,
     NzCardModule,
     NzAutocompleteModule,
+    NzMessageModule,
     NzDividerModule,
     NzTypographyModule,
     NzModalModule,

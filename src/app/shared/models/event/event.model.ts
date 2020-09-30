@@ -1,4 +1,4 @@
-import { User } from '../user/user';
+import { Entrant } from '../user/user';
 
 export class Event {
     constructor(public name: string,
@@ -12,6 +12,7 @@ export class Event {
         public longitude: number,
         public joined: boolean = false,
         public id?: number,
+        public entrants?: Entrant[],
         public picture?: string,
         public organizer?: number) { }
 }

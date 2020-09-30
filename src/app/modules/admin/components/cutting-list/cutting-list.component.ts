@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Cutting } from 'src/app/shared/models/cutting/cutting';
 import { CuttingService } from 'src/app/core/services/cutting/cutting.service';
 import { ResultData } from 'src/app/shared/models/query/query';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { switchMap } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cutting-list',
   templateUrl: './cutting-list.component.html',
-  styleUrls: ['./cutting-list.component.scss']
+  styleUrls: ['./cutting-list.component.scss'],
 })
-export class CuttingListComponent implements OnInit {
+export class CuttingListComponent implements OnInit, OnDestroy {
+
+  @Output() deleted = new EventEmitter<void>();
 
   public cuttings: ResultData<Cutting> = {
     count: 0,
-    items: []
+    items: [],
   };
 
   public expandSet = new Set<number>();
@@ -22,12 +25,16 @@ export class CuttingListComponent implements OnInit {
   public pageIndex = 1;
   public pageSize = 8;
 
-  constructor(
-    private cuttingService: CuttingService,
-  ) { }
+  private sub: Subscription = new Subscription();
+
+  constructor(private cuttingService: CuttingService) { }
 
   ngOnInit(): void {
     this.loadDataFromServer(this.pageIndex, this.pageSize);
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   onExpandChange(id: number, checked: boolean): void {
@@ -39,27 +46,29 @@ export class CuttingListComponent implements OnInit {
   }
 
   loadDataFromServer(pageIndex?: number, pageSize?: number) {
-    this.cuttingService
-      .findAll(((pageIndex - 1) * pageSize) || 0, pageSize)
-      .subscribe({
-        next: (cuttings) => this.cuttings = cuttings
+    this.sub.add(
+      this.cuttingService.findAll((pageIndex - 1) * pageSize || 0, pageSize).subscribe({
+        next: (cuttings) => (this.cuttings = cuttings),
       })
+    );
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
-    console.log(params);
     const { pageSize, pageIndex, sort, filter } = params;
     this.loadDataFromServer(pageIndex, pageSize);
   }
 
   deleteCutting(id: number) {
-    this.cuttingService
-      .delete(id)
-      .pipe(
-        switchMap(() => this.cuttingService.findAll(((this.pageIndex - 1) * this.pageSize) || 0, this.pageSize))
-      ).subscribe({
-        next: (cuttings) => this.cuttings = cuttings
-      });
+    this.sub.add(
+      this.cuttingService
+        .delete(id)
+        .pipe(switchMap(() => this.cuttingService.findAll((this.pageIndex - 1) * this.pageSize || 0, this.pageSize)))
+        .subscribe({
+          next: (cuttings) => {
+            this.cuttings = cuttings;
+            this.deleted.emit();
+          },
+        })
+    );
   }
-
 }

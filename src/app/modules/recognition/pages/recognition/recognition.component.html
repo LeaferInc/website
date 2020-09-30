@@ -1,0 +1,48 @@
+<div nz-row>
+	<div nz-col nzOffset="8" nzSpan="8">
+		<h1 style="text-align: center;">Reconnaissance d'une plante</h1>
+	</div>
+  <br/>
+
+	<div nz-col nzOffset="8" nzSpan="8" class="upload">
+		<app-image-picker label="Image de la plante" required="true" (picked)="imagePlant = $event"></app-image-picker>
+	</div>
+
+	<div nz-col nzOffset="8" nzSpan="8">
+		<form nz-form [formGroup]="recognitionForm" (ngSubmit)="submit()">
+			<div nz-col>
+				<nz-form-item>
+					<nz-form-label nzFor="organ" nzRequired>
+						<h4>Type de photo</h4>
+					</nz-form-label>
+					<nz-form-control [nzErrorTip]="organErrorTpl">
+						<nz-select formControlName="organ">
+							<nz-option nzValue="feuille" nzLabel="Feuille"></nz-option>
+							<nz-option nzValue="fleur" nzLabel="Fleur"></nz-option>
+						</nz-select>
+						<ng-template #organErrorTpl>
+							<ng-container *ngIf="recognitionForm.get('organ').hasError('required')">
+								Veuillez sélectionner un type de photo
+							</ng-container>
+						</ng-template>
+					</nz-form-control>
+				</nz-form-item>
+			</div>
+
+			<nz-form-item>
+				<nz-form-control>
+					<button nz-button nzType="primary" [nzLoading]="submitted">Identifier</button>
+				</nz-form-control>
+			</nz-form-item>
+		</form>
+  </div>
+  
+  <div nz-col nzOffset="8" nzSpan="8" *ngIf="result">
+    <h3>Résultat</h3>
+    <p>Nom de la plante: <strong>{{result.name}}</strong></p>
+    <p>Taux d'exactitude: <strong>{{(result.score * 100).toFixed(2)}}%</strong></p>
+  </div>
+  <div nz-col nzOffset="8" nzSpan="8" *ngIf="notFound">
+    Aucune correspondance trouvée
+  </div>
+</div>

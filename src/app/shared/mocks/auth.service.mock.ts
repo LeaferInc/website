@@ -5,6 +5,7 @@ import { UserAuth } from '../models/auth/auth';
 
 export class MockAuthService extends AuthService {
     public static user: User = {
+        id: 1,
         email: 'test@email.com',
         username: 'azerty123',
         firstname: 'John',

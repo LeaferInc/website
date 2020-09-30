@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { UserService } from 'src/app/core/services/user/user.service';
 import { User, UserEdit } from 'src/app/shared/models/user/user';
@@ -8,41 +8,49 @@ import { Router } from '@angular/router';
 import { UserAuth } from 'src/app/shared/models/auth/auth';
 import { UploadFile } from 'ng-zorro-antd/upload';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-edit',
   templateUrl: './user-edit.component.html',
-  styleUrls: ['./user-edit.component.scss']
+  styleUrls: ['./user-edit.component.scss'],
 })
-export class UserEditComponent implements OnInit {
-
-  userAuth: UserAuth; // The current user
+export class UserEditComponent implements OnInit, OnDestroy {
+  userAuth: UserAuth = null; // The current user
   userForm: FormGroup;
   submitted: boolean = false; // True if the form has been submitted
   newAvatar: UploadFile; // The selected avatar image file
 
-  //sub: Subscription; // Get user observable subscription
+  private sub: Subscription = new Subscription();
 
-  constructor(private authService: AuthService, public userService: UserService, private router: Router) { }
+  constructor(private authService: AuthService, public userService: UserService, private router: Router, 
+    private message: NzMessageService) { }
 
   ngOnInit(): void {
-    this.authService.getUserAuth().subscribe(
-      (userAuth: UserAuth) => {
-        this.userAuth = userAuth;
-        const dateInput: string = userAuth.user.birthdate ? userAuth.user.birthdate.toISOString().slice(0, 10) : '';
+    this.sub.add(
+      this.authService.getUserAuth().subscribe(
+        (userAuth: UserAuth) => {
+          this.userAuth = userAuth;
+          const dateInput: string = userAuth.user.birthdate ? userAuth.user.birthdate.toISOString().slice(0, 10) : '';
 
-        this.userForm = new FormGroup({
-          firstname: new FormControl(userAuth.user.firstname ?? ''),
-          lastname: new FormControl(userAuth.user.lastname ?? ''),
-          birthdate: new FormControl(dateInput),
-          location: new FormControl(userAuth.user.location ?? ''),
-          biography: new FormControl(userAuth.user.biography ?? ''),
-        });
-      },
-      (e) => {
-        console.log(e);
-      }
+          this.userForm = new FormGroup({
+            firstname: new FormControl(userAuth.user.firstname ?? ''),
+            lastname: new FormControl(userAuth.user.lastname ?? ''),
+            birthdate: new FormControl(dateInput),
+            location: new FormControl(userAuth.user.location ?? ''),
+            biography: new FormControl(userAuth.user.biography ?? ''),
+          });
+        },
+        (e) => {
+          console.log(e);
+        }
+      )
     );
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   /**
@@ -64,6 +72,12 @@ export class UserEditComponent implements OnInit {
       const birth = new Date(this.userForm.get('birthdate').value); // Parse input field
       if (this.userAuth.user.birthdate.getTime() !== birth.getTime()) {
         changes.birthdate = birth;
+
+        // Check birthdate in past
+        if (birth > new Date()) {
+          this.message.error('La naissance ne peut être dans le futur');
+          return;
+        }
       } else {
         delete changes.birthdate;
       }
@@ -79,17 +93,19 @@ export class UserEditComponent implements OnInit {
       this.router.navigate(['users', 'me']);
     } else {
       this.submitted = true;
-      this.userService.updateProfile(changes).subscribe(
-        (user: User) => {
-          // Update provider and redirect
-          this.userAuth.user = user;
-          this.authService.setUserAuth({ user: user, token: this.userAuth.token });
-          this.router.navigate(['users', 'me']);
-        },
-        (err: HttpErrorResponse) => {
-          console.log(err);
-          this.submitted = false;
-        }
+      this.sub.add(
+        this.userService.updateProfile(changes).subscribe(
+          (user: User) => {
+            // Update provider and redirect
+            this.userAuth.user = user;
+            this.authService.setUserAuth({ user: user, token: this.userAuth.token });
+            this.router.navigate(['users', 'me']);
+          },
+          (err: HttpErrorResponse) => {
+            console.log(err);
+            this.submitted = false;
+          }
+        )
       );
     }
   }

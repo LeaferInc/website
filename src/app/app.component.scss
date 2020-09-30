@@ -52,3 +52,17 @@ nz-footer {
 .full-height {
   height: 100%;
 }
+
+#notification-header {
+  width: 150px;
+  padding: 10px;
+  line-height: normal;
+  
+  h3 {
+    margin-bottom: 0;
+  }
+}
+
+.ant-dropdown-menu-item {
+  white-space: normal;
+}

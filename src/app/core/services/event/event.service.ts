@@ -18,6 +18,8 @@ export class EventService {
 
   /**
    * Get all Events from the server 
+   * @param skip How many events to skip
+   * @param take How many events to take
    */
   getEvents(skip?: number, take?: number): Observable<Event[]> {
     return this.http.get<Event[]>(EventService.BASE_URL, {
@@ -43,7 +45,15 @@ export class EventService {
   }
 
   /**
-   * Get a single Event from the server by its id
+   * Get organized events
+   */
+  getOrganizedEvents(): Observable<Event[]> {
+    return this.http.get<Event[]>(EventService.BASE_URL + "organized");
+  }
+
+  /**
+   * Get a single Event by its id
+   * @param id The event's id
    */
   getEvent(id: number): Observable<Event> {
     return this.http.get<Event>(EventService.BASE_URL + id);
@@ -59,7 +69,7 @@ export class EventService {
 
   /**
    * Search for events with criteria
-   * @param search  The research criteria
+   * @param search The research criteria
    */
   searchEvents(search: SearchEvent): Observable<Event[]> {
     return this.http.get<Event[]>(EventService.BASE_URL + `search?${search.toUrlParams()}`);
@@ -67,7 +77,7 @@ export class EventService {
 
   /**
    * Deletes an event
-   * @param id the id of the event
+   * @param id The id of the event
    */
   deleteEvent(id: number): Observable<void> {
     return this.http.delete<void>(EventService.BASE_URL + id);

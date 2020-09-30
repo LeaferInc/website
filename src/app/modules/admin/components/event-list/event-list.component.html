@@ -1,7 +1,7 @@
 <nz-table 
   #nzTable
   [nzData]="events"
-  [nzTotal]="events.length"
+  [nzTotal]="count"
   [nzPageSize]="pageSize"
   [nzPageIndex]="pageIndex"
   [nzFrontPagination]="false"
@@ -11,7 +11,7 @@
     <tr>
       <th nzWidth="60px"></th>
       <th>Nom</th>
-      <th>Location</th>
+      <th>Lieu</th>
       <th>Debut</th>
       <th>Fin</th>
       <th>Prix</th>
@@ -29,16 +29,16 @@
         ></td>
         <td>{{data.name}}</td>
         <td>{{data.location }}</td>
-        <td>{{data.startDate}}</td>
-        <td>{{data.endDate}}</td>
+        <td>{{data.startDate | date:'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{data.endDate | date:'dd/MM/yyyy HH:mm'}}</td>
         <td>{{data.price}}</td>
         <td>{{data.maxPeople}}</td>
         <td>
           <a
             nz-popconfirm
-            nzPopconfirmTitle="Etes vous sure de supprimer cette bouture ?"
+            nzPopconfirmTitle="Êtes-vous sûr de supprimer cet évènement ?"
             (nzOnConfirm)="deleteEvent(data.id)"
-          >Delete</a>
+          >Supprimer</a>
         </td>
       </tr>
 

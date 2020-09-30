@@ -31,7 +31,9 @@ describe('ChatMessageComponent', () => {
       },
       user: {
         email: 'email',
-        username: 'username'
+        username: 'username',
+        firstname: 'John',
+        lastname: 'Doe',
       }
     }
     fixture.detectChanges();

@@ -17,16 +17,19 @@ import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { IconDefinition } from '@ant-design/icons-angular';
-import { UserOutline, LockOutline } from '@ant-design/icons-angular/icons';
+import { UserOutline, LockOutline, BellOutline } from '@ant-design/icons-angular/icons';
 import localeFr from '@angular/common/locales/fr';
 import localeFrExtra from '@angular/common/locales/extra/fr';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 import { GlobalErrorHandler } from './core/services/error-handler/global-error.handler';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NotificationItemModule } from './shared/components/notification-item/notification-item.module';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { AboutComponent } from './shared/components/about/about.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 
-const icons: IconDefinition[] = [UserOutline, LockOutline];
+const icons: IconDefinition[] = [UserOutline, LockOutline, BellOutline];
 
 registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
 
@@ -48,6 +51,9 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
     NzBreadCrumbModule,
     NzAvatarModule,
     NzIconModule.forRoot(icons),
+    NzDropDownModule,
+    NotificationItemModule,
+    NzBadgeModule,
     MarkdownModule.forRoot(),
   ],
   providers: [

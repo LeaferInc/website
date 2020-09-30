@@ -9,8 +9,8 @@ export interface User {
   enabled?: boolean;
   email: string;
   username: string;
-  firstname?: string;
-  lastname?: string;
+  firstname: string;
+  lastname: string;
   birthdate?: Date;
   biography?: string;
   location?: string;
@@ -18,6 +18,16 @@ export interface User {
   roomId?: number;
   role?: Role;
   premium?: boolean;
+}
+
+/**
+ * Used for events
+ */
+export interface Entrant {
+  id: number;
+  username: string;
+  firstname: string;
+  lastname: string;
 }
 
 /**

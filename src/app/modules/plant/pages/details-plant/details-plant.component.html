@@ -16,7 +16,7 @@
     </div>
 
     <div nz-row>
-      <h2 nz-typography>{{ plant?.difficulty }} d'entretien</h2>
+      <h2 nz-typography>Difficulté d'entretien: {{ plant?.difficulty }}</h2>
     </div>
 
     <div nz-row>
@@ -173,7 +173,7 @@
       </div>
     </div>
 
-    <div nz-row *ngIf="plant?.humidity" class="row">
+    <div nz-row *ngIf="plant?.humidityMin || plant?.humidityMax" class="row">
       <div nz-col>
         <i class="float-left" nz-icon>
           <svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -231,9 +231,14 @@
             c-0.3,6.2-2.2,12-5.3,17.1c-3.1,5-7.5,9.5-12.9,12.3c-3.4,2-4.8,6.4-2.8,9.8C193.1,245.3,197.6,246.4,201,244.4z"/>
           </svg>
         </i>
-        <p class="inline">
-          {{ plant.humidity }}
-        </p>
+        <div nz-row>
+          <div nz-col nzSpan="24">
+            <ng-container *ngIf="plant.humidityMin">Humidité minimum : {{ plant.humidityMin }} %</ng-container>
+          </div>
+          <div nz-col nzSpan="24">
+            <ng-container *ngIf="plant.humidityMax">Humidité maximum : {{ plant.humidityMax }} %</ng-container>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -330,9 +335,7 @@
     </div>
 
     <div nz-row *ngIf="plant?.toxicity" nzAlign="middle" class="row">
-      <!-- <img src="assets/images/icons/toxicite.svg" /> -->
       <i class="float-left" nz-icon>
-        <!-- <img src="assets/images/icons/toxicite.svg" /> -->
         <svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	        viewBox="0 0 354 344" style="enable-background:new 0 0 354 344;" xml:space="preserve">
         <style type="text/css">
