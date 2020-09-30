@@ -86,8 +86,6 @@ export class PremiumHomeComponent implements OnInit, OnDestroy {
             },
           });
 
-          console.log(res);
-
           if (res.error) {
             console.log(res.error);
           } else {

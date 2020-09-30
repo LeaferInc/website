@@ -1,8 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { EventService } from 'src/app/core/services/event/event.service';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { switchMap } from 'rxjs/operators';
-import { ResultData } from 'src/app/shared/models/query/query';
 import { Event } from 'src/app/shared/models/event/event.model';
 import { Subscription } from 'rxjs';
 
@@ -12,6 +11,9 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./event-list.component.scss'],
 })
 export class EventListComponent implements OnInit, OnDestroy {
+
+  @Output() deleted = new EventEmitter<void>();
+
   public events: Event[] = [];
 
   public expandSet = new Set<number>();
@@ -21,7 +23,7 @@ export class EventListComponent implements OnInit, OnDestroy {
 
   private sub: Subscription = new Subscription();
 
-  constructor(private eventService: EventService) {}
+  constructor(private eventService: EventService) { }
 
   ngOnInit(): void {
     this.loadDataFromServer(this.pageIndex, this.pageSize);
@@ -48,19 +50,20 @@ export class EventListComponent implements OnInit, OnDestroy {
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
-    console.log(params);
     const { pageSize, pageIndex, sort, filter } = params;
     this.loadDataFromServer(pageIndex, pageSize);
   }
 
   deleteEvent(id: number) {
-    // this.eventService
-    //   .delete(id)
-    //   .pipe(
-    //     switchMap(() => this.eventService.getAll())
-    //   ).subscribe({
-    //     next: (events) => this.events = events
-    //   });
-    alert('Delete ' + id);
+    this.eventService
+      .deleteEvent(id)
+      .pipe(
+        switchMap(() => this.eventService.getEvents())
+      ).subscribe({
+        next: (events) => {
+          this.events = events;
+          this.deleted.emit();
+        }
+      });
   }
 }

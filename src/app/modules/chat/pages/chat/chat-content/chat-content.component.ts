@@ -64,22 +64,8 @@ export class ChatContentComponent implements OnInit, OnDestroy {
         .subscribe((routes) => {})
     );
 
-    // this.activatedRoute.params.subscribe((routes) => {
-    //   if (routes.roomId) {
-    //     if (this.roomId) {
-    //       this.chatSocketService
-    //         .emit('leaveRoom', this.roomId)
-    //         .subscribe((message) => console.log('[Client]', message));
-    //     }
-    //     this.roomId = routes.roomId;
-    //     this.chatSocketService.emit('joinRoom', Number(routes.roomId)).subscribe();
-    //     this.messageService.findConversation(routes.roomId).subscribe((messages) => (this.messages = messages));
-    //   }
-    // });
-
     this.sub.add(
       this.chatSocketService.on('messageServerToClient').subscribe((message: Message) => {
-        console.log('[Client]', message);
         this.messages.push(message);
       })
     );

@@ -95,7 +95,6 @@ export class CreatePlantComponent implements OnInit, OnDestroy {
 
     this.btnLoading = true;
 
-    console.log(plant);
     this.sub.add(
       this.plantService
         .createPlant(plant)

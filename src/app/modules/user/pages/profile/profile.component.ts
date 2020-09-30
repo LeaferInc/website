@@ -30,12 +30,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
             this.user = user;
           },
           (err: HttpErrorResponse) => {
-            console.log('redirect');
-            console.log(err);
-
             if (err.status === 404) {
               this.router.navigate(['/404']);
             }
+            else console.log(err);
           }
         )
     );

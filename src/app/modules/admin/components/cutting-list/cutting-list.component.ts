@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Cutting } from 'src/app/shared/models/cutting/cutting';
 import { CuttingService } from 'src/app/core/services/cutting/cutting.service';
 import { ResultData } from 'src/app/shared/models/query/query';
@@ -12,6 +12,9 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./cutting-list.component.scss'],
 })
 export class CuttingListComponent implements OnInit, OnDestroy {
+
+  @Output() deleted = new EventEmitter<void>();
+
   public cuttings: ResultData<Cutting> = {
     count: 0,
     items: [],
@@ -24,7 +27,7 @@ export class CuttingListComponent implements OnInit, OnDestroy {
 
   private sub: Subscription = new Subscription();
 
-  constructor(private cuttingService: CuttingService) {}
+  constructor(private cuttingService: CuttingService) { }
 
   ngOnInit(): void {
     this.loadDataFromServer(this.pageIndex, this.pageSize);
@@ -51,7 +54,6 @@ export class CuttingListComponent implements OnInit, OnDestroy {
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
-    console.log(params);
     const { pageSize, pageIndex, sort, filter } = params;
     this.loadDataFromServer(pageIndex, pageSize);
   }
@@ -62,7 +64,10 @@ export class CuttingListComponent implements OnInit, OnDestroy {
         .delete(id)
         .pipe(switchMap(() => this.cuttingService.findAll((this.pageIndex - 1) * this.pageSize || 0, this.pageSize)))
         .subscribe({
-          next: (cuttings) => (this.cuttings = cuttings),
+          next: (cuttings) => {
+            this.cuttings = cuttings;
+            this.deleted.emit();
+          },
         })
     );
   }

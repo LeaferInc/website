@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { UserService } from 'src/app/core/services/user/user.service';
 import { User } from 'src/app/shared/models/user/user';
 import { ResultData } from 'src/app/shared/models/query/query';
@@ -12,6 +12,9 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent implements OnInit, OnDestroy {
+
+  @Output() deleted = new EventEmitter<void>();
+
   public users: ResultData<User> = {
     count: 0,
     items: [],
@@ -51,7 +54,6 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
-    console.log(params);
     const { pageSize, pageIndex, sort, filter } = params;
     this.loadDataFromServer(pageIndex, pageSize);
   }
@@ -62,7 +64,10 @@ export class UserListComponent implements OnInit, OnDestroy {
         .delete(id)
         .pipe(switchMap(() => this.userService.getAll((this.pageIndex - 1) * this.pageSize || 0, this.pageSize)))
         .subscribe({
-          next: (users) => (this.users = users),
+          next: (users) => {
+            this.users = users;
+            this.deleted.emit();
+          },
         })
     );
   }

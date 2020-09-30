@@ -8,7 +8,6 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { UserAuth } from 'src/app/shared/models/auth/auth';
 import { User, Entrant } from 'src/app/shared/models/user/user';
 import { ColumnItem } from 'src/app/shared/models/ngzorro/column.item';
-import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -49,7 +48,6 @@ export class EventInfosComponent implements OnInit, OnDestroy {
     private eventService: EventService,
     private entryService: EntryService,
     private authService: AuthService,
-    private message: NzMessageService
   ) {}
 
   ngOnInit(): void {
@@ -122,7 +120,7 @@ export class EventInfosComponent implements OnInit, OnDestroy {
           if (err.status === 403) {
             alert('Aucune place disponible!');
           }
-          console.log(err);
+          else console.log(err);
         },
         () => (this.querying = false)
       )

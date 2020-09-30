@@ -30,15 +30,15 @@
         <td>{{data.username}}</td>
         <td>{{data.firstname}}</td>
         <td>{{data.lastname}}</td>
-        <td>{{data.createdAt}}</td>
+        <td>{{data.createdAt | date:'dd/MM/yyyy HH:mm'}}</td>
         <td>{{data.email}}</td>
         <td>{{data.role}}</td>
         <td>
           <a
             nz-popconfirm
-            nzPopconfirmTitle="Etes vous sure de supprimer cet utilisateur ?"
+            nzPopconfirmTitle="Êtes-vous sûr de supprimer cet utilisateur ?"
             (nzOnConfirm)="deleteUser(data.id)"
-          >Delete</a>
+          >Supprimer</a>
         </td>
       </tr>
 

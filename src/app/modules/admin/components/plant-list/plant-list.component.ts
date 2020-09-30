@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { PlantService } from 'src/app/core/services/plant/plant.service';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { switchMap } from 'rxjs/operators';
@@ -12,6 +12,9 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./plant-list.component.scss'],
 })
 export class PlantListComponent implements OnInit, OnDestroy {
+  
+  @Output() deleted = new EventEmitter<void>();
+
   public plants: ResultData<Plant> = {
     count: 0,
     items: [],
@@ -51,7 +54,6 @@ export class PlantListComponent implements OnInit, OnDestroy {
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
-    console.log(params);
     const { pageSize, pageIndex, sort, filter } = params;
     this.loadDataFromServer(pageIndex, pageSize);
   }
@@ -62,7 +64,10 @@ export class PlantListComponent implements OnInit, OnDestroy {
         .delete(id)
         .pipe(switchMap(() => this.plantService.findAll((this.pageIndex - 1) * this.pageSize || 0, this.pageSize)))
         .subscribe({
-          next: (plants) => (this.plants = plants),
+          next: (plants) => {
+            this.plants = plants;
+            this.deleted.emit();
+          },
         })
     );
   }

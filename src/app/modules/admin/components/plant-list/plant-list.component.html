@@ -15,7 +15,7 @@
       <th>Hauteur</th>
       <th>Difficulté</th>
       <th>Proprietaire</th>
-      <th>Actions</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
@@ -27,16 +27,16 @@
           [nzShowExpand]="data.exposure || data.humidityMin || data.humidityMax || data.potting"
         ></td>
         <td>{{data.name}}</td>
-        <td>{{data.createdAt}}</td>
+        <td>{{data.createdAt | date:'dd/MM/yyyy HH:mm'}}</td>
         <td>{{data.height}}</td>
         <td>{{data.difficulty}}</td>
         <td>{{data.owner?.username}}</td>
         <td>
           <a
             nz-popconfirm
-            nzPopconfirmTitle="Etes vous sure de supprimer cette plante ?"
+            nzPopconfirmTitle="Êtes-vous sûr de supprimer cette plante ?"
             (nzOnConfirm)="deletePlant(data.id)"
-          >Delete</a>
+          >Supprimer</a>
         </td>
       </tr>
 
