@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { EventService } from 'src/app/core/services/event/event.service';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { switchMap } from 'rxjs/operators';
@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 export class EventListComponent implements OnInit, OnDestroy {
 
   @Output() deleted = new EventEmitter<void>();
+  @Input() count: number = 0; // Amount of events
 
   public events: Event[] = [];
 
@@ -58,10 +59,11 @@ export class EventListComponent implements OnInit, OnDestroy {
     this.eventService
       .deleteEvent(id)
       .pipe(
-        switchMap(() => this.eventService.getEvents())
+        switchMap(() => this.eventService.getEvents((this.pageIndex - 1) * this.pageSize || 0, this.pageSize))
       ).subscribe({
         next: (events) => {
           this.events = events;
+          this.count--;
           this.deleted.emit();
         }
       });

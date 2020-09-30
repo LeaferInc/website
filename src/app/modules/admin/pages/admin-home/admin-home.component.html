@@ -28,7 +28,7 @@
       </nz-tab>
       <nz-tab nzTitle="Évènements">
         <ng-template nz-tab>
-          <app-admin-event-list (deleted)="stats.eventCount = stats.eventCount - 1"></app-admin-event-list>
+          <app-admin-event-list [count]="stats.eventCount" (deleted)="stats.eventCount = stats.eventCount - 1"></app-admin-event-list>
         </ng-template>
       </nz-tab>
     </nz-tabset>
