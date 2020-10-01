@@ -1,3 +1,11 @@
+# [1.4.0](https://github.com/LeaferInc/website/compare/v1.3.0...v1.4.0) (2020-10-01)
+
+
+### Features
+
+* **notification:** add simple notification to the app ([5624e03](https://github.com/LeaferInc/website/commit/5624e03e34294537e3c61a5506236df44b39672d))
+* **sensor:** add sensor screen ([f6f6881](https://github.com/LeaferInc/website/commit/f6f68817dcbcb302c0b55d8d3e150e4386d4bf4b))
+
 # [1.3.0](https://github.com/LeaferInc/website/compare/v1.2.0...v1.3.0) (2020-07-12)
 
 
