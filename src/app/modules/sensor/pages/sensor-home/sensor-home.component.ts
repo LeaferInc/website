@@ -1,73 +1,107 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Chart, ChartData, ChartDataSets, ChartPoint } from 'chart.js';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Chart, ChartDataSets, ChartPoint } from 'chart.js';
 import 'hammerjs';
 import 'chartjs-plugin-zoom';
-import { addMinutes } from 'date-fns';
+import { SensorDataService } from 'src/app/core/services/sensor-data/sensor-data.service';
+import { groupBy, values } from 'lodash';
+import parse from 'date-fns/parse';
+import { parseISO } from 'date-fns';
 
 @Component({
   selector: 'app-sensor-home',
   templateUrl: './sensor-home.component.html',
   styleUrls: ['./sensor-home.component.scss'],
 })
-export class SensorHomeComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('chart') chartRef: ElementRef<HTMLCanvasElement>;
+export class SensorHomeComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('canvasList') canvasList: ElementRef<HTMLElement>;
 
-  private chart: Chart = null;
+  private chart: Chart[] = [];
 
-  private first_dataset: ChartDataSets = {
-    label: '[First] test',
-    data: this.generateDate(),
-    fill: false,
-  };
+  constructor(private sensorDataService: SensorDataService, private renderer: Renderer2) {}
 
-  private second_dataset: ChartDataSets = {
-    label: '[Second] test',
-    data: this.generateDate(),
-    fill: false,
-  };
-
-  private generateDate(): ChartPoint[] {
-    let arr: ChartPoint[] = [];
-    let date = new Date(2020, 1, 1, 10, 0);
-    for (let index = 0; index < 500; index++) {
-      arr.push({
-        x: date = addMinutes(date, 10),
-        y: Math.floor(Math.random() * Math.floor(15))
-      });
-    }
-    return arr;
-  }
-
-  constructor() {}
-
-  // private date: Date = new Date(2020, 1, 1, 10, 30);
-  // private interval: NodeJS.Timeout = null;
-
-  ngOnInit(): void {
-    // this.interval = setInterval(() => {
-    //   const point: ChartPoint = {
-    //     x: this.date = addMinutes(this.date, 10),
-    //     y: Math.floor(Math.random() * Math.floor(15))
-    //   };
-    //   (this.chart.data.datasets[0].data as ChartPoint[]).push(point);
-    //   this.chart.update();
-    // }, 5000);
-  }
-
-  ngOnDestroy() {
-    // clearInterval(this.interval);
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit() {
-    const ctx = this.chartRef.nativeElement;
+    this.sensorDataService.getAllDataByUser().subscribe({
+      next: (sensorData) => {
+        const grpBy = values(groupBy(sensorData, 'sensorId'));
 
-    const first_data: ChartData = {
-      datasets: [this.first_dataset, this.second_dataset],
-    };
+        grpBy.forEach((el) => {
+          const chart = this.generateNewChart();
 
-    this.chart = new Chart(ctx, {
+          let groundHumidity: ChartPoint[] = [];
+          let airHumidity: ChartPoint[] = [];
+          let temperature: ChartPoint[] = [];
+
+          el.forEach((sensorData) => {
+            const groundHumidityPoint: ChartPoint = {
+              x: parseISO(sensorData.createdAt),
+              y: sensorData.groundHumidity,
+            };
+            const airHumidityPoint: ChartPoint = {
+              x: parseISO(sensorData.createdAt),
+              y: sensorData.airHumidity,
+            };
+            const temperaturePoint: ChartPoint = {
+              x: parseISO(sensorData.createdAt),
+              y: sensorData.temperature,
+            };
+
+            groundHumidity.push(groundHumidityPoint);
+            airHumidity.push(airHumidityPoint);
+            temperature.push(temperaturePoint);
+          });
+
+          const ground_humidity_color = this.getRandomColor();
+          const dataset_ground_humidity: ChartDataSets = {
+            label: 'Ground humidity',
+            data: groundHumidity,
+            backgroundColor: ground_humidity_color,
+            borderColor: ground_humidity_color,
+            fill: false,
+          };
+
+          const air_humidity_color = this.getRandomColor();
+          const dataset_air_humidity: ChartDataSets = {
+            label: 'Air humidity',
+            data: airHumidity,
+            backgroundColor: air_humidity_color,
+            borderColor: air_humidity_color,
+            fill: false,
+          };
+
+          const temperature_color = this.getRandomColor();
+          const dataset_temperature: ChartDataSets = {
+            label: 'Temperature',
+            data: temperature,
+            backgroundColor: temperature_color,
+            borderColor: temperature_color,
+            fill: false,
+          };
+
+          chart.data.datasets.push(dataset_ground_humidity, dataset_air_humidity, dataset_temperature);
+          chart.update();
+          this.chart.push(chart);
+        });
+        console.log('Hello', this.chart);
+      },
+    });
+  }
+
+  ngOnDestroy() {}
+
+  generateNewChart() {
+    const divEl = this.renderer.createElement('div');
+    this.renderer.setStyle(divEl, 'position', 'relative');
+
+    const canvasEl = this.renderer.createElement('canvas');
+    this.renderer.setProperty(canvasEl, 'height', 500);
+
+    this.renderer.appendChild(this.canvasList.nativeElement, divEl);
+    this.renderer.appendChild(divEl, canvasEl);
+    return new Chart(canvasEl, {
       type: 'line',
-      data: first_data,
+      data: null,
       options: {
         responsive: true,
         maintainAspectRatio: false,
@@ -110,12 +144,12 @@ export class SensorHomeComponent implements OnInit, AfterViewInit, OnDestroy {
               // Format of min pan range depends on scale type
               rangeMin: {
                 x: null,
-                y: null
+                y: null,
               },
               // Format of max pan range depends on scale type
               rangeMax: {
                 x: null,
-                y: null
+                y: null,
               },
               // On category scale, factor of pan velocity
               speed: 20,
@@ -140,12 +174,12 @@ export class SensorHomeComponent implements OnInit, AfterViewInit, OnDestroy {
               // Format of min zoom range depends on scale type
               rangeMin: {
                 x: null,
-                y: null
+                y: null,
               },
               // Format of max zoom range depends on scale type
               rangeMax: {
                 x: null,
-                y: null
+                y: null,
               },
               // Speed of zoom via mouse wheel
               // (percentage of zoom on a wheel event)
@@ -168,4 +202,14 @@ export class SensorHomeComponent implements OnInit, AfterViewInit, OnDestroy {
       },
     });
   }
+
+  private getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+  
 }
