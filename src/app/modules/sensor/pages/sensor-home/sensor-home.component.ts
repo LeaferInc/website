@@ -4,7 +4,6 @@ import 'hammerjs';
 import 'chartjs-plugin-zoom';
 import { SensorDataService } from 'src/app/core/services/sensor-data/sensor-data.service';
 import { groupBy, values } from 'lodash';
-import parse from 'date-fns/parse';
 import { parseISO } from 'date-fns';
 
 @Component({
