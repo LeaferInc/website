@@ -5,6 +5,10 @@ import 'chartjs-plugin-zoom';
 import { SensorDataService } from 'src/app/core/services/sensor-data/sensor-data.service';
 import { groupBy, values } from 'lodash';
 import { parseISO } from 'date-fns';
+import { merge, Subscription } from 'rxjs';
+import { SensorDataSocketService } from 'src/app/core/services/sensor-data-socket/sensor-data-socket.service';
+import { switchMap } from 'rxjs/operators';
+import { SensorData } from 'src/app/shared/models/sensor-data/sensor-data';
 
 @Component({
   selector: 'app-sensor-home',
@@ -14,11 +18,65 @@ import { parseISO } from 'date-fns';
 export class SensorHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('canvasList') canvasList: ElementRef<HTMLElement>;
 
-  private chart: Chart[] = [];
+  private charts: Map<number, Chart> = new Map();
+  private sub: Subscription = new Subscription();
 
-  constructor(private sensorDataService: SensorDataService, private renderer: Renderer2) {}
+  constructor(
+    private sensorDataService: SensorDataService,
+    private renderer: Renderer2,
+    private sensorDataSocketService: SensorDataSocketService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.sub.add(
+      this.sensorDataSocketService
+        .init()
+        .pipe(
+          switchMap(() =>
+            merge(
+              this.sensorDataSocketService.on('init'),
+              this.sensorDataSocketService.on('disconnect'),
+              this.sensorDataSocketService.on('roomJoined'),
+              this.sensorDataSocketService.on('roomLeft')
+            )
+          )
+        )
+        .subscribe((message) => {
+          console.log('[Client SensorData]', message);
+        })
+    );
+
+    
+    this.sub.add(
+      this.sensorDataSocketService
+        .on<SensorData>('newSensorData')
+        .subscribe({
+          next: (sensorData) => {
+            const groundHumidityPoint: ChartPoint = {
+              x: parseISO(sensorData.createdAt),
+              y: sensorData.groundHumidity,
+            };
+            const airHumidityPoint: ChartPoint = {
+              x: parseISO(sensorData.createdAt),
+              y: sensorData.airHumidity,
+            };
+            const temperaturePoint: ChartPoint = {
+              x: parseISO(sensorData.createdAt),
+              y: sensorData.temperature,
+            };
+            
+            (this.charts.get(sensorData.sensorId)
+              .data.datasets[0].data as ChartPoint[]).push(groundHumidityPoint);
+            (this.charts.get(sensorData.sensorId)
+              .data.datasets[1].data as ChartPoint[]).push(airHumidityPoint);
+            (this.charts.get(sensorData.sensorId)
+              .data.datasets[2].data as ChartPoint[]).push(temperaturePoint);
+
+            this.charts.get(sensorData.sensorId).update();
+          }
+        })
+    );
+  }
 
   ngAfterViewInit() {
     this.sensorDataService.getAllDataByUser().subscribe({
@@ -78,16 +136,22 @@ export class SensorHomeComponent implements OnInit, OnDestroy, AfterViewInit {
             fill: false,
           };
 
-          chart.data.datasets.push(dataset_ground_humidity, dataset_air_humidity, dataset_temperature);
+          chart.data.datasets.push(
+            dataset_ground_humidity,
+            dataset_air_humidity,
+            dataset_temperature
+          );
           chart.update();
-          this.chart.push(chart);
+          this.charts.set(el[0].sensorId, chart);
         });
-        console.log('Hello', this.chart);
       },
     });
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.sensorDataSocketService.disconnect();
+    this.sub.unsubscribe();
+  }
 
   generateNewChart() {
     const divEl = this.renderer.createElement('div');
