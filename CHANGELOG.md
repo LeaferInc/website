@@ -1,3 +1,11 @@
+# [1.5.0](https://github.com/LeaferInc/website/compare/v1.4.0...v1.5.0) (2020-10-02)
+
+
+### Features
+
+* **chart:** add chart live update ([906df25](https://github.com/LeaferInc/website/commit/906df2544b6382793568d8980b29b096412241a5))
+* **charts:** add charts ([980f540](https://github.com/LeaferInc/website/commit/980f540bbb253da32d93577e5714d86ad6072a25))
+
 # [1.4.0](https://github.com/LeaferInc/website/compare/v1.3.0...v1.4.0) (2020-10-01)
 
 
