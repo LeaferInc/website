@@ -6,6 +6,7 @@ import { switchMap, finalize, take, tap, catchError } from 'rxjs/operators';
 import { PlantCollectionService } from 'src/app/core/services/plant-collection/plant-collection.service';
 import { PlantCollection } from 'src/app/shared/models/plant-collection/plant-collection';
 import { forkJoin, of, Subscription } from 'rxjs';
+import { SensorService } from 'src/app/core/services/sensor/sensor.service';
 
 @Component({
   selector: 'app-details-plant',
@@ -22,7 +23,8 @@ export class DetailsPlantComponent implements OnInit, OnDestroy {
   constructor(
     private plantService: PlantService,
     private plantCollectionService: PlantCollectionService,
-    private activatedRoute: ActivatedRoute
+    private sensorService: SensorService,
+    private activatedRoute: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -69,5 +71,13 @@ export class DetailsPlantComponent implements OnInit, OnDestroy {
         next: () => (this.plantCollection = null),
       })
     );
+  }
+
+  onDesync() {
+    if(this.plantCollection?.sensor?.id)
+      this.sensorService.desync(this.plantCollection?.sensor?.id);
+    else {
+      throw new Error('The plantCollection doesn\'t have a sensor');
+    }
   }
 }

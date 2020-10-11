@@ -1,5 +1,6 @@
 import { User } from '../user/user';
 import { Plant } from '../plant/plant';
+import { Sensor } from '../sensor/sensor';
 
 export class PlantCollection {
   id: number;
@@ -7,4 +8,5 @@ export class PlantCollection {
   enabled: boolean;
   user: User;
   plant: Plant;
+  sensor: Sensor;
 }
