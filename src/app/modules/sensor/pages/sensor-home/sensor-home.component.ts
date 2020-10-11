@@ -4,7 +4,7 @@ import 'hammerjs';
 import 'chartjs-plugin-zoom';
 import { SensorDataService } from 'src/app/core/services/sensor-data/sensor-data.service';
 import { groupBy, values } from 'lodash';
-import { parseISO } from 'date-fns';
+import { addHours, parseISO, subDays } from 'date-fns';
 import { merge, Subscription } from 'rxjs';
 import { SensorDataSocketService } from 'src/app/core/services/sensor-data-socket/sensor-data-socket.service';
 import { switchMap } from 'rxjs/operators';
@@ -72,6 +72,10 @@ export class SensorHomeComponent implements OnInit, OnDestroy, AfterViewInit {
             (this.charts.get(sensorData.sensorId)
               .data.datasets[2].data as ChartPoint[]).push(temperaturePoint);
 
+            const createdAt = parseISO(sensorData.createdAt);
+            this.charts.get(sensorData.sensorId).options.scales.xAxes[0].ticks.min = subDays(createdAt, 5);
+            this.charts.get(sensorData.sensorId).options.scales.xAxes[0].ticks.max = addHours(createdAt, 2);
+
             this.charts.get(sensorData.sensorId).update();
           }
         })
@@ -79,7 +83,10 @@ export class SensorHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.sensorDataService.getAllDataByUser().subscribe({
+    this.sensorDataService.getAllDataByUser(
+      subDays(new Date(), 5),
+      addHours(new Date(), 2)
+    ).subscribe({
       next: (sensorData) => {
         const grpBy = values(groupBy(sensorData, 'sensorId'));
 
@@ -174,6 +181,7 @@ export class SensorHomeComponent implements OnInit, OnDestroy, AfterViewInit {
             {
               ticks: {
                 beginAtZero: true,
+                max: 100
               },
             },
           ],
@@ -182,18 +190,11 @@ export class SensorHomeComponent implements OnInit, OnDestroy, AfterViewInit {
               type: 'time',
               time: {
                 unit: 'minute',
-                // displayFormats: {
-                //   millisecond: 'MMM DD',
-                //   second: 'MMM DD',
-                //   minute: 'MMM DD',
-                //   hour: 'MMM DD',
-                //   day: 'MMM DD',
-                //   week: 'MMM DD',
-                //   month: 'MMM DD',
-                //   quarter: 'MMM DD',
-                //   year: 'MMM DD',
-                // },
               },
+              ticks: {
+                min: subDays(new Date(), 5),
+                max: addHours(new Date(), 2),
+              }
             },
           ],
         },
@@ -206,12 +207,12 @@ export class SensorHomeComponent implements OnInit, OnDestroy, AfterViewInit {
               mode: 'x',
               // Format of min pan range depends on scale type
               rangeMin: {
-                x: null,
+                x: subDays(new Date(), 5),
                 y: null,
               },
               // Format of max pan range depends on scale type
               rangeMax: {
-                x: null,
+                x: addHours(new Date(), 2),
                 y: null,
               },
               // On category scale, factor of pan velocity
@@ -236,12 +237,12 @@ export class SensorHomeComponent implements OnInit, OnDestroy, AfterViewInit {
               mode: 'x',
               // Format of min zoom range depends on scale type
               rangeMin: {
-                x: null,
+                x: subDays(new Date(), 5),
                 y: null,
               },
               // Format of max zoom range depends on scale type
               rangeMax: {
-                x: null,
+                x: addHours(new Date(), 2),
                 y: null,
               },
               // Speed of zoom via mouse wheel
