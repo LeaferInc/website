@@ -4,7 +4,7 @@ import 'hammerjs';
 import 'chartjs-plugin-zoom';
 import { SensorDataService } from 'src/app/core/services/sensor-data/sensor-data.service';
 import { groupBy, values } from 'lodash';
-import { addHours, parseISO, subDays } from 'date-fns';
+import { addHours, parseISO, subDays, subMinutes } from 'date-fns';
 import { merge, Subscription } from 'rxjs';
 import { SensorDataSocketService } from 'src/app/core/services/sensor-data-socket/sensor-data-socket.service';
 import { switchMap } from 'rxjs/operators';
@@ -71,10 +71,6 @@ export class SensorHomeComponent implements OnInit, OnDestroy, AfterViewInit {
               .data.datasets[1].data as ChartPoint[]).push(airHumidityPoint);
             (this.charts.get(sensorData.sensorId)
               .data.datasets[2].data as ChartPoint[]).push(temperaturePoint);
-
-            const createdAt = parseISO(sensorData.createdAt);
-            this.charts.get(sensorData.sensorId).options.scales.xAxes[0].ticks.min = subDays(createdAt, 5);
-            this.charts.get(sensorData.sensorId).options.scales.xAxes[0].ticks.max = addHours(createdAt, 2);
 
             this.charts.get(sensorData.sensorId).update();
           }
@@ -148,6 +144,13 @@ export class SensorHomeComponent implements OnInit, OnDestroy, AfterViewInit {
             dataset_air_humidity,
             dataset_temperature
           );
+
+          const createdAt = parseISO(el[0].createdAt);
+          const daySubFiveDay = subDays(createdAt, 5);
+          const minTicks = createdAt > daySubFiveDay ? subMinutes(createdAt, 30) : daySubFiveDay
+          chart.options.scales.xAxes[0].ticks.min = minTicks;
+          chart.options.scales.xAxes[0].ticks.max = addHours(createdAt, 2);
+
           chart.update();
           this.charts.set(el[0].sensorId, chart);
         });
