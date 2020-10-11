@@ -75,7 +75,11 @@ export class DetailsPlantComponent implements OnInit, OnDestroy {
 
   onDesync() {
     if(this.plantCollection?.sensor?.id)
-      this.sensorService.desync(this.plantCollection?.sensor?.id);
+      this.sensorService.desync(this.plantCollection?.sensor?.id).subscribe({
+        next: (sensorUpdated) => {
+          this.plantCollection.sensor = sensorUpdated;
+        }
+      })
     else {
       throw new Error('The plantCollection doesn\'t have a sensor');
     }
