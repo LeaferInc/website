@@ -406,9 +406,16 @@
       </p>
     </div>
 
-    <div nz-row>
-      <button *ngIf="!plantCollection" nz-button nzType="primary" (click)="onAddPlantInCollection()">Ajouter à ma collection</button>
-      <button *ngIf="plantCollection" nz-button nzType="danger" (click)="onDeletePlantInCollection()">Supprimer de ma colleciton</button>
+    <div nz-row [nzGutter]="[16, 16]">
+      <div nz-col>
+        <button *ngIf="!plantCollection" nz-button nzType="primary" (click)="onAddPlantInCollection()">Ajouter à ma collection</button>
+      </div>
+      <div nz-col>
+        <button *ngIf="plantCollection" nz-button nzType="danger" (click)="onDeletePlantInCollection()">Supprimer de ma collection</button>
+      </div>
+      <div nz-col>
+        <button *ngIf="plantCollection && plantCollection?.sensor?.enabled" (click)="onDesync()" nz-button nzType="danger">Dissocier</button>
+      </div>
     </div>
     
   </div>
