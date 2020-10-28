@@ -19,7 +19,7 @@ describe('SearchEvent', () => {
 
     it('should return encoded parameters', () => {
         const searchDate = SearchEvent.fromDate(startDate);
-        expect(searchDate.toUrlParams()).toBe('startDate=2020-12-01T09:00:00.000Z')
+        expect(searchDate.toUrlParams()).toBe('startDate=2020-12-01T10:00:00.000Z')
 
         const searchLocation = SearchEvent.fromLocation(31.44331, 9.3756);
         expect(searchLocation.toUrlParams()).toBe('latitude=31.44331&longitude=9.3756');
