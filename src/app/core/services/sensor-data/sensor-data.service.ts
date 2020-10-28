@@ -1,5 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import formatISO from 'date-fns/formatISO';
+import { CustomEncoder } from 'src/app/shared/custom-encoder';
 import { SensorData } from 'src/app/shared/models/sensor-data/sensor-data';
 
 @Injectable({
@@ -11,7 +13,12 @@ export class SensorDataService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getAllDataByUser() {
-    return this.httpClient.get<SensorData[]>(`${SensorDataService.SENSOR_DATA_URL}/allByUser`);
+  public getAllDataByUser(start?: Date, end?: Date) {
+    let httpParams = new HttpParams({encoder: new CustomEncoder()});
+    if(start) httpParams = httpParams.append('start', formatISO(start));
+    if(end) httpParams = httpParams.append('end', formatISO(end));
+    return this.httpClient.get<SensorData[]>(`${SensorDataService.SENSOR_DATA_URL}/allByUser`, {
+      params: httpParams
+    });
   }
 }
