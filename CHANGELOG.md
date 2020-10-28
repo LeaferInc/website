@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/LeaferInc/website/compare/v1.5.0...v1.5.1) (2020-10-28)
+
+
+### Bug Fixes
+
+* **clean:** clean a little ([92b139c](https://github.com/LeaferInc/website/commit/92b139c975db765f525e7fb6d1cd08a619b6367b))
+
 # [1.5.0](https://github.com/LeaferInc/website/compare/v1.4.0...v1.5.0) (2020-10-02)
 
 
