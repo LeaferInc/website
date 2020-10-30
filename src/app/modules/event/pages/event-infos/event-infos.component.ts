@@ -154,6 +154,7 @@ export class EventInfosComponent implements OnInit, OnDestroy {
     this.sub.add(
       this.eventService.deleteEvent(this.event.id).subscribe(
         () => {
+          this.isModalVisible = false;
           this.router.navigate(['events']);
         },
         (err: HttpErrorResponse) => {
