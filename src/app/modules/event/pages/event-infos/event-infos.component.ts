@@ -81,6 +81,7 @@ export class EventInfosComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.isModalVisible = false;
     this.sub.unsubscribe();
   }
 
@@ -151,10 +152,10 @@ export class EventInfosComponent implements OnInit, OnDestroy {
    */
   deleteEvent(): void {
     this.querying = true;
+    this.isModalVisible = false;
     this.sub.add(
       this.eventService.deleteEvent(this.event.id).subscribe(
         () => {
-          this.isModalVisible = false;
           this.router.navigate(['events']);
         },
         (err: HttpErrorResponse) => {
