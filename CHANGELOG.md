@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/LeaferInc/website/compare/v1.5.2...v1.6.0) (2020-10-30)
+
+
+### Features
+
+* **event deletion:** dialog box -2 ([2a2c789](https://github.com/LeaferInc/website/commit/2a2c789c1cd017dd887c7b388305e1599bc12b86))
+
 ## [1.5.2](https://github.com/LeaferInc/website/compare/v1.5.1...v1.5.2) (2020-10-30)
 
 
