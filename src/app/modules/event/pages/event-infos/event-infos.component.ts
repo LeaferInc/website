@@ -18,7 +18,7 @@ import { Subscription } from 'rxjs';
 export class EventInfosComponent implements OnInit, OnDestroy {
   event: Event;
   querying: boolean = false; // True if waiting for a server response
-  currentUser: User;
+  currentUser: User; // The current user
   isModalVisible: boolean = false;
 
   currentPage: Entrant[] = [];
